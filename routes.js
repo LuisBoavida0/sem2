@@ -1,73 +1,62 @@
-
-/* routes.js */
-
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
-// import { upload } from 'https://cdn.deno.land/oak_upload_middleware/versions/v2/raw/mod.ts'
-// import { parse } from 'https://deno.land/std/flags/mod.ts'
 
-import { login, register } from './modules/accounts.js'
+import { login, register, userDoesntExist } from './modules/ORM.js'
+import { formDataProcessing, getGeneralData, homePageRedirection } from './modules/dataProcessing.js'
+import { registerSchema, loginSchema } from './modules/schema.js'
 
-const handle = new Handlebars({ defaultLayout: '' })
+const handle = new Handlebars({ defaultLayout: 'layout' })
 
 const router = new Router()
 
 // the routes defined here
 router.get('/', async context => {
-	const authorised = context.cookies.get('authorised')
-	const data = { authorised }
-	const body = await handle.renderView('home', data)
+	if (!context.cookies.get('userType')) context.response.redirect('/login')
+	const body = await handle.renderView(homePageRedirection(context), getGeneralData('HomePage', context))
 	context.response.body = body
 })
 
 router.get('/login', async context => {
-	const body = await handle.renderView('login')
+	const body = await handle.renderView('login', getGeneralData('Login', context))
 	context.response.body = body
 })
 
 router.get('/register', async context => {
-	const body = await handle.renderView('register')
+	const body = await handle.renderView('register', getGeneralData('Register', context))
 	context.response.body = body
 })
 
 router.post('/register', async context => {
-	console.log('POST /register')
-	const body = context.request.body({ type: 'form' })
-	const value = await body.value
-	const obj = Object.fromEntries(value)
-	console.log(obj)
-	await register(obj)
-	context.response.redirect('/login')
-})
-
-router.get('/logout', context => {
-  // context.cookies.set('authorised', null) // this does the same
-  context.cookies.delete('authorised')
-  context.response.redirect('/')
+	try {
+		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), loginSchema)
+		await userDoesntExist(obj)
+		await register(obj)
+		context.response.redirect('/login')
+	} catch (err) {
+		console.log(err)	//Log the error
+		context.cookies.set('error', err)	//Send error to Page
+		context.response.redirect('/register')
+	}
 })
 
 router.post('/login', async context => {
-	console.log('POST /login')
-	const body = context.request.body({ type: 'form' })
-	const value = await body.value
-	const obj = Object.fromEntries(value)
-	console.log(obj)
 	try {
-		const username = await login(obj)
-		context.cookies.set('authorised', username)
-		context.response.redirect('/foo')
-	} catch(err) {
-		console.log(err)
+		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), loginSchema)
+		context.cookies.set('userType', await login(obj))
+		context.cookies.set('userName', obj.userName)
+		context.response.redirect('/')
+	} catch (err) {
+		console.log(err)	//Log the error
+		context.cookies.set('error', err)	//Send error to Page
 		context.response.redirect('/login')
 	}
 })
 
-router.get('/foo', async context => {
-	const authorised = context.cookies.get('authorised')
-	if(authorised === undefined) context.response.redirect('/')
-	const data = { authorised }
-	const body = await handle.renderView('foo', data)
-	context.response.body = body
+router.get('/logout', context => {
+  // context.cookies.set('authorised', null) // this does the same
+  context.cookies.delete('userType')
+  context.cookies.delete('userName')
+  context.response.redirect('/login')
 })
 
 export default router

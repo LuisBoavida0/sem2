@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width' , initial-scale='1.0' />
+    <meta name='Author' content='Luis Boavida'>
+    <meta name='description' content='{{title}} page'>
+    <title>{{title}}</title>
+
+    <script src='{{host}}/js/common.js'></script>
+    <link href='{{host}}/css/common.css' type='text/css' rel='stylesheet' />
+</head>
+
+<body>
+    <main>
+        {{#if error}}
+            <p>{{error}}</p>
+        {{/if}}
+        <!-- It is possible to have only the success message, so i need the class-->
+        {{#if success}}
+            <p class='success'>{{success}}</p>
+        {{/if}}
+        <h1>LAYOUT</h1>
+        {{{body}}}
+    </main>
+</body>
