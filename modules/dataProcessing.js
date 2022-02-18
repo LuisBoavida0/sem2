@@ -1,3 +1,5 @@
+import { isValidUUID } from './ORM.js'
+
 //function to tranform the data and check if the data is correct through the use of a schema
 export const formDataProcessing = async (obj,  schema) => {
     obj = Object.fromEntries(await obj.value)
@@ -49,4 +51,34 @@ export const loginCorrectly = async (data, records, compare) => {
     
     console.log(`This username has logged in : ${data.userName}`)
     return records[0].userType
+}
+
+export const getDataIsosFormat = (alreadyDbFormatted) => {    //Converts the Data into the Schema format (With timezones)
+    let IsoDate =  new Date()
+    let LocalStringDate = new Date()
+
+    /*Since Server doesnt Give UK timezone Hours (When its winter timezone the server still gives 0 instead of +1)
+      I made this solution, the only way to get the hours with the timezone is with this localestring, so i get the date as a string and
+      then split it to only get the hour*/
+    LocalStringDate = LocalStringDate.toLocaleString('en-GB', { timeZone: 'Europe/London' }).split(', ')
+    IsoDate.setHours(IsoDate.getHours() + (LocalStringDate[1].split(':')[0] - IsoDate.getUTCHours()))
+    
+    IsoDate = IsoDate.toISOString()
+    if (alreadyDbFormatted) return IsoDate.slice(0, 19).replace('T', ' ')     
+    return IsoDate
+} 
+
+export const addExtraParcelValues = async (context) => {
+    let UUID
+    while (true) {
+        UUID = crypto.randomUUID()
+        if (await isValidUUID(UUID)) break
+    }
+
+    return {
+        senderUsername: context.cookies.get('userName'),
+        dateAndTimeAdded: getDataIsosFormat(true),
+        parcelStatus: 'not-dispatched',
+        trackingNumber: UUID
+    }
 }

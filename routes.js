@@ -1,9 +1,9 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { login, register, userDoesntExist } from './modules/ORM.js'
-import { formDataProcessing, getGeneralData, homePageRedirection } from './modules/dataProcessing.js'
-import { registerSchema, loginSchema } from './modules/schema.js'
+import { login, register, userDoesntExist, addParcel } from './modules/ORM.js'
+import { formDataProcessing, getGeneralData, homePageRedirection, addExtraParcelValues } from './modules/dataProcessing.js'
+import { registerSchema, loginSchema, sendParcelSchema } from './modules/schema.js'
 
 const handle = new Handlebars({ defaultLayout: 'layout' })
 
@@ -23,6 +23,11 @@ router.get('/login', async context => {
 
 router.get('/register', async context => {
 	const body = await handle.renderView('register', getGeneralData('Register', context))
+	context.response.body = body
+})
+
+router.get('/sendParcel', async context => {
+	const body = await handle.renderView('sendParcel', getGeneralData('Send Parcel', context))
 	context.response.body = body
 })
 
@@ -49,6 +54,20 @@ router.post('/login', async context => {
 		console.log(err)	//Log the error
 		context.cookies.set('error', err)	//Send error to Page
 		context.response.redirect('/login')
+	}
+})
+
+router.post('/sendParcel', async context => {
+	try {
+		let obj = await formDataProcessing(await context.request.body({ type: 'form' }), sendParcelSchema)
+		obj = Object.assign({}, obj, await addExtraParcelValues(context))
+		await addParcel(obj)
+
+		context.response.redirect('/sendParcel')
+	} catch (err) {
+		console.log(err)	//Log the error
+		context.cookies.set('error', err)	//Send error to Page
+		context.response.redirect('/sendParcel')
 	}
 })
 

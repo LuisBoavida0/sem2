@@ -45,3 +45,22 @@ export async function userDoesntExist(data) {
         throw new Error(err)
     }
 }
+
+export async function isValidUUID(UUID) {
+	try {
+		const records = await db.query(`SELECT trackingNumber FROM parcels WHERE trackingNumber = '${UUID}';`)
+		if (!records[0]) return true
+		return false
+	} catch (err) {
+        throw new Error(err)
+    }
+}
+
+export async function addParcel(data) {
+	try {
+		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
+		return true
+	} catch (err) {
+        throw new Error(err)
+    }
+}
