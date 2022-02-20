@@ -7,12 +7,25 @@
     <meta name='Author' content='Luis Boavida'>
     <meta name='description' content='{{title}} page'>
     <title>{{title}}</title>
-
-    <script src='{{host}}/js/common.js'></script>
     <link href='{{host}}/css/common.css' type='text/css' rel='stylesheet' />
+    <script src='{{host}}/js/common.js'></script>
+
+    {{#if Login}}
+        <link href='{{host}}/css/login.css' type='text/css' rel='stylesheet' />
+    {{/if}}
+
+    {{#if Register}}
+        <link href='{{host}}/css/register.css' type='text/css' rel='stylesheet' />
+    {{/if}}
+
+    {{#if sendParcel}}
+        <link href='{{host}}/css/sendParcel.css' type='text/css' rel='stylesheet' />
+    {{/if}}
 </head>
 
 <body>
+    <header>
+    </header>
     <main>
         {{#if error}}
             <p>{{error}}</p>
@@ -21,7 +34,6 @@
         {{#if success}}
             <p class='success'>{{success}}</p>
         {{/if}}
-        <h1>LAYOUT</h1>
         {{{body}}}
     </main>
 </body>

@@ -27,7 +27,8 @@ router.get('/register', async context => {
 })
 
 router.get('/sendParcel', async context => {
-	const body = await handle.renderView('sendParcel', getGeneralData('Send Parcel', context))
+	if (!context.cookies.get('userType')) context.response.redirect('/login')
+	const body = await handle.renderView('sendParcel', getGeneralData('Send Parcel', context, 'sendParcel'))
 	context.response.body = body
 })
 

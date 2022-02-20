@@ -13,7 +13,7 @@ export const formDataProcessing = async (obj,  schema) => {
     return obj
 }
 
-export const getGeneralData = (page, context) => {  //Gets the general Data
+export const getGeneralData = (page, context, pageName) => {  //Gets the general Data
     let data = {}
 
     if (context.cookies.get('success')) data.success = context.cookies.get('success')  //Gets the success message
@@ -24,7 +24,7 @@ export const getGeneralData = (page, context) => {  //Gets the general Data
     context.cookies.delete('success')   //Deletes temporary cookies
     context.cookies.delete('error')
 
-    data.title = page    //The title of the page    
+    pageName ? data[pageName] = true : data[page] = true    //The title of the page    
 
     console.log(data)
     return data

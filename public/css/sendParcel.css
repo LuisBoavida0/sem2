@@ -1,0 +1,39 @@
+main {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 700px;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
+    background-color: var(--whiteBackroud);
+}
+
+input[type='submit'] {
+    margin: auto;
+    padding: 10px 40px;
+}
+
+section > section {
+    display: block;
+}
+
+section, section>section>section {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+section > section > input:not([type="submit"]) {
+    margin-bottom: 0;
+}
+
+section > button {
+    width: 110px;
+    margin-left: 5px;
+    white-space: nowrap;
+}

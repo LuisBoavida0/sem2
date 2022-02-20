@@ -1,29 +1,43 @@
 <form action='/sendParcel' onsubmit='form_combine_address()' method='post'>
     <h1>Send Parcel</h1>
 
-    <label for='parcelName'>Name of the item to send</label><br>
-    <input type='text' name='parcelName' placeholder='Parcel Name' autofocus required><br>
-    <br>
+    <label for='parcelName'>Name of the item to send *</label>
+    <input type='text' name='parcelName' placeholder='Parcel Name' autofocus required>
+
+    <section>
+        <section>
+            <label for='senderPostcode'>Your Postal Code *</label>
+            <section>
+                <input type='text' name='senderPostcode' placeholder='Your Postal Code' required />
+                <button onclick='getFullAddress(this, "senderAddress")' type="button">Get Address</button>
+            </section>
+            
+            <label for='senderHouseNumber'>House Number *</label>
+            <input type='number' name='senderHouseNumber' placeholder='house number'>
+            
+            <label for='senderAddress'>Address</label>
+            <textarea name='senderAddress' placeholder='The complete Address WITHOUT HOUSE NUMBER' required></textarea>
+        </section>
+
+        <section>
+            <label for='destinationPostcode'>Your Postal Code *</label>
+            <section>
+                <input type='text' name='destinationPostcode' placeholder='Your Postal Code' />
+                <button onclick='getFullAddress(this, "destinationAddress")' type="button">Get Address</button>
+            </section>
+
+            <label for='destinationHouseNumber'>House Number *</label>
+            <input type='number' name='destinationHouseNumber' placeholder='house number'>
+
+            <label for='destinationAddress'>Address</label>
+            <textarea name='destinationAddress' placeholder='The complete Address WITHOUT HOUSE NUMBER'required></textarea>  
+        </section>   
+    </section>
     
-    <label for='senderPostcode'>Your Postal Code</label><br>
-    <input type='text' name='senderPostcode' placeholder='Your Postal Code' required />
-    <button onclick='getFullAddress(this, "senderAddress")' type="button">Get Address</button><br>
-    <input type='number' name='senderHouseNumber' placeholder='house number'>
-    <textarea name='senderAddress' placeholder='The complete Address' required></textarea><br>
-    <br>
-    
-    <label for='destinationPostcode'>Your Postal Code</label><br>
-    <input type='text' name='destinationPostcode' placeholder='Your Postal Code' />
-    <button onclick='getFullAddress(this, "destinationAddress")' type="button">Get Address</button><br>
-    <input type='number' name='destinationHouseNumber' placeholder='house number'>
-    <textarea name='destinationAddress' placeholder='The complete Address'required></textarea><br>
-    <br>
-    
-    <label for='kgs'>Weight of the parcel</label><br>
+    <label for='kgs'>Weight of the parcel</label>
     <input type='range' name='kgs' min='1' value='10' max='20' onload='showRange(this.nextElementSibling, this.value)' oninput='showRange(this.nextElementSibling, this.value)' required>
     <p>10</p><p>Kgs</p>
     
-    <br>
     <input type='submit' value='Send Parcel'>
 </form>
 
