@@ -6,13 +6,13 @@
 	<form action="/register" method="post">
 		<h1>Register</h1>
 		<label for="userName">Username</label>
-		<input type="text" name="userName" placeholder="your preferred username">
-		<label for="password">Password</label>
-		<input type="password" name="password" placeholder="your chosen password">
-		<label for="password2">Password</label>
-		<input type="password" name="password2" placeholder="repeat your password">
+		<input type="text" name="userName" placeholder="your preferred username" required>
 		<label for="email">Email</label>
-		<input type="email" name="email" placeholder="your chosen email">
+		<input type="email" name="email" placeholder="your chosen email" required>
+		<label for="password">Password</label>
+		<input type="password" name="password" placeholder="your chosen password" oninput='check(this, "password2")' required>
+		<label for="password2">Password</label>
+		<input type="password" name="password2" placeholder="repeat your password" oninput='check(this, "password")' required>
 		<input type="submit" value="Register">
 	</form>
 	<p>Already have an account? <a href="/login">Login</a> here</p>

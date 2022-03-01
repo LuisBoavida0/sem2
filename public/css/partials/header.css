@@ -1,0 +1,33 @@
+/*  HEADER */
+header {
+    background-color: var(--main);   /*Create gradient background for the header*/
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav {
+    margin: auto;
+}
+
+header ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header li {
+    list-style-type: none;
+    margin: 0 10px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header a:last-child {
+    margin: auto 0;
+}
+/* END HEADER */

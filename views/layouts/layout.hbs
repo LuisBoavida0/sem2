@@ -2,30 +2,15 @@
 
 <html lang='en'>
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width' , initial-scale='1.0' />
-    <meta name='Author' content='Luis Boavida'>
-    <meta name='description' content='{{title}} page'>
-    <title>{{title}}</title>
-    <link href='{{host}}/css/common.css' type='text/css' rel='stylesheet' />
-    <script src='{{host}}/js/common.js'></script>
-
-    {{#if Login}}
-        <link href='{{host}}/css/login.css' type='text/css' rel='stylesheet' />
-    {{/if}}
-
-    {{#if Register}}
-        <link href='{{host}}/css/register.css' type='text/css' rel='stylesheet' />
-    {{/if}}
-
-    {{#if sendParcel}}
-        <link href='{{host}}/css/sendParcel.css' type='text/css' rel='stylesheet' />
-    {{/if}}
+    {{> head}}
 </head>
 
 <body>
-    <header>
-    </header>
+    {{#unless Login}}
+    {{#unless Register}}
+        {{> header}}
+    {{/unless}}
+    {{/unless}}
     <main>
         {{#if error}}
             <p>{{error}}</p>

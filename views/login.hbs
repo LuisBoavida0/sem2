@@ -4,11 +4,11 @@
 
 <section>
 	<form action="/login" method="post">
-		<h1>Instant Deliver</h1>
+		<h1>Login</h1>
 		<label for="userName">Username</label>
-		<input type="text" name="userName" placeholder="your username" value="{{body.user}}" autofocus>
+		<input type="text" name="userName" placeholder="your username" value="{{body.user}}" autofocus required>
 		<label for="password">Password</label>
-		<input type="password" name="password" placeholder="your password" value="{{body.pass}}">
+		<input type="password" name="password" placeholder="your password" value="{{body.pass}}" required>
 		<input type="submit" value="Log in">
 	</form>
 	<p>Don't have an account? <a href="/register">Register</a> for free</p>

@@ -6,7 +6,6 @@ main {
 }
 
 figure {
-    margin: 0;
     margin-right: 30px;
     width: 300px;
 }
@@ -20,10 +19,18 @@ form, p {
 }
 
 input[type='submit'] {
-    margin: auto;
+    margin: 20px auto 0px auto;
     padding: 10px 24px;
 }
 
 h1, p {
     text-align: center;
+}
+
+p {
+    margin: 10px 0;
+}
+
+img {
+    width: 100%;
 }

@@ -6,7 +6,7 @@ main {
 }
 
 form {
-    width: 700px;
+    width: 670px;
     border-radius: 5px;
     padding: 30px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
@@ -18,8 +18,18 @@ input[type='submit'] {
     padding: 10px 40px;
 }
 
+section > section:first-of-type {
+    margin-right: 18px;
+}
+
+
+section > section > section:first-of-type {
+    margin-right: 0px;
+}
+
 section > section {
     display: block;
+    margin-bottom: 0px;
 }
 
 section, section>section>section {
@@ -28,7 +38,7 @@ section, section>section>section {
     justify-content: space-between;
 }
 
-section > section > input:not([type="submit"]) {
+section > section > section > input:not([type="submit"]) {
     margin-bottom: 0;
 }
 
@@ -36,4 +46,19 @@ section > button {
     width: 110px;
     margin-left: 5px;
     white-space: nowrap;
+    padding: 0px 10px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+h2 {
+    margin: 20px 0px;
+    text-align: center;
+}
+
+form > label {
+    margin-top: 20px;
+    display: block;
 }

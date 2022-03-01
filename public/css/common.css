@@ -3,18 +3,22 @@
 
 /* NON SPECIFIC CSS */
 :root {    /*Colors for website*/
-    --main: #46008c;
+    --main: #370bba;
     --secondary: #f0b829;
     --background: #fcfcf2;
     --whiteBackroud: #fdfef9;
     --font: #262626;
-    --header: #004d5c;
     --error: red;
     --success: green;
 }
 
+*:focus:hover:active {    /*Add general css to when something is being clicked (and is clickable)*/
+    opacity: 0.5;
+}
+
 html, body {    /*Change background color and removes margin*/
     background-color: var(--background);
+    margin: 0;
 }
 
 body
@@ -31,6 +35,14 @@ input, textarea, button {
     display: block;
 }
 
+input[type="range"] {
+    padding: 0;
+}
+
+p {
+    margin: 0;
+}
+
 input:not([type="submit"]), textarea {
     margin-bottom: 10px;
     width: -webkit-fill-available;
@@ -43,7 +55,7 @@ input[type='submit'], button {
     padding: 10px;
     cursor: pointer;
 }
-    
-img {
-    width: 100%;
+
+figure {
+    margin: 0;
 }
