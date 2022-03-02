@@ -20,8 +20,6 @@ const handle = new Handlebars({ defaultLayout: '' })
 // error handler
 app.use(async (context, next) => {
   try {
-	console.log(context.request.url.href)
-	console.log(`authorised cookie: ${context.cookies.get('authorised')}`)
     await next()
   } catch (err) {
 		console.log(err)
@@ -44,9 +42,9 @@ app.use(async (context, next) => {
 // page not found
 app.use( async context => {
 	try {
-		console.log('404 PAGE NOT FOUND')
 		const body = await handle.renderView('404')
 		context.response.body = body
+		console.log('404 PAGE NOT FOUND')
 // 		context.response.body = '404 PAGE NOT FOUND'
 	} catch(err) {
 		console.error(err)

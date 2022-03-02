@@ -10,13 +10,14 @@
             <label for='senderPostcode'>Postal Code *</label>
             <section>
                 <input type='text' name='senderPostcode' placeholder='Your postal code' required>
-                <button onclick='getFullAddress(this, "senderAddress")' type="button">Get Address</button>
+                <button onclick='getFullAddress(this, "senderAddressLabel")' type="button">Get Address</button>
             </section>
             
             <label for='senderHouseNumber'>House Number *</label>
             <input type='number' name='senderHouseNumber' placeholder='Your house number' required>
             
-            <label name='senderAddress'></label>
+            <label name='senderAddressLabel'></label>
+            <input type='hidden' name='senderAddress'>
         </section>
 
         <section>
@@ -24,13 +25,14 @@
             <label for='destinationPostcode'>Postal Code *</label>
             <section>
                 <input type='text' name='destinationPostcode' placeholder='Destination postal code' required>
-                <button onclick='getFullAddress(this, "destinationAddress")' type="button">Get Address</button>
+                <button onclick='getFullAddress(this, "destinationAddressLabel")' type="button">Get Address</button>
             </section>
 
             <label for='destinationHouseNumber'>House Number *</label>
             <input type='number' name='destinationHouseNumber' placeholder='Destination house number' required>
 
-            <label name='destinationAddress'></label>
+            <label name='destinationAddressLabel'></label>
+            <input type='hidden' name='destinationAddress'>
         </section>   
     </section>
     

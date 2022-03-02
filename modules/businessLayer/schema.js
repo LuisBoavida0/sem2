@@ -64,12 +64,12 @@ export const sendParcelSchema = ajv.compile({
       minLength: 3,
       maxLength: 120
     },
-    senderPostcode: {
+    senderAddress: {
       type: 'string',
       minLength: 6,
       maxLength: 500
     },
-    destinationPostcode: {
+    destinationAddress: {
       type: 'string',
       minLength: 6,
       maxLength: 500
@@ -79,5 +79,5 @@ export const sendParcelSchema = ajv.compile({
       pattern: '(?=^(([01]?[0-9])|(20))$)(?=[^0]+)'
     }
   },
-  required: [ 'parcelName', 'senderPostcode', 'destinationPostcode', 'kgs' ]
+  required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs' ]
 })
