@@ -11,12 +11,13 @@ const salt = await genSalt(saltRounds)
  * @returns {string} the username for the valid account
  */
 export async function loginDb(data) {
-	try {
+	try {		
         const records = await db.query(`SELECT userType, password FROM users WHERE userName = '${data.userName}';`)
 
 		if(!records[0]) throw new Error(`userName '${data.userName}' not found`)	//If userName is incorrect
-    
+	
 		const samePwd = await compare(data.password, records[0].password)	//Compares the two passwords
+
 		if (!samePwd) throw new Error(`invalid password for account '${data.userName}'`)	//password invalid
     
 		console.log(`This username has logged in : ${data.userName}`)

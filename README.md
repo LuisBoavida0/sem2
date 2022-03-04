@@ -30,3 +30,8 @@ There is a secure page called **Foo Bar** which can be accessed at the `/foo` ro
 If you get stuck your first step should be to see if this is a problem that others have already encountered. There is a comprehensive FAQ document that gives solutions to the most common problems.
 
 [Frequently-Asked Questions](https://docs.google.com/document/d/1b_lTA_ay0Yi46annuNnZ6fK1nIe_ddszmPua1Wwvfa0/edit?usp=sharing)
+
+## Run the coverage
+deno test --allow-all --unstable --import-map './test.json' --coverage=ut/lcov
+deno coverage ut/lcov --lcov > ut/cov_profile.lcov
+genhtml -o ut/coverage ut/cov_profile.lcov

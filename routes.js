@@ -49,6 +49,7 @@ router.post('/register', async context => {
 
 router.post('/login', async context => {
 	try {
+		console.log((await context.request.body({ type: 'form' })).value)
 		//Transforms the form data into an object (throws an error if form is not formatted according to the schema)
 		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), loginSchema)
 		const userType = await login(obj)	//Checks if credentials are correct and tries to login, then it returns the userType

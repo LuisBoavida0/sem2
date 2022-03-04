@@ -26,7 +26,7 @@ export const homePageRedirection = (userType) => {  //Redirects the user to the 
     }
 }
 
-export const getDateIsosFormat = (alreadyDbFormatted) => {    //Converts the Data into the Schema format (With timezones)
+export const getDateIsosFormat = () => {    //Converts the Data into the Schema format (With timezones)
     let IsoDate =  new Date()
     let LocalStringDate = new Date()
 

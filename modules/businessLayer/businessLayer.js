@@ -11,7 +11,7 @@ export const register = async (obj) => {
         else 
             throw new Error(`userName ${obj.userName} already exists`)  //If user already exists throw error
 	} catch (err) {
-            throw err
+        throw err
     }
 }
 

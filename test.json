@@ -1,0 +1,7 @@
+{
+  "scopes": {
+    "./modules/": {
+      "./modules/": "./modules/test/"
+    }
+  }
+}
