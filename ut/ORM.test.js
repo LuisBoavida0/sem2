@@ -1,5 +1,5 @@
 import { assertEquals } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { loginDb } from '../modules/persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
 //There was an error of leaking resources because of the bcrypt import in ORM.js (for the compare, genSalt and hash functions)
@@ -76,3 +76,87 @@ Deno.test({
   sanitizeResources: false,
   sanitizeOps: false
 })
+
+//-------------- test registerDb function --------------------------------
+Deno.test({
+  name: 'registerDB - Correct values',
+  async fn () { 
+    const obj = {
+        userName: 'existingUName',
+        password: 'p455w0rd',
+        email: 'existingUName@gmail.com'
+    }
+    assertEquals(await registerDb(obj), true, 'Register not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test userDoesntExistDb function --------------------------------
+Deno.test({
+  name: 'userDoesntExistDb - Correct values',
+  async fn () { 
+    const username = 'NoUName'  //When the username doesnt exists it is supposed to return true
+    assertEquals(await userDoesntExistDb(username), true, 'userDoesntExistDb not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'userDoesntExistDb - With existing username',
+  async fn () { 
+    const username = 'existingUName'  //When the username doesnt exists it is supposed to return true
+    assertEquals(await userDoesntExistDb(username), false, 'userDoesntExistDb not returning false') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test isValidUUIDDb function --------------------------------
+Deno.test({
+  name: 'isValidUUIDDb - Correct values',
+  async fn () { 
+    const UUID = 'noUUID'  //When the UUID doesnt exists it is supposed to return true, because this uuid is unique
+    assertEquals(await isValidUUIDDb(UUID), true, 'isValidUUIDDb not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'isValidUUIDDb - existingUUID',
+  async fn () { 
+    const UUID = 'existingUUID'  //When the UUID exists it is supposed to return false
+    assertEquals(await isValidUUIDDb(UUID), false, 'isValidUUIDDb not returning false') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test addParcelDb function --------------------------------
+Deno.test({
+  name: 'addParcelDb - correct values',
+  async fn () { 
+    const obj = {
+        trackingNumber: 'trackingNumber',
+        senderAddress: 'address',
+        destinationAddress: 'address',
+        kgs: '20',
+        parcelName: 'parcelName',
+        dateAndTimeAdded: '22-11-2000 10:00:00',
+        senderUsername: 'senderUsername',
+        parcelStatus: 'parcelStatus'
+    }
+    assertEquals(await addParcelDb(obj), true, 'addParcel not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+

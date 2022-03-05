@@ -45,7 +45,7 @@ export async function registerDb(data) {
 
 export async function userDoesntExistDb(username) {
 	try {
-		const records = await db.query(`SELECT userType, password FROM users WHERE userName = '${username}';`)
+		const records = await db.query(`SELECT userType FROM users WHERE userName = '${username}';`)
 		if (!records[0]) return true	//If there isnt any users with that name
 		return false
 	} catch (err) {
