@@ -1,3 +1,8 @@
+/**
+ * DB Module.
+ * @module db
+ */
+
 import { compare, genSalt, hash } from 'https://deno.land/x/bcrypt@v0.2.4/mod.ts'
 import { db } from './db.js'
 
@@ -6,9 +11,10 @@ const salt = await genSalt(saltRounds)
 
 /**
  * Checks user credentials.
- * @param {string} username
- * @param {string} password
- * @returns {string} the username for the valid account
+ * @param data Information about the user.
+ * @param data.userName The username of the user.
+ * @param data.password The password of the user.
+ * @returns {string} the userType of the user.
  */
 export async function loginDb(data) {
 	try {		
@@ -28,10 +34,12 @@ export async function loginDb(data) {
 }
 	
 /**
- * Adds x and y.
- * @param {number} x
- * @param {number} y
- * @returns {number} Sum of x and y
+ * Registers a user.
+ * @param data Information about the user.
+ * @param data.userName The username of the user.
+ * @param data.password The password of the user.
+ * @param data.email The email of the user.
+ * @returns {boolean} true if the user is successfully created.
  */
 export async function registerDb(data) {
 	try {
@@ -43,6 +51,11 @@ export async function registerDb(data) {
     }
 }
 
+/**
+ * Checks if user doesnt exists.
+ * @param {string} username The username to see if it exists.
+ * @returns {boolean} true if the user doesnt exists and false if it does.
+ */
 export async function userDoesntExistDb(username) {
 	try {
 		const records = await db.query(`SELECT userType FROM users WHERE userName = '${username}';`)
@@ -53,6 +66,11 @@ export async function userDoesntExistDb(username) {
     }
 }
 
+/**
+ * Checks if UUID is valid.
+ * @param {string} UUID The UUID.
+ * @returns {boolean} true if UUID doesnt exists and false if it does.
+ */
 export async function isValidUUIDDb(UUID) {
 	try {
 		const records = await db.query(`SELECT trackingNumber FROM parcels WHERE trackingNumber = '${UUID}';`)
@@ -63,6 +81,19 @@ export async function isValidUUIDDb(UUID) {
     }
 }
 
+/**
+ * Adds a parcel.
+ * @param data Information about the parcel.
+ * @param data.trackingNumber The tracking number of the parcel.
+ * @param data.senderAddress The sender Address of the parcel.
+ * @param data.destinationAddress The destination Address of the parcel.
+ * @param data.kgs The kilograms of the parcel.
+ * @param data.parcelName The name of the parcel.
+ * @param data.dateAndTimeAdded The date and time that the parcel was added.
+ * @param data.senderUsername The username of the person sending the parcel.
+ * @param data.parcelStatus The status of the parcel.
+ * @returns {boolean} true if the parcel is successfully created.
+ */
 export async function addParcelDb(data) {
 	try {
 		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)

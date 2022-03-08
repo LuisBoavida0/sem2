@@ -1,4 +1,4 @@
-import { assertEquals } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
+import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
 import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
@@ -93,6 +93,22 @@ Deno.test({
   sanitizeOps: false
 })
 
+Deno.test({
+  name: 'registerDB - Empty data (throw error)',
+  async fn () { 
+    try {
+      await registerDb()
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Cannot read properties of undefined (reading 'password')", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+
 //-------------- test userDoesntExistDb function --------------------------------
 Deno.test({
   name: 'userDoesntExistDb - Correct values',
@@ -110,6 +126,21 @@ Deno.test({
   async fn () { 
     const username = 'existingUName'  //When the username doesnt exists it is supposed to return true
     assertEquals(await userDoesntExistDb(username), false, 'userDoesntExistDb not returning false') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'userDoesntExistDb - throw error test',
+  async fn () { 
+    try {
+      await userDoesntExistDb('throwError')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, 'Error Thrown', 'Message Error incorrect') 
+    }
   },
   // following two options deactivate open resource checking
   sanitizeResources: false,
@@ -139,6 +170,21 @@ Deno.test({
   sanitizeOps: false
 })
 
+Deno.test({
+  name: 'isValidUUIDDb - throw error test',
+  async fn () { 
+    try {
+      await isValidUUIDDb('throwError')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, 'Error Thrown', 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
 //-------------- test addParcelDb function --------------------------------
 Deno.test({
   name: 'addParcelDb - correct values',
@@ -154,6 +200,22 @@ Deno.test({
         parcelStatus: 'parcelStatus'
     }
     assertEquals(await addParcelDb(obj), true, 'addParcel not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+
+Deno.test({
+  name: 'addParcelDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await addParcelDb()
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Cannot read properties of undefined (reading 'trackingNumber')", 'Message Error incorrect') 
+    }
   },
   // following two options deactivate open resource checking
   sanitizeResources: false,

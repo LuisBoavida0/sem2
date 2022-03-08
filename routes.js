@@ -69,7 +69,7 @@ router.post('/sendParcel', async context => {
 		if (context.cookies.get('userType') !== 'user') context.response.redirect('/login') //Checks if it is an user
 
 		//Transforms the form data into an object (throws an error if form is not formatted according to the schema)
-		let obj = await formDataProcessing(await context.request.body({ type: 'form' }), sendParcelSchema)
+		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), sendParcelSchema)
 		await sendParcel(obj, context.cookies.get('userName'))	//Sends the Parcel
 
 		context.response.redirect('/sendParcel')

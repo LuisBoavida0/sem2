@@ -12,12 +12,16 @@ const login = (queryStr) => {
 const userDoesntExist = (queryStr) => {
     if (queryStr.includes('existingUName'))
         return [ { userType: 'user' } ]
+    else if (queryStr.includes('throwError'))   //Throw an error
+        throw new Error('Error Thrown')
     return {}
 }
 
 const isValidUUIDDb = (queryStr) => {
     if (queryStr.includes('existingUUID'))
         return [ { trackingNumber: 'existingUUID' } ]
+    else if (queryStr.includes('throwError'))   //Throw an error
+        throw new Error('Error Thrown')
     return {}
 }
 
@@ -33,6 +37,4 @@ export const query = async (queryStr) => {
     else if (queryStr.includes('INSERT INTO parcels'))
         return true
 }
-
-
 export * as db from '../../persistenceLayer/db.js'

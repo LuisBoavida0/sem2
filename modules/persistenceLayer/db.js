@@ -1,3 +1,8 @@
+/**
+ * DB Module.
+ * @module db
+ */
+
 import { Client } from 'https://deno.land/x/mysql/mod.ts'
 
 const home = Deno.env.get('HOME')
@@ -22,5 +27,6 @@ const conn = connectionData[home]
 console.log(conn)
 
 const db = await new Client().connect(conn)
+
 
 export { db }

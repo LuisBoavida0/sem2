@@ -35,3 +35,12 @@ If you get stuck your first step should be to see if this is a problem that othe
 deno test --allow-all --unstable --import-map './test.json' --coverage=ut/lcov
 deno coverage ut/lcov --lcov > ut/cov_profile.lcov
 genhtml -o ut/coverage ut/cov_profile.lcov
+
+## lint
+deno lint --unstable --config deno.json
+
+## test the project
+deno test --allow-all --unstable --import-map './test.json'
+
+## beautifier
+deno fmt routes2.js

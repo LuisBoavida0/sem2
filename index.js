@@ -18,7 +18,7 @@ const app = new Application()
 const handle = new Handlebars({ defaultLayout: '' })
 
 // error handler
-app.use(async (context, next) => {
+app.use(async (_context, next) => {
   try {
     await next()
   } catch (err) {

@@ -8,6 +8,7 @@ export const userDoesntExistDb = async (userName) => {
 }
 
 export const loginDb = async (obj) => { 
+    if (obj == 'throwError') throw new Error('Error thrown')
     return 'user'
 }
 

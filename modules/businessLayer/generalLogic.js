@@ -41,10 +41,7 @@ export const getDateIsosFormat = () => {    //Converts the Data into the Schema 
 }
 
 export const getUUID = async () => {    //Gets a valid UUID
-    let UUID
-    while (true) {  //While it isnt valid
-        UUID = crypto.randomUUID() //Gets a random UUID
-        if (await isValidUUIDDb(UUID)) break    //If it doesnt already exists in the database, exit while
-    }
+    const UUID = crypto.randomUUID() //Gets a random UUID
+    if (!await isValidUUIDDb(UUID)) return getUUID()
     return UUID
 }
