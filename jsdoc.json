@@ -1,10 +1,27 @@
 [
   {
-    "kind": "function",
-    "name": "login",
+    "kind": "moduleDoc",
+    "name": "",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 17,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 1,
+      "col": 0
+    },
+    "jsDoc": {
+      "doc": "DB Module.",
+      "tags": [
+        {
+          "kind": "module"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "function",
+    "name": "loginDb",
+    "location": {
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 19,
       "col": 0
     },
     "jsDoc": {
@@ -12,18 +29,23 @@
       "tags": [
         {
           "kind": "param",
-          "name": "username",
-          "type": "string"
+          "name": "data",
+          "doc": "Information about the user."
         },
         {
           "kind": "param",
-          "name": "password",
-          "type": "string"
+          "name": "data.userName",
+          "doc": "The username of the user."
+        },
+        {
+          "kind": "param",
+          "name": "data.password",
+          "doc": "The password of the user."
         },
         {
           "kind": "return",
           "type": "string",
-          "doc": "the username for the valid account"
+          "doc": "the userType of the user."
         }
       ]
     },
@@ -44,11 +66,197 @@
   },
   {
     "kind": "function",
-    "name": "register",
+    "name": "registerDb",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 29,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 44,
       "col": 0
+    },
+    "jsDoc": {
+      "doc": "Registers a user.",
+      "tags": [
+        {
+          "kind": "param",
+          "name": "data",
+          "doc": "Information about the user."
+        },
+        {
+          "kind": "param",
+          "name": "data.userName",
+          "doc": "The username of the user."
+        },
+        {
+          "kind": "param",
+          "name": "data.password",
+          "doc": "The password of the user."
+        },
+        {
+          "kind": "param",
+          "name": "data.email",
+          "doc": "The email of the user."
+        },
+        {
+          "kind": "return",
+          "type": "boolean",
+          "doc": "true if the user is successfully created."
+        }
+      ]
+    },
+    "functionDef": {
+      "params": [
+        {
+          "kind": "identifier",
+          "name": "data",
+          "optional": false,
+          "tsType": null
+        }
+      ],
+      "returnType": null,
+      "isAsync": true,
+      "isGenerator": false,
+      "typeParams": []
+    }
+  },
+  {
+    "kind": "function",
+    "name": "userDoesntExistDb",
+    "location": {
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 59,
+      "col": 0
+    },
+    "jsDoc": {
+      "doc": "Checks if user doesnt exists.",
+      "tags": [
+        {
+          "kind": "param",
+          "name": "username",
+          "type": "string",
+          "doc": "The username to see if it exists."
+        },
+        {
+          "kind": "return",
+          "type": "boolean",
+          "doc": "true if the user doesnt exists and false if it does."
+        }
+      ]
+    },
+    "functionDef": {
+      "params": [
+        {
+          "kind": "identifier",
+          "name": "username",
+          "optional": false,
+          "tsType": null
+        }
+      ],
+      "returnType": null,
+      "isAsync": true,
+      "isGenerator": false,
+      "typeParams": []
+    }
+  },
+  {
+    "kind": "function",
+    "name": "isValidUUIDDb",
+    "location": {
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 74,
+      "col": 0
+    },
+    "jsDoc": {
+      "doc": "Checks if UUID is valid.",
+      "tags": [
+        {
+          "kind": "param",
+          "name": "UUID",
+          "type": "string",
+          "doc": "The UUID."
+        },
+        {
+          "kind": "return",
+          "type": "boolean",
+          "doc": "true if UUID doesnt exists and false if it does."
+        }
+      ]
+    },
+    "functionDef": {
+      "params": [
+        {
+          "kind": "identifier",
+          "name": "UUID",
+          "optional": false,
+          "tsType": null
+        }
+      ],
+      "returnType": null,
+      "isAsync": true,
+      "isGenerator": false,
+      "typeParams": []
+    }
+  },
+  {
+    "kind": "function",
+    "name": "addParcelDb",
+    "location": {
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 97,
+      "col": 0
+    },
+    "jsDoc": {
+      "doc": "Adds a parcel.",
+      "tags": [
+        {
+          "kind": "param",
+          "name": "data",
+          "doc": "Information about the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.trackingNumber",
+          "doc": "The tracking number of the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.senderAddress",
+          "doc": "The sender Address of the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.destinationAddress",
+          "doc": "The destination Address of the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.kgs",
+          "doc": "The kilograms of the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.parcelName",
+          "doc": "The name of the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.dateAndTimeAdded",
+          "doc": "The date and time that the parcel was added."
+        },
+        {
+          "kind": "param",
+          "name": "data.senderUsername",
+          "doc": "The username of the person sending the parcel."
+        },
+        {
+          "kind": "param",
+          "name": "data.parcelStatus",
+          "doc": "The status of the parcel."
+        },
+        {
+          "kind": "return",
+          "type": "boolean",
+          "doc": "true if the parcel is successfully created."
+        }
+      ]
     },
     "functionDef": {
       "params": [
@@ -69,9 +277,17 @@
     "kind": "import",
     "name": "compare",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 4,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 6,
       "col": 0
+    },
+    "jsDoc": {
+      "doc": "DB Module.",
+      "tags": [
+        {
+          "kind": "module"
+        }
+      ]
     },
     "importDef": {
       "src": "https://deno.land/x/bcrypt@v0.2.4/mod.ts",
@@ -82,9 +298,17 @@
     "kind": "import",
     "name": "genSalt",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 4,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 6,
       "col": 0
+    },
+    "jsDoc": {
+      "doc": "DB Module.",
+      "tags": [
+        {
+          "kind": "module"
+        }
+      ]
     },
     "importDef": {
       "src": "https://deno.land/x/bcrypt@v0.2.4/mod.ts",
@@ -95,9 +319,17 @@
     "kind": "import",
     "name": "hash",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 4,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 6,
       "col": 0
+    },
+    "jsDoc": {
+      "doc": "DB Module.",
+      "tags": [
+        {
+          "kind": "module"
+        }
+      ]
     },
     "importDef": {
       "src": "https://deno.land/x/bcrypt@v0.2.4/mod.ts",
@@ -108,12 +340,12 @@
     "kind": "import",
     "name": "db",
     "location": {
-      "filename": "file:///home/codio/workspace/modules/accounts.js",
-      "line": 6,
+      "filename": "file:///home/codio/workspace/modules/persistenceLayer/ORM.js",
+      "line": 7,
       "col": 0
     },
     "importDef": {
-      "src": "file:///home/codio/workspace/modules/db.js",
+      "src": "file:///home/codio/workspace/modules/persistenceLayer/db.js",
       "imported": "db"
     }
   }

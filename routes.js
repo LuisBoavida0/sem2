@@ -1,7 +1,6 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-//
 import { register, login, sendParcel } from './modules/businessLayer/businessLayer.js'
 import { formDataProcessing, homePageRedirection } from './modules/businessLayer/generalLogic.js'
 import { registerSchema, loginSchema, sendParcelSchema } from './modules/businessLayer/schema.js'

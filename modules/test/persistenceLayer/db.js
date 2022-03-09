@@ -37,4 +37,5 @@ export const query = async (queryStr) => {
     else if (queryStr.includes('INSERT INTO parcels'))
         return true
 }
-export * as db from '../../persistenceLayer/db.js'
+
+export * as db from '../../persistenceLayer/db.js'  //A workaround to be able to call query like db.query

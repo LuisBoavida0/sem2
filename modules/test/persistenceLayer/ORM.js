@@ -1,5 +1,8 @@
+let callCount = 0   //variable to enable validUUIDDB return false once
 export async function isValidUUIDDb(data) {
-    return true
+    if (callCount)  return true //Only give true on the second call
+    callCount++
+    return false
 }
 
 export const userDoesntExistDb = async (userName) => { 

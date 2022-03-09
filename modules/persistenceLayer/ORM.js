@@ -1,6 +1,6 @@
 /**
- * DB Module.
- * @module db
+ * ORM Module.
+ * @module ORM
  */
 
 import { compare, genSalt, hash } from 'https://deno.land/x/bcrypt@v0.2.4/mod.ts'
@@ -11,10 +11,13 @@ const salt = await genSalt(saltRounds)
 
 /**
  * Checks user credentials.
+ * @async
+ * @function loginDb
  * @param data Information about the user.
  * @param data.userName The username of the user.
  * @param data.password The password of the user.
  * @returns {string} the userType of the user.
+ * @throws Throws error if Username not found or invalid password
  */
 export async function loginDb(data) {
 	try {		
@@ -35,6 +38,8 @@ export async function loginDb(data) {
 	
 /**
  * Registers a user.
+ * @async
+ * @function registerDb
  * @param data Information about the user.
  * @param data.userName The username of the user.
  * @param data.password The password of the user.
@@ -53,6 +58,8 @@ export async function registerDb(data) {
 
 /**
  * Checks if user doesnt exists.
+ * @async
+ * @function userDoesntExistDb
  * @param {string} username The username to see if it exists.
  * @returns {boolean} true if the user doesnt exists and false if it does.
  */
@@ -68,6 +75,8 @@ export async function userDoesntExistDb(username) {
 
 /**
  * Checks if UUID is valid.
+ * @async
+ * @function isValidUUIDDb
  * @param {string} UUID The UUID.
  * @returns {boolean} true if UUID doesnt exists and false if it does.
  */
@@ -83,6 +92,8 @@ export async function isValidUUIDDb(UUID) {
 
 /**
  * Adds a parcel.
+ * @async
+ * @function addParcelDb
  * @param data Information about the parcel.
  * @param data.trackingNumber The tracking number of the parcel.
  * @param data.senderAddress The sender Address of the parcel.

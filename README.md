@@ -33,7 +33,7 @@ If you get stuck your first step should be to see if this is a problem that othe
 
 ## Run the coverage
 deno test --allow-all --unstable --import-map './test.json' --coverage=ut/lcov
-deno coverage ut/lcov --lcov > ut/cov_profile.lcov
+deno coverage ut/lcov --lcov > ut/cov_profile.lcov --exclude=ajv.min.js --exclude=/modules/test/ --exclude=/ut/
 genhtml -o ut/coverage ut/cov_profile.lcov
 
 ## lint
@@ -44,3 +44,7 @@ deno test --allow-all --unstable --import-map './test.json'
 
 ## beautifier
 deno fmt routes2.js
+
+## jsDoc
+source ~/.nvm/nvm.sh
+jsdoc modules/ -r

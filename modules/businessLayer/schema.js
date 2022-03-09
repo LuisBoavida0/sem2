@@ -1,7 +1,15 @@
+/**
+ * schema Module.
+ * @module schema
+ */
+
 import Ajv from './ajv.min.js'
 
 const ajv = new Ajv({allErrors: true})
 
+/**
+ * Register Schema
+ */
 export const registerSchema = ajv.compile({
   title: 'Add Customer',
   description: 'Check if the customer data is correct to be added',
@@ -32,6 +40,9 @@ export const registerSchema = ajv.compile({
   required: [ 'userName', 'password', 'email' ]
 })
 
+/**
+ * Login Schema
+ */
 export const loginSchema = ajv.compile({
   title: 'Login',
   description: 'Check if the Login Data is correctly formatted',
@@ -51,9 +62,9 @@ export const loginSchema = ajv.compile({
   required: [ 'userName', 'password' ]
 })
 
-//https://stackoverflow.com/questions/11338405/regular-expression-that-would-contains-a-number-less-then-or-equal-to-20
-//https://stackoverflow.com/questions/31122901/regex-pattern-to-not-equal-0
-//https://stackoverflow.com/questions/469913/regular-expressions-is-there-an-and-operator
+/**
+ * Send Parcel Schema
+ */
 export const sendParcelSchema = ajv.compile({
   title: 'Send Parcel',
   description: 'Checks if info from Parcel is correctly formatted (Information from the form)',
@@ -74,6 +85,9 @@ export const sendParcelSchema = ajv.compile({
       minLength: 6,
       maxLength: 500
     },
+    //https://stackoverflow.com/questions/11338405/regular-expression-that-would-contains-a-number-less-then-or-equal-to-20
+    //https://stackoverflow.com/questions/31122901/regex-pattern-to-not-equal-0
+    //https://stackoverflow.com/questions/469913/regular-expressions-is-there-an-and-operator
     kgs: {
       type: 'string',
       pattern: '(?=^(([01]?[0-9])|(20))$)(?=[^0]+)'

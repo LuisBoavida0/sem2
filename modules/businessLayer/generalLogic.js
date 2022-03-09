@@ -1,6 +1,19 @@
+/**
+ * generalLogic Module.
+ * @module generalLogic
+ */
+
 import { isValidUUIDDb } from '../persistenceLayer/ORM.js'
 
-//function to tranform the data and check if the data is correct through the use of a schema
+/**
+ * Function to tranform the data (form data) into an usable object and check if the data is correct through the use of a schema
+ * @async
+ * @function formDataProcessing
+ * @param {Object} obj form object with all the data to be converted to a usable object
+ * @param {avj} schema constant that contains the schema
+ * @returns {Object} returns the transformed object.
+ * @throws Throws error if Obj does not meet the schema criteria
+ */
 export const formDataProcessing = async (obj,  schema) => {
     obj = Object.fromEntries(await obj.value)
 
@@ -13,7 +26,14 @@ export const formDataProcessing = async (obj,  schema) => {
     return obj
 }
 
-export const homePageRedirection = (userType) => {  //Redirects the user to the according homepage
+/**
+ * Redirects the user to the according homepage
+ * @function homePageRedirection
+ * @param {string} userType contains the type of user
+ * @returns {string} returns the correct hbs page.
+ * @throws Throws error if userType is not correct
+ */
+export const homePageRedirection = (userType) => {
     switch(userType) {
         case 'user':
             return 'userHomepage'
@@ -26,7 +46,12 @@ export const homePageRedirection = (userType) => {  //Redirects the user to the 
     }
 }
 
-export const getDateIsosFormat = () => {    //Converts the Data into the Schema format (With timezones)
+/**
+ * Gets the current data into the Schema format (With timezones)
+ * @function getDateIsosFormat
+ * @returns {string} date in the schema format 
+ */
+export const getDateIsosFormat = () => {    
     let IsoDate =  new Date()
     let LocalStringDate = new Date()
 
@@ -40,8 +65,14 @@ export const getDateIsosFormat = () => {    //Converts the Data into the Schema 
     return IsoDate.slice(0, 19).replace('T', ' ')     
 }
 
-export const getUUID = async () => {    //Gets a valid UUID
+/**
+ * Gets a valid UUID
+ * @async
+ * @function getUUID
+ * @returns {string} UUID
+ */
+export const getUUID = async () => {
     const UUID = crypto.randomUUID() //Gets a random UUID
-    if (!await isValidUUIDDb(UUID)) return getUUID()
+    if (!await isValidUUIDDb(UUID)) return getUUID()    //If UUID already exists, call again the function to get a new UUID
     return UUID
 }
