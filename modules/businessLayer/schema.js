@@ -75,6 +75,18 @@ export const sendParcelSchema = ajv.compile({
       minLength: 3,
       maxLength: 120
     },
+    senderHouseNumber: {
+      type: 'string',
+      minLength: 1,
+      maxLength: 3,
+      pattern: '^[0-9]*$'
+    },
+    destinationHouseNumber: {
+      type: 'string',
+      minLength: 1,
+      maxLength: 3,
+      pattern: '^[0-9]*$'
+    },
     senderAddress: {
       type: 'string',
       minLength: 6,
@@ -93,5 +105,5 @@ export const sendParcelSchema = ajv.compile({
       pattern: '(?=^(([01]?[0-9])|(20))$)(?=[^0]+)'
     }
   },
-  required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs' ]
+  required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs', 'senderHouseNumber', 'destinationHouseNumber' ]
 })
