@@ -32,7 +32,7 @@ If you get stuck your first step should be to see if this is a problem that othe
 [Frequently-Asked Questions](https://docs.google.com/document/d/1b_lTA_ay0Yi46annuNnZ6fK1nIe_ddszmPua1Wwvfa0/edit?usp=sharing)
 
 ## Run the coverage
-deno test --allow-all --unstable --import-map './test.json' --coverage=ut/lcov
+deno test --allow-all --unstable --import-map "./test.json" --coverage=ut/lcov ut/
 deno coverage ut/lcov --lcov > ut/cov_profile.lcov --exclude=ajv.min.js --exclude=/modules/test/ --exclude=/ut/
 genhtml -o ut/coverage ut/cov_profile.lcov
 

@@ -58,7 +58,7 @@ export const login = async (obj) => {
  * @param obj.parcelStatus The status of the parcel.
  * @returns {boolean} true if parcel was added.
  */
-export async function sendParcel(obj, username) {
+export const sendParcel = async (obj, username) => {
     try {
         //Adds Missing values
         obj.trackingNumber = await getUUID()  //Gets a valid UUID

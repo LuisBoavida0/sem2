@@ -9,11 +9,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE parcels (
-  trackingNumber VARCHAR(12) PRIMARY KEY,
+  trackingNumber VARCHAR(36) PRIMARY KEY,
   senderAddress VARCHAR(500) NOT NULL, 
   destinationAddress VARCHAR(500) NOT NULL,
   kgs tinyint NOT NULL,
-  parcelsName VARCHAR(120) NOT NULL,
+  parcelName VARCHAR(120) NOT NULL,
   dateAndTimeAdded DATETIME NOT NULL,
   senderUsername VARCHAR(25) NOT NULL,
   assignedCourier VARCHAR(25),
