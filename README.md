@@ -48,3 +48,6 @@ deno fmt routes2.js
 ## jsDoc
 source ~/.nvm/nvm.sh
 jsdoc modules/ -r
+
+## Push git
+git push origin feature-1
