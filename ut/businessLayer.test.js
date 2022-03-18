@@ -19,7 +19,17 @@ Deno.test('register Logic - with an existing user name', async () => {
     }
 })
 
-//-------------- test Login function (Since it simply calls another function i only need this verification) --------------------------------
+Deno.test('register Logic - empty obj', async () => {
+    try {
+        const obj = {}
+        await register(obj)
+        fail('the function wasnt triggered with an error of existing user name')
+    } catch (err) {
+        assertEquals(err.message, 'Failed assertion: the function wasnt triggered with an error of existing user name', 'The message Sent is incorrect') 
+    }
+})
+
+//-------------- test Login function --------------------------------
 Deno.test('Login Logic - Check if it is running correctly', async () => {
     const obj = {}
     assertEquals(await login(obj), 'user', 'Login isnt working correctly') 
@@ -35,7 +45,7 @@ Deno.test('Login Logic - Error thrown', async () => {
     }
 })
 
-//-------------- test sendParcel function (Since it simply calls another functions i only need this verification)  --------------------------------
+//-------------- test sendParcel function  --------------------------------
 Deno.test('sendParcel - Check with correct values', async () => {
     const obj = {}
     assertEquals(await sendParcel(obj, 'username'), true, 'Send parcel isnt working correctly') 

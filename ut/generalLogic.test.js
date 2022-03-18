@@ -47,7 +47,7 @@ Deno.test('getDateIsosFormat - check with string', () => {
 import Ajv from '../modules/businessLayer/ajv.min.js'
 const ajv = new Ajv({allErrors: true})
 
-const testSchema = ajv.compile({
+const testSchema = ajv.compile({    //Schema to see if formdataProcessing is working
   title: 'test',
   description: 'check if it is correct',
   type: 'object',
@@ -72,7 +72,7 @@ Deno.test('formDataProcessing - check correctly', async () => {
     })
     
     const result = await formDataProcessing({value: formData}, testSchema)   //Result of the form data tranformed into an object
-    assertEquals(JSON.stringify(obj), JSON.stringify(result))   //Checks if the result is the same object as the normal one
+    assertEquals(JSON.stringify(obj), JSON.stringify(result), 'formDataProcessing not transforming the object correctly')   //Checks if the result is the same object as the normal one
 })
 
 Deno.test('formDataProcessing - without name (throw error)', async () => {
@@ -90,5 +90,15 @@ Deno.test('formDataProcessing - without name (throw error)', async () => {
         fail('Didnt threw an error')  
     } catch (err) {
         assertEquals(err, " should have required property 'name'", 'Not giving the correct error message')
+    }
+})
+
+
+Deno.test('formDataProcessing - Empty obj', async () => {
+    try {
+        const result = await formDataProcessing({}, testSchema)   //Result of the form data tranformed into an object  
+        fail('Didnt threw an error')  
+    } catch (err) {
+        assertEquals(err.message, 'undefined is not iterable', 'Not giving the correct error message')
     }
 })

@@ -82,9 +82,9 @@ Deno.test({
   name: 'registerDB - Correct values',
   async fn () { 
     const obj = {
-        userName: 'existingUName',
+        userName: 'newUName',
         password: 'p455w0rd',
-        email: 'existingUName@gmail.com'
+        email: 'newUName@gmail.com'
     }
     assertEquals(await registerDb(obj), true, 'Register not returning true') 
   },
@@ -108,6 +108,25 @@ Deno.test({
   sanitizeOps: false
 })
 
+Deno.test({
+  name: 'registerDB - db Error (throw error)',
+  async fn () { 
+    try {
+      const obj = {
+        userName: 'throwError',
+        password: 'p455w0rd',
+        email: 'throwError@gmail.com'
+      }
+      await registerDb(obj)
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
 
 //-------------- test userDoesntExistDb function --------------------------------
 Deno.test({
@@ -222,3 +241,27 @@ Deno.test({
   sanitizeOps: false
 })
 
+Deno.test({
+  name: 'addParcelDb - db Error (throw error)',
+  async fn () { 
+    try {
+      const obj = {
+          trackingNumber: 'throwError',
+          senderAddress: 'address',
+          destinationAddress: 'address',
+          kgs: '20',
+          parcelName: 'parcelName',
+          dateAndTimeAdded: '22-11-2000 10:00:00',
+          senderUsername: 'senderUsername',
+          parcelStatus: 'parcelStatus'
+      }
+      await addParcelDb(obj)
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})

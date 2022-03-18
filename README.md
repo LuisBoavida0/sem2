@@ -51,3 +51,6 @@ jsdoc modules/ -r
 
 ## Push git
 git push origin feature-1
+
+##Run UATs
+sh/runAllUATs.sh

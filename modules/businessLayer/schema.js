@@ -8,7 +8,12 @@ import Ajv from './ajv.min.js'
 const ajv = new Ajv({allErrors: true})
 
 /**
- * Register Schema
+ * Register Schema, a schema that verifies if an object has this fields:
+ * @function registerSchema
+ * @param {string} userName the user name
+ * @param {string} password the password
+ * @param {string} email the email
+ * @param {string} userType the type of user (Not required)
  */
 export const registerSchema = ajv.compile({
   title: 'Add Customer',
@@ -41,7 +46,10 @@ export const registerSchema = ajv.compile({
 })
 
 /**
- * Login Schema
+ * Login Schema, a schema that verifies if an object has this fields:
+ * @function loginSchema
+ * @param {string} userName the username
+ * @param {string} password the password
  */
 export const loginSchema = ajv.compile({
   title: 'Login',
@@ -63,7 +71,14 @@ export const loginSchema = ajv.compile({
 })
 
 /**
- * Send Parcel Schema
+ * Send Parcel Schema, a schema that verifies if an object has this fields:
+ * @function loginSchema
+ * @param {string} parcelName the parcel name
+ * @param {string} senderHouseNumber a string that is a number (the house number of the sender)
+ * @param {string} destinationHouseNumber a string that is a number (the destination house number)
+ * @param {string} senderAddress the address of the sender
+ * @param {string} destinationAddress the destination address
+ * @param {string} kgs the weight of the package, a string that is a number between 1-20
  */
 export const sendParcelSchema = ajv.compile({
   title: 'Send Parcel',

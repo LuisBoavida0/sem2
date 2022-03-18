@@ -14,7 +14,7 @@ console.log(`HOME: ${home}`)
 /** Contains all possible mysql connections
  * @constant connectionData
  */
-const connectionData = {
+const connectionData = {  //Connection data 
   '/home/codio':  {
     hostname: '127.0.0.1',
     username: 'websiteuser',
