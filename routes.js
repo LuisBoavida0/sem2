@@ -39,7 +39,7 @@ router.post('/register', async context => {
 		//Transforms the form data into an object (throws an error if form is not formatted according to the schema)
 		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), registerSchema)
 		await register(obj)	//Tries to register
-		context.response.redirect('/login')	//Goes to login
+		context.response.redirect('/login?succ=Registered with success!')	//Goes to login
 	} catch (err) {
 		console.log(err)	//Log the error
 		context.response.redirect(`/register?err=${err}`) //Send error to Page
