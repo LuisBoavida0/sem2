@@ -22,10 +22,10 @@ const connectionData = {  //Connection data
     db: 'website'
   },
   '/app': {
-		hostname: 'HOSTNAME',
-    username: 'USERNAME',
-    password: 'PASSWORD',
-    db: 'DATABASE'
+		hostname: 'sql4.freemysqlhosting.net',
+    username: 'sql4480028',
+    password: 'tm4HYSXBTC',
+    db: 'sql4480028'
   }
 }
 

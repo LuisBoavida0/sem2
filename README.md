@@ -57,3 +57,13 @@ sh/runAllUATs.sh
 
 ## Run the project
 deno run --allow-all --unstable index.js
+
+## Connect to online database
+mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
+
+https://www.freemysqlhosting.net/account/
+
+## heroku settings
+heroku login -i
+heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpack-deno.git
+https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
