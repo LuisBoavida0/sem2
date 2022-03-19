@@ -1,0 +1,70 @@
+@import 'mobile/sendParcel-mobile.css';
+
+main {
+    margin: 30px auto;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 20px);
+    max-width: 770px;
+}
+
+form {
+    width: 100%;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
+    background-color: var(--whiteBackroud);
+}
+
+input[type='submit'] {
+    margin: auto;
+    padding: 10px 40px;
+}
+
+section > section:first-of-type {
+    margin-right: 18px;
+}
+
+
+section > section > section:first-of-type {
+    margin-right: 0px;
+}
+
+section > section {
+    display: block;
+    margin-bottom: 0px;
+}
+
+section, section>section>section {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+section > section > section > input:not([type="submit"]) {
+    margin-bottom: 0;
+    width: calc(100% - 111px);
+}
+
+section > button {
+    width: 110px;
+    margin-left: 5px;
+    white-space: nowrap;
+    padding: 0px 10px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+h2 {
+    margin: 20px 0px;
+    text-align: center;
+}
+
+form > label {
+    margin-top: 20px;
+    display: block;
+}

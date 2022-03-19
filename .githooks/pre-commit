@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+deno lint --unstable --config deno.json
+deno test --allow-all --unstable --import-map './test.json' ut/

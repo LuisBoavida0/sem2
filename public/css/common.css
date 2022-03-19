@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+@import url('mobileCommon.css');
+
+/* NON SPECIFIC CSS */
+:root {    /*Colors for website*/
+    --main: #370bba;
+    --secondary: #f0b829;
+    --background: #fcfcf2;
+    --whiteBackroud: #fdfef9;
+    --font: #262626;
+    --error: red;
+    --success: green;
+}
+
+*:focus:hover:active {    /*Add general css to when something is being clicked (and is clickable)*/
+    opacity: 0.5;
+}
+
+html, body {    /*Change background color and removes margin*/
+    background-color: var(--background);
+    margin: 0;
+}
+
+body
+{    /*Add style to all text*/
+    color: var(--font);
+    font-family: 'Noto Sans Display', sans-serif;
+}
+
+input, textarea, button {
+    padding: 5px;
+    border-radius: 5px;
+    color: var(--font) !important;
+    font-family: 'Noto Sans Display', sans-serif;
+    display: block;
+}
+
+input[type="range"] {
+    padding: 0;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 10px 0;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p, label {
+    font-size: 16px;
+    margin: 0;
+}
+
+input:not([type="submit"]), textarea {
+    margin-bottom: 10px;
+    width: -webkit-fill-available;
+}
+
+input[type='submit'], button {
+    background-color: var(--secondary);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+figure {
+    margin: 0;
+}
+
+/*error message*/
+main > p:first-child {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+}
+
+/*Success Message*/
+main > p:first-child.success {
+    background-color: green;
+}

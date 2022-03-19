@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+<head>
+    {{> head}}
+</head>
+
+<body>
+    {{#unless Login}}
+    {{#unless Register}}
+        {{> header}}
+    {{/unless}}
+    {{/unless}}
+    <main>
+        {{{body}}}
+    </main>
+</body>

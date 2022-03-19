@@ -1,15 +1,33 @@
+DROP TABLE IF EXISTS parcels;
+DROP TABLE IF EXISTS users;
 
--- make sure the websiteuser account is set up and has the correct privileges
-CREATE USER IF NOT EXISTS websiteuser IDENTIFIED BY 'websitepassword';
-GRANT INSERT, SELECT, UPDATE, DELETE ON website.* TO websiteuser;
-
-DROP TABLE IF EXISTS accounts;
-
-CREATE TABLE IF NOT EXISTS accounts (
-  id MEDIUMINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  user VARCHAR(25) NOT NULL,
-  pass VARCHAR(70) NOT NULL
+CREATE TABLE users (
+  userName VARCHAR(25) PRIMARY KEY,
+  password VARCHAR(70) NOT NULL,
+  email NVARCHAR(255) NOT NULL,
+  userType VARCHAR(10) DEFAULT 'user'
 );
 
-INSERT INTO accounts(user, pass)
-	VALUES("doej", "$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO");
+CREATE TABLE parcels (
+  trackingNumber VARCHAR(36) PRIMARY KEY,
+  senderAddress VARCHAR(500) NOT NULL, 
+  destinationAddress VARCHAR(500) NOT NULL,
+  kgs tinyint NOT NULL,
+  parcelName VARCHAR(120) NOT NULL,
+  dateAndTimeAdded DATETIME NOT NULL,
+  senderUsername VARCHAR(25) NOT NULL,
+  assignedCourier VARCHAR(25),
+  personWhoReceivedParcel VARCHAR(100),
+  signature TEXT,
+  dateAndTimeReceived DATETIME,
+  locationReceived VARCHAR(25),
+  parcelStatus VARCHAR(14) DEFAULT 'not-dispatched',
+  FOREIGN KEY (senderUsername) REFERENCES users(userName),
+  FOREIGN KEY (assignedCourier) REFERENCES users(userName)
+);
+
+INSERT INTO users(userName, password, email, userType)
+	VALUES('customer1', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'customer1@gmail.com', 'user'),
+        ('customer2', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'customer2@gmail.com', 'user'),
+        ('courier1', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'courier1@gmail.com', 'courier'),
+        ('courier2', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'courier2@gmail.com', 'courier');

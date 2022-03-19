@@ -30,3 +30,40 @@ There is a secure page called **Foo Bar** which can be accessed at the `/foo` ro
 If you get stuck your first step should be to see if this is a problem that others have already encountered. There is a comprehensive FAQ document that gives solutions to the most common problems.
 
 [Frequently-Asked Questions](https://docs.google.com/document/d/1b_lTA_ay0Yi46annuNnZ6fK1nIe_ddszmPua1Wwvfa0/edit?usp=sharing)
+
+## Run the coverage
+deno test --allow-all --unstable --import-map "./test.json" --coverage=ut/lcov ut/
+deno coverage ut/lcov --lcov > ut/cov_profile.lcov --exclude=ajv.min.js --exclude=/modules/test/ --exclude=/ut/
+genhtml -o ut/coverage ut/cov_profile.lcov
+
+## lint
+deno lint --unstable --config deno.json
+
+## test the project
+deno test --allow-all --unstable --import-map './test.json'
+
+## beautifier
+deno fmt routes2.js
+
+## jsDoc
+source ~/.nvm/nvm.sh
+jsdoc modules/ -r
+
+## Push git
+git push origin feature-1
+
+##Run UATs
+sh/runAllUATs.sh
+
+## Run the project
+deno run --allow-all --unstable index.js
+
+## Connect to online database
+mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
+
+https://www.freemysqlhosting.net/account/
+
+## heroku settings
+heroku login -i
+heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpack-deno.git
+https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
