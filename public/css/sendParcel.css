@@ -1,12 +1,17 @@
+@import 'mobile/sendParcel-mobile.css';
+
 main {
-    margin-top: 60px;
+    margin: 30px auto;
     display: flex;
+    flex-flow: wrap;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 20px);
+    max-width: 770px;
 }
 
 form {
-    width: 670px;
+    width: 100%;
     border-radius: 5px;
     padding: 30px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
@@ -40,6 +45,7 @@ section, section>section>section {
 
 section > section > section > input:not([type="submit"]) {
     margin-bottom: 0;
+    width: calc(100% - 111px);
 }
 
 section > button {

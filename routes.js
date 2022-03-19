@@ -71,7 +71,7 @@ router.post('/sendParcel', async context => {
 		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), sendParcelSchema)
 		await sendParcel(obj, context.cookies.get('userName'))	//Sends the Parcel
 
-		context.response.redirect('/sendParcel')
+		context.response.redirect('/sendParcel?succ=Parcel added with success')
 	} catch (err) {
 		console.log(err)	//Log the error
 		context.response.redirect(`/sendParcel?err=${err}`) //Send error to Page

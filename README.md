@@ -54,3 +54,6 @@ git push origin feature-1
 
 ##Run UATs
 sh/runAllUATs.sh
+
+## Run the project
+deno run --allow-all --unstable index.js

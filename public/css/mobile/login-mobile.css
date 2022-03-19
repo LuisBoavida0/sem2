@@ -1,0 +1,25 @@
+/* MOBILE */
+@media only screen and (max-width: 600px) {   
+    html main {
+        margin-top: 20px;
+    }
+
+    html figure {
+        width: 100%;
+        margin: 0;
+    }
+
+    html figure > img {
+        height: 100px;
+    }
+
+    main > p:first-child {
+        order: 1;
+    }
+
+    html section {
+        width: 100%;
+        order: 1;
+    }
+}
+/* END MOBILE */

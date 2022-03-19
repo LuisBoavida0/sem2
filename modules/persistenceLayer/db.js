@@ -38,4 +38,3 @@ const conn = connectionData[home]
  * @example
  * db.query('SELECT * FROM TABLES;') */
 export const db = await new Client().connect(conn)
-console.log(conn)

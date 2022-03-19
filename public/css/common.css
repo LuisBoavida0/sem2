@@ -39,7 +39,17 @@ input[type="range"] {
     padding: 0;
 }
 
-p {
+h1 {
+    font-size: 32px;
+    margin: 10px 0;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p, label {
+    font-size: 16px;
     margin: 0;
 }
 
@@ -58,4 +68,19 @@ input[type='submit'], button {
 
 figure {
     margin: 0;
+}
+
+/*error message*/
+main > p:first-child {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+}
+
+/*Success Message*/
+main > p:first-child.success {
+    background-color: green;
 }

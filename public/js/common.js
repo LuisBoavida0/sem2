@@ -7,7 +7,7 @@ window.onload = () => {
     
     if (err) {  //If there is an error, shows it
         let main = document.querySelector('main')
-        main.innerHTML = main.innerHTML + `<p>${err}</p>`
+        main.innerHTML = `<p>${err}</p>` + main.innerHTML
     }
 
     let succ = url.searchParams.get('succ')   //Gets success message
@@ -15,7 +15,7 @@ window.onload = () => {
     
     if (succ) {  //If there is an success, shows it
         let main = document.querySelector('main')
-        main.innerHTML = main.innerHTML + `<p>${succ}</p>`
+        main.innerHTML = `<p class='success'>${succ}</p>` + main.innerHTML
     }
     history.pushState("", "", url.href)
 }
