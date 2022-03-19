@@ -1,45 +1,45 @@
-@import 'mobile/login-mobile.css';
+@import 'mobile/login-mobile.css'; /*Import login css for mobile*/
 
-main {
-    margin: auto;
-    margin-top: 100px;
-    display: flex;
-    flex-flow: wrap;
-    width: calc(100% - 30px);
-    max-width: 800px;
-    justify-content: center;
-    align-items: center;
+main {  /*Main css*/
+    margin: auto;   /*Align main to center*/
+    margin-top: 100px;  /*Add a margin on top*/
+    display: flex;  /*Display flex to put elements on the same line*/
+    flex-flow: wrap;    /*flex-flow wrap to allow 100% width elements to break page (error and success message)*/
+    width: calc(100% - 30px);   /*Set width: to 100% with a padding of 30px*/
+    max-width: 800px;   /*sets the maximum width to 800px*/
+    align-items: center;     /*align elements to center vertically*/
 }
 
-figure {
-    margin-right: 30px;
-    width: calc(50% - 30px);
+figure {    /*image css*/
+    margin-right: 30px; /*Adds a spacing from next element*/
+    width: calc(50% - 30px);    /*Sets width to half (removing the padding)*/
 }
 
-section {
-    width: 50%;
+section {   /*section with the login form and the register link*/
+    width: 50%; /*Set it to occupy half the screen*/
 }
 
-form, p {
-    border-radius: 5px;
-    padding: 30px;
+form, p {   /*Set the forms and paraghraphs (the pharagraph has the link to register) to have a box-shadow*/
+    border-radius: 5px; /*Round borders*/
+    padding: 30px; 
+    /*Adds a shadow to create a 3d efect*/
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
     background-color: var(--whiteBackroud);
 }
 
-input[type='submit'] {
-    margin: 20px auto 0px auto;
-    padding: 10px 24px;
+input[type='submit'] {  /*Styles submit button*/
+    margin: 20px auto 0px auto; /*add top margin and center horizontally*/
+    padding: 10px 24px; /*Add padding to button*/
 }
 
-h1, p {
+h1, p { /*Center pharagraph and title (label not affected)*/
     text-align: center;
 }
 
-p {
+p { /*Add margin to pharagraph*/
     margin: 10px 0;
 }
 
-img {
+img {   /*Sets img to occupy 100% of the figure*/
     width: 100%;
 }

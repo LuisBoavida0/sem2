@@ -1,70 +1,62 @@
-@import 'mobile/sendParcel-mobile.css';
+@import 'mobile/sendParcel-mobile.css'; /*Import send parcel css for mobile*/
 
-main {
-    margin: 30px auto;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 20px);
-    max-width: 770px;
+main {  /*Main element css*/
+    margin: 30px auto;  /*align center horizontally and sets a margin vertically*/
+    width: calc(100% - 20px);   /*sets width to 100% - 20 to create a margin*/
+    max-width: 770px;   /*Sets maximum width*/
 }
 
-form {
-    width: 100%;
-    border-radius: 5px;
-    padding: 30px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/
+form {  /*Css of form*/
+    border-radius: 5px; /*Round borders*/
+    padding: 30px;  /*Add padding*/
+    /*Add a shadow to create a 3d effect*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; /*https://getcssscan.com/css-box-shadow-examples*/ 
     background-color: var(--whiteBackroud);
 }
 
-input[type='submit'] {
-    margin: auto;
-    padding: 10px 40px;
+input[type='submit'] {  /*submit button css*/
+    margin: auto;   /*Align center*/
+    padding: 10px 24px; /*Add padding*/
 }
 
-section > section:first-of-type {
+section > section:first-of-type {   /*Add margin to first address section (for them to not be together)*/
     margin-right: 18px;
 }
 
-
+ /*Remove right margin (added by the above query) from section that has postal code text and button*/
 section > section > section:first-of-type {
     margin-right: 0px;
 }
 
-section > section {
-    display: block;
-    margin-bottom: 0px;
+section > section { /*css to change style of both address details*/
+    display: block; /*display block to ignore display flex from parent*/
+    margin-bottom: 0px; /*Remove bottom margin*/
 }
 
+/*Style for details and for all sections (they are usually overwritten when they dont need a style from this)*/ 
 section, section>section>section {
     display: flex;
     margin-bottom: 10px;
-    justify-content: space-between;
+    justify-content: space-between; /*Sets childs (details) apart from each other*/
 }
 
-section > section > section > input:not([type="submit"]) {
-    margin-bottom: 0;
-    width: calc(100% - 111px);
+section > section > section > input:not([type="submit"]) {  /*Style for postal code inputs*/
+    margin-bottom: 0;   /*remove bottom margin*/
+    width: 100%;    /*Occupy all width (it wont because there is a button, so it will adjust itself)*/
 }
 
-section > button {
-    width: 110px;
-    margin-left: 5px;
-    white-space: nowrap;
-    padding: 0px 10px;
+section > button {  /*"Get address" buttons css*/
+    margin-left: 5px;   /*Add distance between the button and the input text*/
+    white-space: nowrap;    /*Prevent text break*/
+    padding: 0px 12px;  /*add padding*/
 }
 
-textarea {
-    resize: vertical;
+h2 {    /*Style for subtitles*/
+    margin: 20px 0px;   /*Add vertical margin*/
+    text-align: center; /*align center the text*/
 }
 
-h2 {
-    margin: 20px 0px;
-    text-align: center;
-}
-
-form > label {
-    margin-top: 20px;
-    display: block;
+form > label {  /*Style labels*/
+    margin-top: 20px;   /*add top spacing*/
+    display: block; /*display block to put inputs on a new line*/
 }
