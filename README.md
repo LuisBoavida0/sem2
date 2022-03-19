@@ -50,7 +50,7 @@ source ~/.nvm/nvm.sh
 jsdoc modules/ -r
 
 ## Push git
-git push origin feature-1
+git push origin feature-2
 
 ##Run UATs
 sh/runAllUATs.sh

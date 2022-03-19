@@ -1,7 +1,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { register, login, sendParcel } from './modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels } from './modules/businessLayer/businessLayer.js'
 import { formDataProcessing, homePageRedirection } from './modules/businessLayer/generalLogic.js'
 import { registerSchema, loginSchema, sendParcelSchema } from './modules/businessLayer/schema.js'
 
@@ -14,9 +14,10 @@ const router = new Router()
 //-------------------------- GET -------------------------
 router.get('/', async context => {
 	if (!context.cookies.get('userType')) context.response.redirect('/login') //Checks if he is logged in
-	
+	const parcels = await getParcels(context.cookies.get('userType'), context.cookies.get('userName'))	//Get parcels
+
 	const homepage = homePageRedirection(context.cookies.get('userType'))	//Gets homepage according to type of user
-	context.response.body = await handle.renderView(homepage)
+	context.response.body = await handle.renderView(homepage, {'parcels': parcels})
 })
 
 router.get('/login', async context => {

@@ -22,3 +22,7 @@ export const registerDb = async (obj) => {
 export const addParcelDb = async (obj) => { 
     return true
 }
+
+export const getUserParcelsDb = async (obj) => { 
+    return true
+}

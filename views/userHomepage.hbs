@@ -1,0 +1,9 @@
+<h1>Your parcels</h1>
+{{#each parcels}}
+    <section>
+        <h2>{{this.parcelName}}</h2>
+        <p>{{this.destinationAddress}}</p>
+        <p>{{this.dateAndTimeAdded}}</p>
+        <p>{{this.parcelStatus}}</p>
+    </section>
+{{/each}}
