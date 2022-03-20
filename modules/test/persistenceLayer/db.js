@@ -39,6 +39,13 @@ const addParcel = (queryStr) => {
         return true
 }
 
+const getUserParcelsDb = (queryStr) => {    
+    if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
+    return {
+        parcelName: 'parcelName'
+    }
+}
+
 export const query = async (queryStr) => {
     if (queryStr.includes('SELECT userType, password FROM users WHERE userName = '))  //Login
         return login(queryStr)
@@ -50,6 +57,8 @@ export const query = async (queryStr) => {
         return isValidUUIDDb(queryStr)
     else if (queryStr.includes('INSERT INTO parcels'))
         return addParcel(queryStr)
+    else if (queryStr.includes('SELECT parcelName, destinationAddress, dateAndTimeAdded, parcelStatus FROM parcels WHERE senderUsername = '))
+        return getUserParcelsDb(queryStr)
 }
 
 export * as db from '../../persistenceLayer/db.js'  //A workaround to be able to call query like db.query
