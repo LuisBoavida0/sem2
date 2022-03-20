@@ -1,9 +1,14 @@
-<h1>Your parcels</h1>
-{{#each parcels}}
-    <section>
-        <h2>{{this.parcelName}}</h2>
-        <p>{{this.destinationAddress}}</p>
-        <p>{{this.dateAndTimeAdded}}</p>
-        <p>{{this.parcelStatus}}</p>
-    </section>
-{{/each}}
+
+{{#if parcels}}
+    <h1>Your parcels</h1>
+    {{#each parcels}}
+        <section>
+            <h2>{{this.parcelName}}</h2>
+            <p>{{this.destinationAddress}}</p>
+            <p>{{this.dateAndTimeAdded}}</p>
+            <p>{{this.parcelStatus}}</p>
+        </section>
+        {{/each}}
+{{else}}
+    <h1>You don't have any parcels yet, click Send Parcel to send one</h1>
+{{/if}}
