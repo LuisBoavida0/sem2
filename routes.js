@@ -17,7 +17,8 @@ router.get('/', async context => {
 	const parcels = await getParcels(context.cookies.get('userType'), context.cookies.get('userName'))	//Get parcels
 
 	const homepage = homePageRedirection(context.cookies.get('userType'))	//Gets homepage according to type of user
-	context.response.body = await handle.renderView(homepage, {'parcels': parcels})
+	//Go to homepage with the parcels and with a key saying to the header that the page is home
+	context.response.body = await handle.renderView(homepage, {'homepage': true, 'parcels': parcels})	
 })
 
 router.get('/login', async context => {

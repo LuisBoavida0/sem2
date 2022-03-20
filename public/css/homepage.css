@@ -1,0 +1,47 @@
+@import 'mobile/homepage-mobile.css'; /*Import homepage css for mobile*/
+
+main {  /* Main css */
+    display: flex;
+    flex-wrap: wrap;    /*flex wrap to allow width 100% to breack line*/
+    justify-content: center;    /*Align items to center*/
+    margin: 20px;   /*Adds margin*/
+}
+
+section {   /* Each parcel */
+    display: grid;  /*Display grid to put all parcels of that row with the same height*/
+    width: calc(25% - 54px); /*Set width to a quarter of the page (At maximum there will be 4 items per row)*/
+    min-width: 300px; /*Sets the minimum size*/
+    border: 2px solid var(--font);  /*Create border*/
+    padding: 15px;  /*Add Spacing from the border*/
+    margin: 10px;   /*Add spacing between parcels*/
+}
+
+h1 {    /*Title to center and break line*/
+    width: 100%;
+    text-align: center;
+    margin-top: 0px; /*Removes margin top added by common.css*/
+}
+
+p { /*Add space between parcel details*/
+    margin-bottom: 10px;
+}
+
+p:last-of-type {  /*Last detail from parcel doesnt have a margin bottom*/
+    margin-bottom: 0px;
+}
+
+h2 {    /*Add margin for parcel title*/
+    margin: 0 0 10px 0;
+}
+
+.not-dispatched {   /*Style for when an item is not-dispatched (Css class called from JS)*/
+    color: var(--error);
+}
+
+.in-transit {   /*Style for when an item is in-transit (Css class called from JS)*/
+    color: var(--secondary);
+}
+
+.delivered {    /*Style for when an item is delivered (Css class called from JS)*/
+    color: var(--success);
+}
