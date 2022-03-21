@@ -19,8 +19,4 @@ jobs:
 
       - name: Unit testing
         run: deno test --allow-all --unstable --import-map './test.json' ut/
-      
-      if: github.ref_name == 'main'
-        - name: Publish Website
-          run: git push heroku master
         
