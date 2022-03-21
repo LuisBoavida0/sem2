@@ -17,8 +17,9 @@ router.get('/', async context => {
 	const parcels = await getParcels(context.cookies.get('userType'), context.cookies.get('userName'))	//Get parcels
 
 	const homepage = homePageRedirection(context.cookies.get('userType'))	//Gets homepage according to type of user
-	//Go to homepage with the parcels and with a key saying to the header that the page is home
-	context.response.body = await handle.renderView(homepage, {'homepage': true, 'parcels': parcels})	
+
+	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
+	context.response.body = await handle.renderView(homepage, {'homepage': true, 'parcels': parcels, [context.cookies.get('userType')]: true})	
 })
 
 router.get('/login', async context => {
@@ -30,7 +31,7 @@ router.get('/register', async context => {
 })
 
 router.get('/sendParcel', async context => {
-	if (!context.cookies.get('userType')) context.response.redirect('/login') //Checks if he is logged in
+	if (context.cookies.get('userType') !== 'user') context.response.redirect('/login') //Checks if he is logged in
 
 	context.response.body = await handle.renderView('sendParcel', {'sendParcel': true})	//Goes to Send Parcel page (Sends object for the header to know which page it is)
 })

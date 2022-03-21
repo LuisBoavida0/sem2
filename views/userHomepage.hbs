@@ -4,9 +4,9 @@
     {{#each parcels}}
         <section>
             <h2>{{this.parcelName}}</h2>
-            <p>{{this.destinationAddress}}</p>
+            <p>Destination: {{this.destinationAddress}}</p>
             <p>{{this.dateAndTimeAdded}}</p>
-            <p>{{this.parcelStatus}}</p>
+            <p>Status: <b>{{this.parcelStatus}}</b></p>
         </section>
         {{/each}}
 {{else}}
