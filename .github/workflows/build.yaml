@@ -26,7 +26,12 @@ jobs:
       #Run only on master and on push 
       #https://kevsoft.net/2020/06/10/running-github-action-steps-and-jobs-only-on-push-to-master.html
       - if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-        name: Publishing Update to website
-        run: git push heroku master
-      
-        
+        #Deploy to heroku
+        #https://github.com/marketplace/actions/deploy-to-heroku
+        name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          buildpack: https://github.com/chibat/heroku-buildpack-deno.git        
