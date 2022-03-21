@@ -22,4 +22,11 @@ jobs:
           deno test --allow-all --unstable --import-map './test.json' ut/businessLayer.test.js            
           deno test --allow-all --unstable --import-map './test.json' ut/generalLogic.test.js
           deno test --allow-all --unstable --import-map './test.json' ut/ORM.test.js
+      
+      #Run only on master and on push 
+      #https://kevsoft.net/2020/06/10/running-github-action-steps-and-jobs-only-on-push-to-master.html
+      - if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        name: Publishing Update to website
+        run: git push heroku master
+      
         
