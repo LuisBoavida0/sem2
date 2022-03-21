@@ -60,3 +60,8 @@ form > label {  /*Style labels*/
     margin-top: 20px;   /*add top spacing*/
     display: block; /*display block to put inputs on a new line*/
 }
+
+
+main > p:first-child {  /*Error/Success message width 100% occupies extra space on this page, so auto fixes it*/
+    width: auto;
+}
