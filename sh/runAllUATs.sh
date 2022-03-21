@@ -20,3 +20,7 @@ npx test-runner ./uat/addParcel/addParcelInvalidDestinationHouseNumber.test.js
 npx test-runner ./uat/addParcel/addParcelInvalidParcelName.test.js
 npx test-runner ./uat/addParcel/addParcelInvalidSenderHouseNumber.test.js
 npx test-runner ./uat/addParcel/addParcelValidData.test.js
+echo 'Show Parcels tests'
+npx test-runner ./uat/seeParcel/homepageAccess.test.js
+npx test-runner ./uat/seeParcel/noParcels.test.js
+npx test-runner ./uat/seeParcel/seeParcels.test.js
