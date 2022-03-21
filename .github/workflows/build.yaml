@@ -15,7 +15,7 @@ jobs:
           deno-version: v1.14.0
 
       - name: Analyze code
-        run: deno lint
+        run: deno lint --unstable --config deno.json
 
       - name: Unit testing
         run: deno test --allow-all --unstable --import-map './test.json' ut/
