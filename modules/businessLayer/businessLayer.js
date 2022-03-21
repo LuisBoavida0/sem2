@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -87,7 +87,7 @@ export const getParcels = async (userType, userName) => {
             case 'user':
                 return await getUserParcelsDb(userName)
             case 'courier':
-                return {}//await getCourierParcelsDb(userName)
+                return await getCourierParcelsDb(userName)
             case 'manager':
                 //return await getManagerParcelsDb(userName)
                 break

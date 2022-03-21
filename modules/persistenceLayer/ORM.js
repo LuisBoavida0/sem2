@@ -165,3 +165,11 @@ export async function assignParcelDb(trackingNumber, userName) {
         throw new Error(err)
     }
 }
+
+export async function getCourierParcelsDb(courier) {
+	try {
+		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}';`)
+	} catch (err) {
+        throw new Error(err)
+    }
+}

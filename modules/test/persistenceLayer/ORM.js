@@ -38,3 +38,7 @@ export const assignParcelDb = async () => {
 export const getParcelStatusDb = async () => {
     return true
 }
+
+export const getCourierParcelsDb = async () => {
+    return true
+}

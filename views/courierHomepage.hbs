@@ -3,3 +3,12 @@
     <input type='text' name='trackingNumber' placeholder='Insert tracking number' autofocus>
     <input type='submit'>
 </form>
+
+{{#each parcels}}
+    <section>
+        <h1>{{this.parcelName}}</h1>
+        <p>{{this.destinationAddress}}</p>
+        <p>{{this.dateAndTimeAdded}}</p>
+        <p>{{this.kgs}}</p>
+    </section>
+{{/each}}
