@@ -152,7 +152,7 @@ export async function getParcelStatusDb(trackingNumber) {
 /**
  * Assigns the parcel.
  * @async
- * @function assignParcel
+ * @function assignParcelDb
  * @param {string} trackingNumber The tracking number of the parcel.
  * @param {string} userName The userName of the courier.
  * @returns {boolean} true if parcel was assigned to the courier
@@ -166,9 +166,20 @@ export async function assignParcelDb(trackingNumber, userName) {
     }
 }
 
+/**
+ * Gets the courier parcels.
+ * @async
+ * @function getCourierParcelsDb
+ * @param {string} courier The courier userName.
+ * @returns {Dictionary<string>} An object containing: 
+ * Parcel name (parcelName), 
+ * the destination address (destinationAddress),
+ * the datetime that the parcel was created (dateAndTimeAdded),
+ * and the kilograms (kgs).
+ */
 export async function getCourierParcelsDb(courier) {
 	try {
-		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}';`)
+		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
 	} catch (err) {
         throw new Error(err)
     }
