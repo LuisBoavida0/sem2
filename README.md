@@ -67,6 +67,3 @@ https://www.freemysqlhosting.net/account/
 heroku login -i
 heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpack-deno.git
 https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
-
-## Github token
-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
