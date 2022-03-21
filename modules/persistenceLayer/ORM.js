@@ -132,3 +132,36 @@ export async function getUserParcelsDb(user) {
         throw err
     }
 }
+
+/**
+ * Gets the parcel status.
+ * @async
+ * @function getParcelStatusDb
+ * @param {string} trackingNumber The tracking number of the parcel.
+ * @returns {string} Returns the parcel status
+ */
+export async function getParcelStatusDb(trackingNumber) {
+	try {
+		const records = await db.query(`SELECT parcelStatus FROM parcels WHERE trackingNumber = '${trackingNumber}'`)
+		return records[0].parcelStatus
+	} catch (err) {
+        throw new Error(err)
+    }
+}
+
+/**
+ * Assigns the parcel.
+ * @async
+ * @function assignParcel
+ * @param {string} trackingNumber The tracking number of the parcel.
+ * @param {string} userName The userName of the courier.
+ * @returns {boolean} true if parcel was assigned to the courier
+ */
+export async function assignParcelDb(trackingNumber, userName) {
+	try {
+		await db.query(`UPDATE parcels SET assignedCourier = '${userName}', parcelStatus = 'in-transit' WHERE trackingNumber = '${trackingNumber}';`)
+		return true
+	} catch (err) {
+        throw new Error(err)
+    }
+}

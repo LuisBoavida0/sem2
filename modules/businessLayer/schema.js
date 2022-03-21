@@ -122,3 +122,22 @@ export const sendParcelSchema = ajv.compile({
   },
   required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs', 'senderHouseNumber', 'destinationHouseNumber' ]
 })
+
+/**
+ * Manage Parcel Schema, a schema that verifies if an object has this fields:
+ * @function assignParcelSchema
+ * @param {string} trackingNumber the tracking number
+ */
+export const manageParcelSchema = ajv.compile({
+  title: 'Manage Parcel',
+  description: 'Checks if Parcel that courier is going to assign is well formatted',
+  type: 'object',
+  properties: {
+    trackingNumber: {
+      type: 'string',
+      minLength: 36,
+      maxLength: 36
+    }
+  },
+  required: [ 'trackingNumber' ]
+})

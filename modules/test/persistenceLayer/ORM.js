@@ -30,3 +30,11 @@ export const getUserParcelsDb = async (userName) => {
         parcelName: 'parcelName'
     }
 }
+
+export const assignParcelDb = async () => {
+    return true
+}
+
+export const getParcelStatusDb = async () => {
+    return true
+}

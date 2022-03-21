@@ -1,5 +1,5 @@
 //Gets error and success message and deletes it on the url
-window.onload = () => {
+window.addEventListener('load', function(){
     let url = (new URL(location.href))  //Gets URL
 
     let err = url.searchParams.get('err')   //Gets err message and save it to a variable
@@ -18,4 +18,4 @@ window.onload = () => {
         main.innerHTML = `<p class='success'>${succ}</p>` + main.innerHTML
     }
     history.pushState("", "", url.href)
-}
+}, false)
