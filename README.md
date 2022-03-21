@@ -40,7 +40,7 @@ genhtml -o ut/coverage ut/cov_profile.lcov
 deno lint --unstable --config deno.json
 
 ## test the project
-deno test --allow-all --unstable --import-map './test.json'
+deno test --allow-all --unstable --import-map './test.json' ut/
 
 ## beautifier
 deno fmt routes2.js
@@ -69,4 +69,4 @@ heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpa
 https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
 
 ## Github token
-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
+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

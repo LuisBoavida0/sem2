@@ -18,5 +18,8 @@ jobs:
         run: deno lint --unstable --config deno.json
 
       - name: Unit testing
-        run: deno test --allow-all --unstable --import-map './test.json' ut/
+        run: |  #Run Like this to not run db.test.js
+          deno test --allow-all --unstable --import-map './test.json' ut/businessLayer.test.js            
+          deno test --allow-all --unstable --import-map './test.json' ut/generalLogic.test.js
+          deno test --allow-all --unstable --import-map './test.json' ut/ORM.test.js
         
