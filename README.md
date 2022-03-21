@@ -40,7 +40,7 @@ genhtml -o ut/coverage ut/cov_profile.lcov
 deno lint --unstable --config deno.json
 
 ## test the project
-deno test --allow-all --unstable --import-map './test.json'
+deno test --allow-all --unstable --import-map './test.json' ut/
 
 ## beautifier
 deno fmt routes2.js
@@ -50,7 +50,7 @@ source ~/.nvm/nvm.sh
 jsdoc modules/ -r
 
 ## Push git
-git push origin feature-1
+git push origin feature-2
 
 ##Run UATs
 sh/runAllUATs.sh

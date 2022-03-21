@@ -1,25 +1,24 @@
-/* MOBILE */
+/* Mobile login screen */
 @media only screen and (max-width: 600px) {   
-    html main {
+    html main { /*Decrease top margin*/
         margin-top: 20px;
     }
 
-    html figure {
+    html figure {   /*Make image occupy one line*/
         width: 100%;
         margin: 0;
     }
 
-    html figure > img {
+    html figure > img { /*Put image with 100px*/
         height: 100px;
     }
 
-    main > p:first-child {
+    main > p:first-child {  /*Change success/error message order to put the message between logo and form */
         order: 1;
     }
 
-    html section {
+    html section {  /*Sets the section with the form to 100% to occupy one line*/
         width: 100%;
-        order: 1;
+        order: 1;   /*Order equal to 1 to allow success/error message to be in the middle*/
     }
 }
-/* END MOBILE */

@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb } from '../modules/persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
 //There was an error of leaking resources because of the bcrypt import in ORM.js (for the compare, genSalt and hash functions)
@@ -256,6 +256,32 @@ Deno.test({
           parcelStatus: 'parcelStatus'
       }
       await addParcelDb(obj)
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getUserParcelsDb function --------------------------------
+Deno.test({
+  name: 'getUserParcelsDb - correct values',
+  async fn () { 
+    assertEquals(await getUserParcelsDb('username'), { parcelName: 'parcelName' }, 'addParcel not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getUserParcelsDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await getUserParcelsDb('throwError')
       fail('the function does not throw an exception as expected')
     } catch (err) {
       assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 

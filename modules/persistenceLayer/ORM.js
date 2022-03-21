@@ -113,3 +113,22 @@ export async function addParcelDb(data) {
         throw err
     }
 }
+
+/**
+ * Gets the user parcels.
+ * @async
+ * @function getUserParcelsDb
+ * @param {string} user the user.
+ * @returns {Dictionary<string>} An object containing: 
+ * Parcel name (parcelName), 
+ * the destination address (destinationAddress),
+ * the datetime that the parcel was created (dateAndTimeAdded),
+ * and the parcel status (parcelStatus).
+ */
+export async function getUserParcelsDb(user) {
+	try {
+		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, parcelStatus FROM parcels WHERE senderUsername = '${user}';`)
+	} catch (err) {
+        throw err
+    }
+}

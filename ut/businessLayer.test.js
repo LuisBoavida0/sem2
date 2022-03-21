@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { register, login, sendParcel } from '../modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels } from '../modules/businessLayer/businessLayer.js'
 
 //-------------- test register function --------------------------------
 Deno.test('register Logic - Correct values', async () => {
@@ -58,5 +58,32 @@ Deno.test('sendParcel - Error thrown', async () => {
         fail('the function hasnt thrown an error like it was supposed to')
     } catch (err) {
         assertEquals(err.message, "Cannot create property 'trackingNumber' on string 'stringToThrowError'", 'The message Sent is incorrect') 
+    }
+})
+
+//-------------- test getParcels function  --------------------------------
+Deno.test('getParcels - Check with correct values', async () => {
+    assertEquals(await getParcels('user', 'username'), { parcelName: 'parcelName' }, 'getParcel isnt returning the correct value') 
+})
+
+Deno.test('getParcels - Non existing userType error thrown', async () => {
+    try {
+        await getParcels('nonUserType', 'username')
+        fail('the function hasnt thrown an error like it was supposed to')
+    } catch (err) {
+        assertEquals(err.message, "UserType Not found", 'The message Sent is incorrect') 
+    }
+})
+
+Deno.test('getParcels - userName without parcels ', async () => {
+    assertEquals(await getParcels('user', 'userNameNoParcels'), {}, 'getParcel isnt returning the correct value') 
+})
+
+Deno.test('getParcels - db call error', async () => {
+    try {
+        await getParcels('user', 'throwError')
+        fail('the function hasnt thrown an error like it was supposed to')
+    } catch (err) {
+        assertEquals(err.message, "Error Thrown", 'The message Sent is incorrect') 
     }
 })

@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -71,4 +71,31 @@ export const sendParcel = async (obj, username) => {
 	} catch (err) {
         throw err
 	}
+}
+
+/**
+ * Gets the parcels by calling an ORM function according to the user type and username, and returns it
+ * @async
+ * @function getParcels
+ * @param {string} userType Contains the user type
+ * @param {string} userName Contains the user name
+ * @returns {Dictionary<string>} An object containing the parcels
+ */
+export const getParcels = async (userType, userName) => {
+    try {
+        switch(userType) {       
+            case 'user':
+                return await getUserParcelsDb(userName)
+            /*case 'courier':
+                //return await getCourierParcelsDb(userName)
+                break
+            case 'manager':
+                //return await getManagerParcelsDb(userName)
+                break*/
+            default:
+                throw new Error('UserType Not found')
+        }
+    } catch (err) {
+        throw err
+    }
 }

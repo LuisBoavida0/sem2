@@ -11,7 +11,7 @@ export const userDoesntExistDb = async (userName) => {
 }
 
 export const loginDb = async (obj) => { 
-    if (obj == 'throwError') throw new Error('Error thrown')
+    if (obj === 'throwError') throw new Error('Error thrown')
     return 'user'
 }
 
@@ -21,4 +21,12 @@ export const registerDb = async (obj) => {
 
 export const addParcelDb = async (obj) => { 
     return true
+}
+
+export const getUserParcelsDb = async (userName) => {
+    if (userName === 'userNameNoParcels') return {}
+    else if (userName === 'throwError') throw new Error('Error Thrown')
+    return {
+        parcelName: 'parcelName'
+    }
 }

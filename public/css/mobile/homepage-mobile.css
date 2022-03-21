@@ -1,0 +1,6 @@
+/* Mobile homepage screen */
+@media only screen and (max-width: 400px) {   
+    html section {  /*Each parcel*/
+        min-width: calc(100% - 20px); /*Set min width to 100% (With padding of 10px on each size)*/
+    }
+}

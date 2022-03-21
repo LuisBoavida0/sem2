@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,300;0,400;0,700;1,400&display=swap');
-@import url('mobileCommon.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,300;0,400;0,700;1,400&display=swap'); /*Text font*/
 
 /* NON SPECIFIC CSS */
 :root {    /*Colors for website*/
@@ -27,60 +26,61 @@ body
     font-family: 'Noto Sans Display', sans-serif;
 }
 
-input, textarea, button {
+input, textarea, button {   /*Add general style to inputs and button*/
     padding: 5px;
-    border-radius: 5px;
-    color: var(--font) !important;
+    border-radius: 5px; /*Round borders*/
+    color: var(--font) !important;  /*Overwrite default browser css*/
     font-family: 'Noto Sans Display', sans-serif;
     display: block;
 }
 
-input[type="range"] {
+input[type="range"] {   /*Remove padding from range*/
     padding: 0;
 }
 
-h1 {
+h1 {    /*Sets style for titles*/
     font-size: 32px;
     margin: 10px 0;
 }
 
-h2 {
+h2 {    /*Style for subtitle*/
     font-size: 24px;
 }
 
-p, label {
+p, label {  /*style for text*/
     font-size: 16px;
     margin: 0;
 }
 
-input:not([type="submit"]), textarea {
+input:not([type="submit"]), textarea {  /*style for inputs (except submit)*/
     margin-bottom: 10px;
-    width: -webkit-fill-available;
+    width: -webkit-fill-available;  /*Width 100% (Using this because 100% isnt working correctly with padding and flex parent)*/
 }
 
-input[type='submit'], button {
+input[type='submit'], button {  /*Style for buttons*/
     background-color: var(--secondary);
-    border: none;
-    border-radius: 5px;
+    border: none;   /*Remove border*/
+    border-radius: 5px; /*Round edges */
     padding: 10px;
-    cursor: pointer;
+    cursor: pointer;    /*Sets mouse to clickable icon*/
 }
 
-figure {
+figure {    /*Removes default margin on figures*/
     margin: 0;
 }
 
 /*error message*/
 main > p:first-child {
-    width: 100%;
-    padding: 20px;
+    width: 100%;    /*occupy same width as parent (main)*/
+    padding: 20px;  
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 5px; /*Round edges (error message will be in a red box created by this css)*/
     color: white;
-    background-color: red;
+    background-color: var(--error);
 }
 
-/*Success Message*/
+/*Success Message
+Only change the background color to green because the other css is in the error message*/
 main > p:first-child.success {
-    background-color: green;
+    background-color: var(--success);
 }

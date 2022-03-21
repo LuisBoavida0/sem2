@@ -1,33 +1,31 @@
-/*  HEADER */
-header {
-    background-color: var(--main);   /*Create gradient background for the header*/
+/*  HEADER CSS */
+header {    /*Main component of header*/
+    background-color: var(--main);  /*Add background-color*/
     padding: 20px;
-    display: flex;
-    justify-content: space-between;
+    display: flex;  /*display flex to put all segments on the same line*/
+    justify-content: space-between; /*space between to have logo on left, send parcel button on middle and logout on right*/
 }
 
-header nav {
-    margin: auto;
+header nav {    /*header navigation*/
+    margin: auto;   /*Sets margin auto to vertically align navigation*/
 }
 
-header ul {
+header ul { /*Remove default css from unordered list*/
     margin: 0;
     padding: 0;
-    display: flex;
 }
 
-header li {
+header li { /*Remove default css from list items and added a horizontal margin*/
     list-style-type: none;
     margin: 0 10px;
 }
 
-header a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
+header a {  /*Navigation text css*/
+    color: white;   /*change text color*/
+    text-decoration: none;  /*Remove underline from a element*/
+    font-size: 18px;    /*Set font size*/
 }
 
-header a:last-child {
+header a:last-child {   /*Align vertically logout button*/
     margin: auto 0;
 }
-/* END HEADER */
