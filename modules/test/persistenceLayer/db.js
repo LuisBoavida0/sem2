@@ -17,7 +17,7 @@ const userDoesntExist = (queryStr) => {
     return {}
 }
 
-const isValidUUIDDb = (queryStr) => {
+const isValidUUID = (queryStr) => {
     if (queryStr.includes('existingUUID'))
         return [ { trackingNumber: 'existingUUID' } ]
     else if (queryStr.includes('throwError'))   //Throw an error
@@ -39,11 +39,31 @@ const addParcel = (queryStr) => {
         return true
 }
 
-const getUserParcelsDb = (queryStr) => {    
+const getUserParcels = (queryStr) => {    
     if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
     return {
         parcelName: 'parcelName'
     }
+}
+
+const getParcelStatus = (queryStr) => {    
+    if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
+    else if (queryStr.includes('noTrackingNumber')) return []
+    return [{
+        parcelStatus: 'not-dispatched'
+    }]
+}
+
+const assignParcel = (queryStr) => {    
+    if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
+}
+
+const getCourierParcels = (queryStr) => {    
+    if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
+    else if (queryStr.includes('noParcelsCourier')) return []
+    return [{
+        parcelName: 'parcelName'
+    }]
 }
 
 export const query = async (queryStr) => {
@@ -54,11 +74,17 @@ export const query = async (queryStr) => {
     else if (queryStr.includes('SELECT userType FROM users WHERE userName = ')) //userDoesntExist
         return userDoesntExist(queryStr)
     else if (queryStr.includes('SELECT trackingNumber FROM parcels WHERE trackingNumber = '))   //isValidUUIDDb
-        return isValidUUIDDb(queryStr)
+        return isValidUUID(queryStr)
     else if (queryStr.includes('INSERT INTO parcels'))
         return addParcel(queryStr)
     else if (queryStr.includes('SELECT parcelName, destinationAddress, dateAndTimeAdded, parcelStatus FROM parcels WHERE senderUsername = '))
-        return getUserParcelsDb(queryStr)
+        return getUserParcels(queryStr)
+    else if (queryStr.includes('SELECT parcelStatus FROM parcels WHERE trackingNumber = '))
+        return getParcelStatus(queryStr)
+    else if (queryStr.includes('UPDATE parcels SET assignedCourier = '))
+        return assignParcel(queryStr)
+    else if (queryStr.includes('SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '))
+        return getCourierParcels(queryStr)
 }
 
 export * as db from '../../persistenceLayer/db.js'  //A workaround to be able to call query like db.query

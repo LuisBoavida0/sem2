@@ -1,5 +1,10 @@
 let callCount = 0   //variable to enable validUUIDDB return false once
-export async function isValidUUIDDb(data) {
+export async function isValidUUIDDb(UUID) {
+    //Verification for the manageParcel
+    if (UUID === 'UUID' || UUID === 'UUIDAssignError' || UUID.includes('UUIDParcelStatus')) return false
+    else if (UUID === 'nonExistingUUID') return true
+
+    //Verification for the getUUID
     if (callCount)  return true //Only give true on the second call
     callCount++
     return false
@@ -31,14 +36,24 @@ export const getUserParcelsDb = async (userName) => {
     }
 }
 
-export const assignParcelDb = async () => {
+
+export const getCourierParcelsDb = async (userName) => {
+    if (userName === 'userNameNoParcels') return {}
+    else if (userName === 'throwError') throw new Error('Error Thrown')
+    return {
+        parcelName: 'parcelName'
+    }
+}
+
+export const assignParcelDb = async (trackingNumber, userName) => {
+    if (userName === 'throwError') throw new Error('Error thrown assign Parcel')
     return true
 }
 
-export const getParcelStatusDb = async () => {
-    return true
-}
-
-export const getCourierParcelsDb = async () => {
-    return true
+export const getParcelStatusDb = async (trackingNumber) => {
+    if (trackingNumber === 'UUIDParcelStatusError') throw new Error('Error Thrown')
+    else if (trackingNumber === 'UUIDParcelStatusNot-dispatched') return 'not-dispatched'
+    else if (trackingNumber === 'UUIDParcelStatusIn-transit') return 'in-transit'
+    else if (trackingNumber === 'UUIDParcelStatusDelivered') return 'delivered'
+    return 'other'
 }

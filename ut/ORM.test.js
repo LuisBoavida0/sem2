@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb } from '../modules/persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
 //There was an error of leaking resources because of the bcrypt import in ORM.js (for the compare, genSalt and hash functions)
@@ -270,7 +270,7 @@ Deno.test({
 Deno.test({
   name: 'getUserParcelsDb - correct values',
   async fn () { 
-    assertEquals(await getUserParcelsDb('username'), { parcelName: 'parcelName' }, 'addParcel not returning true') 
+    assertEquals(await getUserParcelsDb('username'), { parcelName: 'parcelName' }, 'get user parcels not returning correctly') 
   },
   // following two options deactivate open resource checking
   sanitizeResources: false,
@@ -286,6 +286,109 @@ Deno.test({
     } catch (err) {
       assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
     }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getParcelStatusDb function --------------------------------
+Deno.test({
+  name: 'getParcelStatusDb - correct values',
+  async fn () { 
+    assertEquals(await getParcelStatusDb('trackingNumber'), 'not-dispatched', 'getParcelStatusDb not working correctly') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getParcelStatusDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await getParcelStatusDb('throwError')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getParcelStatusDb - No tracking number',
+  async fn () { 
+    try {
+      await getParcelStatusDb('noTrackingNumber')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "No parcel found with that tracking number", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test assignParcelDb function --------------------------------
+Deno.test({
+  name: 'assignParcelDb - correct values',
+  async fn () { 
+    assertEquals(await assignParcelDb('trackingNumber', 'username'), true, 'assign parcel not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'assignParcelDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await assignParcelDb('throwError', 'username')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getCourierParcelsDb function --------------------------------
+Deno.test({
+  name: 'getCourierParcelsDb - correct values',
+  async fn () { 
+    assertEquals(await getCourierParcelsDb('courier'), [{parcelName: 'parcelName'}], 'getCourierParcelsDb not working correctly') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getCourierParcelsDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await getCourierParcelsDb('throwError')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getCourierParcelsDb - No parcels assigned to courier',
+  async fn () { 
+    assertEquals(await getCourierParcelsDb('noParcelsCourier'), [], 'getCourierParcelsDb not returning correctly when there is no parcels') 
   },
   // following two options deactivate open resource checking
   sanitizeResources: false,

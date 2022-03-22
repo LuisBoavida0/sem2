@@ -88,9 +88,8 @@ export const getParcels = async (userType, userName) => {
                 return await getUserParcelsDb(userName)
             case 'courier':
                 return await getCourierParcelsDb(userName)
-            case 'manager':
-                //return await getManagerParcelsDb(userName)
-                break
+            /*case 'manager':
+                return await getManagerParcelsDb(userName)*/
             default:
                 throw new Error('UserType Not found')
         }

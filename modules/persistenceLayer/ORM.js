@@ -143,9 +143,11 @@ export async function getUserParcelsDb(user) {
 export async function getParcelStatusDb(trackingNumber) {
 	try {
 		const records = await db.query(`SELECT parcelStatus FROM parcels WHERE trackingNumber = '${trackingNumber}'`)
+		
+		if (!records[0]) throw new Error('No parcel found with that tracking number')
 		return records[0].parcelStatus
 	} catch (err) {
-        throw new Error(err)
+        throw err
     }
 }
 
@@ -162,7 +164,7 @@ export async function assignParcelDb(trackingNumber, userName) {
 		await db.query(`UPDATE parcels SET assignedCourier = '${userName}', parcelStatus = 'in-transit' WHERE trackingNumber = '${trackingNumber}';`)
 		return true
 	} catch (err) {
-        throw new Error(err)
+        throw err
     }
 }
 
@@ -181,6 +183,6 @@ export async function getCourierParcelsDb(courier) {
 	try {
 		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
 	} catch (err) {
-        throw new Error(err)
+        throw err
     }
 }
