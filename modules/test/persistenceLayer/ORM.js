@@ -57,3 +57,7 @@ export const getParcelStatusDb = async (trackingNumber) => {
     else if (trackingNumber === 'UUIDParcelStatusDelivered') return 'delivered'
     return 'other'
 }
+
+export const getAvailableParcelsDb = () => {
+    return true
+}

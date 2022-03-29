@@ -12,6 +12,8 @@ CREATE TABLE parcels (
   trackingNumber VARCHAR(36) PRIMARY KEY,
   senderAddress VARCHAR(500) NOT NULL, 
   destinationAddress VARCHAR(500) NOT NULL,
+  destinationLat Decimal(8,6) NOT NULL,
+  destinationLng Decimal(9,6) NOT NULL,
   kgs tinyint NOT NULL,
   parcelName VARCHAR(120) NOT NULL,
   dateAndTimeAdded DATETIME NOT NULL,

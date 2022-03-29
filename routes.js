@@ -1,7 +1,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { register, login, sendParcel, getParcels, manageParcel } from './modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels } from './modules/businessLayer/businessLayer.js'
 import { formDataProcessing, homePageRedirection } from './modules/businessLayer/generalLogic.js'
 import { registerSchema, loginSchema, sendParcelSchema, manageParcelSchema } from './modules/businessLayer/schema.js'
 
@@ -34,6 +34,21 @@ router.get('/sendParcel', async context => {
 	if (context.cookies.get('userType') !== 'user') context.response.redirect('/login') //Checks if he is logged in
 
 	context.response.body = await handle.renderView('sendParcel', {'sendParcel': true})	//Goes to Send Parcel page (Sends object for the header to know which page it is)
+})
+
+router.get('/availableParcels', async context => {
+	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
+
+	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
+	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true, 'courier': true})	
+})
+
+//-------------------------- Api -------------------------
+router.get('/getAvailableParcelsApi/:lat/:lng', async context => {
+	if (context.cookies.get('userType') !== 'courier') 	//If not a courier then return message saying that there is no permission
+		context.response.body = 'No permission to access the file'
+	else    
+		context.response.body = await getAvailableParcels(context.params.lat, context.params.lng)	//Returns the parcels available (Sort by distance)
 })
 
 //-------------------------- POST -------------------------

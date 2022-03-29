@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -122,4 +122,20 @@ export const manageParcel = async (trackingNumber, userName) => {
         default:
             throw new Error('There was an error with this parcel')
     }
+}
+
+/**
+ * Available Parcels layer, calls function to get the Available parcels for the couriers
+ * @async
+ * @function getAvailableParcels
+ * @param {string} lat The latitude of the user
+ * @param {string} lng The longitude of the user
+ * @returns {Dictionary<string>} An object containing the available parcels
+ */
+export const getAvailableParcels = async (lat, lng) => {
+    try {
+        return await getAvailableParcelsDb(lat, lng)    //Gets the available parcels ordered by distance
+	} catch (err) {
+        throw err
+	}
 }

@@ -1,16 +1,20 @@
-<hr>
+<hr><!--to allow the error to always be 100%-->
 <form action="/manageParcel" method="post">
     <h2>Assign a Parcel</h2>
     <input type='text' name='trackingNumber' placeholder='Insert tracking number' autofocus>
     <input type='submit' value='Assign'>
 </form>
 
-<h1>Parcels to send</h1>
-{{#each parcels}}
-    <section>
-        <h1>{{this.parcelName}}</h1>
-        <p>Destination: {{this.destinationAddress}}</p>
-        <p>{{this.dateAndTimeAdded}}</p>
-        <p>Weight: {{this.kgs}} kgs</p>
-    </section>
-{{/each}}
+{{#if parcels}}
+    <h1>Parcels to send</h1>
+    {{#each parcels}}
+        <section>
+            <h2>{{this.parcelName}}</h2>
+            <p>Destination: {{this.destinationAddress}}</p>
+            <p>{{this.dateAndTimeAdded}}</p>
+            <p>Weight: {{this.kgs}} kgs</p>
+        </section>
+    {{/each}}
+{{else}}
+    <h1>You don't have any assigned parcels</h1>
+{{/if}}

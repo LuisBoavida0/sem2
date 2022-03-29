@@ -107,7 +107,7 @@ export async function isValidUUIDDb(UUID) {
  */
 export async function addParcelDb(data) {
 	try {
-		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
+		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, destinationLat, destinationLng, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.destinationLat}, ${data.destinationLng}, ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
 		return true
 	} catch (err) {
         throw err
@@ -182,6 +182,28 @@ export async function assignParcelDb(trackingNumber, userName) {
 export async function getCourierParcelsDb(courier) {
 	try {
 		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the available parcels for the couriers.
+ * @async
+ * @function getAvailableParcelsDb
+ * @param {string} lat The latitude of the user.
+ * @param {string} lng The longitude of the user.
+ * @returns {Dictionary<string>} An object containing: 
+ * Tracking number (trackingNumber),
+ * Parcel name (parcelName), 
+ * the destination address (destinationAddress),
+ * the datetime that the parcel was created (dateAndTimeAdded),
+ * and the kilograms (kgs).
+ */
+export async function getAvailableParcelsDb(lat, lng) {
+	try {
+		//Gets the parcels not-dispatched ordered by distance
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
 	} catch (err) {
         throw err
     }
