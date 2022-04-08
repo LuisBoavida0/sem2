@@ -51,6 +51,14 @@ router.get('/getAvailableParcelsApi/:lat/:lng', async context => {
 		context.response.body = await getAvailableParcels(context.params.lat, context.params.lng)	//Returns the parcels available (Sort by distance)
 })
 
+// Api call without the courier location
+router.get('/getAvailableParcelsApi', async context => {
+	if (context.cookies.get('userType') !== 'courier') 	//If not a courier then return message saying that there is no permission
+		context.response.body = 'No permission to access the file'
+	else    
+		context.response.body = await getAvailableParcels(false, false)	//Returns the parcels available (Sort by distance)
+})
+
 //-------------------------- POST -------------------------
 router.post('/register', async context => {
 	try {

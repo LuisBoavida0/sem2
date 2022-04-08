@@ -7,16 +7,27 @@ function getUserCoordinatesPromise() {
 }
 
 async function getUserCoordinates() {
-  return await getUserCoordinatesPromise()   //TAVA AQUI
+  try {
+    return await getUserCoordinatesPromise()
+  } catch (err) {
+    alert("You didn't allowed your location, so the parcels will not show in order of distance") 
+    return false
+  }
 }
 
 //Get available parcels
 async function getAvailableParcels(userLocation) { 
-  let response = await fetch(`/getAvailableParcelsApi/${userLocation.coords.latitude}/${userLocation.coords.longitude}`)    //fetches the parcels
+  let response = ''
+  if (userLocation == false)
+    response = await fetch(`/getAvailableParcelsApi/`)
+  else 
+    response = await fetch(`/getAvailableParcelsApi/${userLocation.coords.latitude}/${userLocation.coords.longitude}`)    //fetches the parcels
+
   let data = await response.json()
   return data   //returns it
 }
 
+//NOT NEEDED I THIKN
 async function getCoordinates(address) { 
   let response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAcVD7SuDFqDU6J7OQtZl-T87HIzR74wR4&address=' + address)    //fetches the address
   let data = await response.json()
