@@ -107,6 +107,7 @@ export async function isValidUUIDDb(UUID) {
  */
 export async function addParcelDb(data) {
 	try {
+		//Adds the parcel with all the information needed
 		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, destinationLat, destinationLng, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.destinationLat}, ${data.destinationLng}, ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
 		return true
 	} catch (err) {

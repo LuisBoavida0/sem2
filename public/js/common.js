@@ -17,5 +17,5 @@ window.addEventListener('load', function(){
         let main = document.querySelector('main')
         main.innerHTML = `<p class='success'>${succ}</p>` + main.innerHTML
     }
-    history.pushState("", "", url.href)
+    history.pushState("", "", url.href) //Update link to remove query strings containing the error and success message
 }, false)

@@ -108,19 +108,23 @@ export const getParcels = async (userType, userName) => {
  * @throws If the parcel is not valid or it has been delivered, it throws an error to be shown on the page
  */
 export const manageParcel = async (trackingNumber, userName) => {
-    if (await isValidUUIDDb(trackingNumber)) throw new Error('tracking number doesnt exist') //If parcel doesnt exists 
+    try {
+        if (await isValidUUIDDb(trackingNumber)) throw new Error('tracking number doesnt exist') //If parcel doesnt exist, throw error 
     
-    const parcelStatus = await getParcelStatusDb(trackingNumber)    //Gets the parcel status
-    switch(parcelStatus) {
-        case 'not-dispatched':
-            await assignParcelDb(trackingNumber, userName)  //Assigns the parcel to the courier
-            return 'Parcel Assigned'
-        case 'in-transit':
-            return 'Parcel in transit'
-        case 'delivered':
-            throw new Error('This Parcel has already been delivered')            
-        default:
-            throw new Error('There was an error with this parcel')
+        const parcelStatus = await getParcelStatusDb(trackingNumber)    //Gets the parcel status
+        switch(parcelStatus) {
+            case 'not-dispatched':
+                await assignParcelDb(trackingNumber, userName)  //Assigns the parcel to the courier
+                return 'Parcel Assigned'
+            case 'in-transit':
+                return 'Parcel in transit'
+            case 'delivered':
+                throw new Error('This Parcel has already been delivered')            
+            default:
+                throw new Error('There was an error with this parcel')
+        }
+    } catch (err) {
+        throw err
     }
 }
 
@@ -134,7 +138,7 @@ export const manageParcel = async (trackingNumber, userName) => {
  */
 export const getAvailableParcels = async (lat, lng) => {
     try {
-        return await getAvailableParcelsDb(lat, lng)    //Gets the available parcels ordered by distance
+        return await getAvailableParcelsDb(lat, lng)    //Gets the available parcels ordered by distance (if the location permission was accepted)
 	} catch (err) {
         throw err
 	}
