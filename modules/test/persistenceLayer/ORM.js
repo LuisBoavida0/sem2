@@ -58,6 +58,7 @@ export const getParcelStatusDb = async (trackingNumber) => {
     return 'other'
 }
 
-export const getAvailableParcelsDb = () => {
-    return true
+export const getAvailableParcelsDb = (lat, long) => {
+    if (lat === 'throwError') throw new Error('Error thrown')
+    return 'success'
 }

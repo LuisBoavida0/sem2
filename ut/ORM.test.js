@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb } from '../modules/persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
 //There was an error of leaking resources because of the bcrypt import in ORM.js (for the compare, genSalt and hash functions)
@@ -389,6 +389,42 @@ Deno.test({
   name: 'getCourierParcelsDb - No parcels assigned to courier',
   async fn () { 
     assertEquals(await getCourierParcelsDb('noParcelsCourier'), [], 'getCourierParcelsDb not returning correctly when there is no parcels') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getAvailableParcelsDb function --------------------------------
+Deno.test({
+  name: 'getAvailableParcelsDb - correct values',
+  async fn () { 
+    assertEquals(await getAvailableParcelsDb(25, 25), [{parcelName: 'parcelName'}], 'getAvailableParcelsDb not working correctly') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getAvailableParcelsDb - correct values without location',
+  async fn () { 
+    assertEquals(await getAvailableParcelsDb(false, false), [{parcelName: 'parcelNameNoLocation'}], 'getAvailableParcelsDb not working correctly') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getAvailableParcelsDb - invalid values (throw error)',
+  async fn () { 
+    try {
+      await getAvailableParcelsDb('throwError', 'throwError')
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
   },
   // following two options deactivate open resource checking
   sanitizeResources: false,

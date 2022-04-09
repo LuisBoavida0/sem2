@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { register, login, sendParcel, getParcels, manageParcel } from '../modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels } from '../modules/businessLayer/businessLayer.js'
 
 //-------------- test register function --------------------------------
 Deno.test('register Logic - Correct values', async () => {
@@ -158,5 +158,23 @@ Deno.test('manageParcel - default', async () => {
         fail('the function hasnt thrown an error like it was supposed to')
     } catch (err) {
         assertEquals(err.message, "There was an error with this parcel", 'The message Sent is incorrect') 
+    }
+})
+
+//-------------- test getAvailableParcels function  --------------------------------
+Deno.test('getAvailableParcels Logic - Check if it is running correctly', async () => {
+    assertEquals(await getAvailableParcels(20, 40), 'success', 'getAvailableParcels isnt working correctly') 
+})
+
+Deno.test('getAvailableParcels Logic - Check if it is running correctly without location', async () => {
+    assertEquals(await getAvailableParcels(false, false), 'success', 'getAvailableParcels isnt working correctly') 
+})
+
+Deno.test('getAvailableParcels Logic - Error thrown', async () => {
+    try {
+        await getAvailableParcels("throwError", "throwError")
+        fail('the function hasnt thrown an error like it was supposed to')
+    } catch (err) {
+        assertEquals(err.message, 'Error thrown', 'The message Sent is incorrect') 
     }
 })
