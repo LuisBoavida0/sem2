@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -86,16 +86,60 @@ export const getParcels = async (userType, userName) => {
         switch(userType) {       
             case 'user':
                 return await getUserParcelsDb(userName)
-            /*case 'courier':
-                //return await getCourierParcelsDb(userName)
-                break
-            case 'manager':
-                //return await getManagerParcelsDb(userName)
-                break*/
+            case 'courier':
+                return await getCourierParcelsDb(userName)
+            /*case 'manager':
+                return await getManagerParcelsDb(userName)*/
             default:
                 throw new Error('UserType Not found')
         }
     } catch (err) {
         throw err
     }
+}
+
+/**
+ * Manages the parcel, checks the parcel status, and acts accordingly.
+ * @async
+ * @function manageParcel
+ * @param {string} trackingNumber Contains the tracking number of the parcel
+ * @param {string} userName Contains the user name of the courier
+ * @returns {string} The success message to send to the page
+ * @throws If the parcel is not valid or it has been delivered, it throws an error to be shown on the page
+ */
+export const manageParcel = async (trackingNumber, userName) => {
+    try {
+        if (await isValidUUIDDb(trackingNumber)) throw new Error('tracking number doesnt exist') //If parcel doesnt exist, throw error 
+    
+        const parcelStatus = await getParcelStatusDb(trackingNumber)    //Gets the parcel status
+        switch(parcelStatus) {
+            case 'not-dispatched':
+                await assignParcelDb(trackingNumber, userName)  //Assigns the parcel to the courier
+                return 'Parcel Assigned'
+            case 'in-transit':
+                return 'Parcel in transit'
+            case 'delivered':
+                throw new Error('This Parcel has already been delivered')            
+            default:
+                throw new Error('There was an error with this parcel')
+        }
+    } catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Available Parcels layer, calls function to get the Available parcels for the couriers
+ * @async
+ * @function getAvailableParcels
+ * @param {string} lat The latitude of the user
+ * @param {string} lng The longitude of the user
+ * @returns {Dictionary<string>} An object containing the available parcels
+ */
+export const getAvailableParcels = async (lat, lng) => {
+    try {
+        return await getAvailableParcelsDb(lat, lng)    //Gets the available parcels ordered by distance (if the location permission was accepted)
+	} catch (err) {
+        throw err
+	}
 }

@@ -21,7 +21,7 @@ header li { /*Remove default css from list items and added a horizontal margin*/
 }
 
 header a {  /*Navigation text css*/
-    color: white;   /*change text color*/
+    color: var(--whiteBackroud);   /*change text color*/
     text-decoration: none;  /*Remove underline from a element*/
     font-size: 18px;    /*Set font size*/
 }

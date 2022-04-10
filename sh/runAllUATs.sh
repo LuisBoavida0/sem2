@@ -24,3 +24,8 @@ echo 'Show Parcels tests'
 npx test-runner ./uat/seeParcel/homepageAccess.test.js
 npx test-runner ./uat/seeParcel/noParcels.test.js
 npx test-runner ./uat/seeParcel/seeParcels.test.js
+echo 'Courier Assign parcel'
+npx test-runner ./uat/courierAssignParcel/courierAssignParcelAccess.test.js
+npx test-runner ./uat/courierAssignParcel/courierAssignParcelCorrectly.test.js
+npx test-runner ./uat/courierAssignParcel/courierAssignParcelIncorrectLength.test.js
+npx test-runner ./uat/courierAssignParcel/courierAssignParcelIncorrectTN.test.js 

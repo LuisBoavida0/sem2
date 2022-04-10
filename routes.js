@@ -1,9 +1,9 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { register, login, sendParcel, getParcels } from './modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels } from './modules/businessLayer/businessLayer.js'
 import { formDataProcessing, homePageRedirection } from './modules/businessLayer/generalLogic.js'
-import { registerSchema, loginSchema, sendParcelSchema } from './modules/businessLayer/schema.js'
+import { registerSchema, loginSchema, sendParcelSchema, manageParcelSchema } from './modules/businessLayer/schema.js'
 
 const handle = new Handlebars({ defaultLayout: 'layout' })
 
@@ -17,8 +17,9 @@ router.get('/', async context => {
 	const parcels = await getParcels(context.cookies.get('userType'), context.cookies.get('userName'))	//Get parcels
 
 	const homepage = homePageRedirection(context.cookies.get('userType'))	//Gets homepage according to type of user
-	//Go to homepage with the parcels and with a key saying to the header that the page is home
-	context.response.body = await handle.renderView(homepage, {'homepage': true, 'parcels': parcels})	
+
+	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
+	context.response.body = await handle.renderView(homepage, {'homepage': true, 'parcels': parcels, [context.cookies.get('userType')]: true})	
 })
 
 router.get('/login', async context => {
@@ -30,9 +31,32 @@ router.get('/register', async context => {
 })
 
 router.get('/sendParcel', async context => {
-	if (!context.cookies.get('userType')) context.response.redirect('/login') //Checks if he is logged in
+	if (context.cookies.get('userType') !== 'user') context.response.redirect('/login') //Checks if he is logged in
 
 	context.response.body = await handle.renderView('sendParcel', {'sendParcel': true})	//Goes to Send Parcel page (Sends object for the header to know which page it is)
+})
+
+router.get('/availableParcels', async context => {
+	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
+
+	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
+	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true, 'courier': true})	
+})
+
+//-------------------------- Api -------------------------
+router.get('/getAvailableParcelsApi/:lat/:lng', async context => {
+	if (context.cookies.get('userType') !== 'courier') 	//If not a courier then return message saying that there is no permission
+		context.response.body = 'No permission to access the file'
+	else    
+		context.response.body = await getAvailableParcels(context.params.lat, context.params.lng)	//Returns the parcels available (Sort by distance)
+})
+
+// Api call without the courier location
+router.get('/getAvailableParcelsApi', async context => {
+	if (context.cookies.get('userType') !== 'courier') 	//If not a courier then return message saying that there is no permission
+		context.response.body = 'No permission to access the file'
+	else    
+		context.response.body = await getAvailableParcels(false, false)	//Returns the parcels available (Sort by distance)
 })
 
 //-------------------------- POST -------------------------
@@ -77,6 +101,20 @@ router.post('/sendParcel', async context => {
 	} catch (err) {
 		console.log(err)	//Log the error
 		context.response.redirect(`/sendParcel?err=${err}`) //Send error to Page
+	}
+})
+
+router.post('/manageParcel', async context => {
+	try {
+		if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is an user
+
+		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), manageParcelSchema)
+		const successMessage = await manageParcel(obj.trackingNumber, context.cookies.get('userName'))	//Checks if the parcel is valid and manages the parcel
+
+		context.response.redirect(`/?succ=${successMessage}`)
+	} catch (err) {
+		console.log(err)	//Log the error
+		context.response.redirect(`/?err=${err}`)
 	}
 })
 

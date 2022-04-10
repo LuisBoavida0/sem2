@@ -76,6 +76,8 @@ export const loginSchema = ajv.compile({
  * @param {string} parcelName the parcel name
  * @param {string} senderHouseNumber a string that is a number (the house number of the sender)
  * @param {string} destinationHouseNumber a string that is a number (the destination house number)
+ * @param {string} destinationLat The latitude of the destination
+ * @param {string} destinationLng The longitude of the destination
  * @param {string} senderAddress the address of the sender
  * @param {string} destinationAddress the destination address
  * @param {string} kgs the weight of the package, a string that is a number between 1-20
@@ -102,6 +104,19 @@ export const sendParcelSchema = ajv.compile({
       maxLength: 3,
       pattern: '^[0-9]*$'
     },
+    //https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+    destinationLat: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 12,
+      pattern: '^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$'
+    },
+    destinationLng: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 13,
+      pattern: '^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$'
+    },
     senderAddress: {
       type: 'string',
       minLength: 6,
@@ -120,5 +135,24 @@ export const sendParcelSchema = ajv.compile({
       pattern: '(?=^(([01]?[0-9])|(20))$)(?=[^0]+)'
     }
   },
-  required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs', 'senderHouseNumber', 'destinationHouseNumber' ]
+  required: [ 'parcelName', 'senderAddress', 'destinationAddress', 'kgs', 'senderHouseNumber', 'destinationHouseNumber', 'destinationLat', 'destinationLng' ]
+})
+
+/**
+ * Manage Parcel Schema, a schema that verifies if an object has this fields:
+ * @function assignParcelSchema
+ * @param {string} trackingNumber the tracking number
+ */
+export const manageParcelSchema = ajv.compile({
+  title: 'Manage Parcel',
+  description: 'Checks if Parcel that courier is going to assign is well formatted',
+  type: 'object',
+  properties: {
+    trackingNumber: {
+      type: 'string',
+      minLength: 36,
+      maxLength: 36
+    }
+  },
+  required: [ 'trackingNumber' ]
 })

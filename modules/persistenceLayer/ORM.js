@@ -107,7 +107,8 @@ export async function isValidUUIDDb(UUID) {
  */
 export async function addParcelDb(data) {
 	try {
-		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
+		//Adds the parcel with all the information needed
+		await db.query(`INSERT INTO parcels(trackingNumber, senderAddress, destinationAddress, destinationLat, destinationLng, kgs, parcelName, dateAndTimeAdded, senderUsername, parcelStatus) VALUES('${data.trackingNumber}', '${data.senderAddress}', '${data.destinationAddress}', ${data.destinationLat}, ${data.destinationLng}, ${data.kgs}, '${data.parcelName}', '${data.dateAndTimeAdded}', '${data.senderUsername}', '${data.parcelStatus}');`)
 		return true
 	} catch (err) {
         throw err
@@ -128,6 +129,86 @@ export async function addParcelDb(data) {
 export async function getUserParcelsDb(user) {
 	try {
 		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, parcelStatus FROM parcels WHERE senderUsername = '${user}';`)
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the parcel status.
+ * @async
+ * @function getParcelStatusDb
+ * @param {string} trackingNumber The tracking number of the parcel.
+ * @returns {string} Returns the parcel status
+ */
+export async function getParcelStatusDb(trackingNumber) {
+	try {
+		const records = await db.query(`SELECT parcelStatus FROM parcels WHERE trackingNumber = '${trackingNumber}'`)
+		
+		if (!records[0]) throw new Error('No parcel found with that tracking number')
+		return records[0].parcelStatus
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Assigns the parcel.
+ * @async
+ * @function assignParcelDb
+ * @param {string} trackingNumber The tracking number of the parcel.
+ * @param {string} userName The userName of the courier.
+ * @returns {boolean} true if parcel was assigned to the courier
+ */
+export async function assignParcelDb(trackingNumber, userName) {
+	try {
+		await db.query(`UPDATE parcels SET assignedCourier = '${userName}', parcelStatus = 'in-transit' WHERE trackingNumber = '${trackingNumber}';`)
+		return true
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the courier parcels.
+ * @async
+ * @function getCourierParcelsDb
+ * @param {string} courier The courier userName.
+ * @returns {Dictionary<string>} An object containing: 
+ * Parcel name (parcelName), 
+ * the destination address (destinationAddress),
+ * the datetime that the parcel was created (dateAndTimeAdded),
+ * and the kilograms (kgs).
+ */
+export async function getCourierParcelsDb(courier) {
+	try {
+		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the available parcels for the couriers.
+ * @async
+ * @function getAvailableParcelsDb
+ * @param {string} lat The latitude of the user.
+ * @param {string} lng The longitude of the user.
+ * @returns {Dictionary<string>} An object containing: 
+ * Tracking number (trackingNumber),
+ * Parcel name (parcelName), 
+ * the destination address (destinationAddress),
+ * the datetime that the parcel was created (dateAndTimeAdded),
+ * and the kilograms (kgs).
+ */
+export async function getAvailableParcelsDb(lat, lng) {
+	try {
+		//Gets the parcel without the location
+		if (lat === false)
+			return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
+		
+		//Gets the parcels not-dispatched ordered by distance
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
 	} catch (err) {
         throw err
     }

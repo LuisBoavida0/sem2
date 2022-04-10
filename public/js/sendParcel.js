@@ -1,11 +1,15 @@
-getFullAddress = (btn, receiverName) => {  //Gets the info from the postcode (Using google maps api)
-    //Fetched the address with the postcode
+getFullAddress = (btn, receiverName, saveLocation = false) => {  //Gets the info from the postcode (Using google maps api)
+    //Fetches the address with the postcode
     fetch('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAcVD7SuDFqDU6J7OQtZl-T87HIzR74wR4&components=postal_code:' + btn.previousElementSibling.value)
     .then(response => response.json())  //Converts the response to json
     .then(data => {
         document.getElementsByName(receiverName)[0].innerHTML = data.results[0].formatted_address   //Writes the address on the label
+        if (saveLocation) { //If it is to save the location then store the lat and lng
+            document.getElementsByName('destinationLat')[0].value = data.results[0].geometry.location.lat
+            document.getElementsByName('destinationLng')[0].value = data.results[0].geometry.location.lng
+        }
     }).catch(err => {
-       alert('address not found')   //If there is an error than it means that the address was not found
+       alert('address not found')   //If there is an error send this alert
     })
 }
 

@@ -34,6 +34,7 @@ h2 {    /*Add margin for parcel title*/
     margin: 0 0 10px 0;
 }
 
+/* User Homepage Css */
 .not-dispatched {   /*Style for when an item is not-dispatched (Css class called from JS)*/
     color: var(--error);
 }
@@ -44,4 +45,27 @@ h2 {    /*Add margin for parcel title*/
 
 .delivered {    /*Style for when an item is delivered (Css class called from JS)*/
     color: var(--success);
+}
+
+/* Courier Homepage Css */
+main > p:first-child {  /*Set Error/succ message to 500px*/
+    width: 500px;
+}
+
+form {
+    width: 500px;
+    border: solid 2px var(--font);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+form > input[type='submit'] {
+    margin: 20px auto 0px auto;
+    padding: 10px 24px;
+}
+
+hr {
+    flex-basis: 100%;
+    border: none;
+    margin: 0;
 }
