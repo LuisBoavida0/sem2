@@ -155,9 +155,12 @@ export const getAvailableParcels = async (lat, lng) => {
  * @param obj.locationReceivedLng - The longitude of the received place
  * @param obj.dateAndTimeReceived - The date and time when the parcel was delivered
  * @param obj.signature - The image containing the signature of the receiver
+ * @returns {boolean} true if parcel was delivered.
+ * @throws If error, throw message
  */
 export const deliverParcel = async (obj) => {
     try {
+        //If the tracking number is valid
         if (await getParcelStatusDb(obj.trackingNumber) !== 'in-transit') throw new Error('The parcel needs to be in transit in order to deliver it')
         return await deliverParcelDb(obj)   //Delivers the parcel
 	} catch (err) {

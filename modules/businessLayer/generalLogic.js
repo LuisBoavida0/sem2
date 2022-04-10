@@ -81,6 +81,16 @@ export const getUUID = async () => {
     return UUID
 }
 
+/**
+ * Converts the form data to a usable object and converts the image into data64
+ * @function deliverProcessWithImage
+ * @param {Dictionary<string>} data object with the form data
+ * @param {string} trackingNumber the tracking number of the parcel
+ * @returns {Dictionary<string>} returns the object with this extra files:
+ * obj.dateAndTimeReceived - the date
+ * obj.trackingNumber - the tracking number
+ * obj.signature - the image
+ */
 export const deliverProcessWithImage = async (data, trackingNumber) => {   //Converts the img to data64 and converts the date
     try {
 		//Convert form data to an object
