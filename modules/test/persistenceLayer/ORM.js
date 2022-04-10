@@ -63,6 +63,7 @@ export const getAvailableParcelsDb = (lat, long) => {
     return 'success'
 }
 
-export const deliverParcelDb = () => {
+export const deliverParcelDb = (obj) => {
+    if (obj.personWhoReceivedParcel === 'throwError') throw new Error('Error thrown')
     return true
 }

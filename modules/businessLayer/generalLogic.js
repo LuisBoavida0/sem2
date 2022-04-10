@@ -115,13 +115,10 @@ export const deliverProcessWithImage = async (data, trackingNumber) => {   //Con
         const MimeType = `data:image/${extension};base64,`  //Creates the mimeType
         
         const img64 = MimeType + Base64.fromUint8Array(img).toString()  //creates the base64
-        if (img64.length > 64000)  //Checks if its too big
-            throw new Error('Image is too big') 
 
         obj.signature = img64   //Ads image to the object
         return obj
-	} catch (err) {
-        console.log(err)
+	} catch {
         throw "There was a problem adding this image, please try again with a different one"
     }
 }
