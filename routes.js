@@ -1,9 +1,9 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels } from './modules/businessLayer/businessLayer.js'
-import { formDataProcessing, homePageRedirection } from './modules/businessLayer/generalLogic.js'
-import { registerSchema, loginSchema, sendParcelSchema, manageParcelSchema } from './modules/businessLayer/schema.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels, deliverParcel } from './modules/businessLayer/businessLayer.js'
+import { formDataProcessing, homePageRedirection, deliverProcessWithImage } from './modules/businessLayer/generalLogic.js'
+import { registerSchema, loginSchema, sendParcelSchema, manageParcelSchema, deliverParcelSchema } from './modules/businessLayer/schema.js'
 
 const handle = new Handlebars({ defaultLayout: 'layout' })
 
@@ -41,6 +41,13 @@ router.get('/availableParcels', async context => {
 
 	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
 	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true, 'courier': true})	
+})
+
+router.get('/deliveryScreen/:trackingNumber', async context => {
+	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
+
+	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
+	context.response.body = await handle.renderView('deliveryScreen', {'deliveryScreen': true, 'courier': true, 'trackingNumber': context.params.trackingNumber})	
 })
 
 //-------------------------- Api -------------------------
@@ -111,7 +118,25 @@ router.post('/manageParcel', async context => {
 		const obj = await formDataProcessing(await context.request.body({ type: 'form' }), manageParcelSchema)
 		const successMessage = await manageParcel(obj.trackingNumber, context.cookies.get('userName'))	//Checks if the parcel is valid and manages the parcel
 
-		context.response.redirect(`/?succ=${successMessage}`)
+		successMessage === 'in-transit' ? context.response.redirect(`/deliveryScreen/${obj.trackingNumber}`) : context.response.redirect(`/?succ=${successMessage}`)
+		
+	} catch (err) {
+		console.log(err)	//Log the error
+		context.response.redirect(`/?err=${err}`)
+	}
+})
+
+router.post('/deliveryScreen/:trackingNumber', async context => {	//Delivers the parcel
+	try {
+		if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is an user
+
+		//Converts the data to an usable object
+		const objTransformed = await deliverProcessWithImage(await context.request.body({ type: 'form-data' }), context.params.trackingNumber)
+		await formDataProcessing(objTransformed, deliverParcelSchema, true)	//Check if values are correct
+		
+		await deliverParcel(objTransformed)	//Tries to deliver the parcel
+
+		context.response.redirect(`/?succ=Parcel delivered with success`)	//Redirect to homepage with a success message
 	} catch (err) {
 		console.log(err)	//Log the error
 		context.response.redirect(`/?err=${err}`)

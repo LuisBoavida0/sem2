@@ -13,7 +13,7 @@ CREATE TABLE parcels (
   senderAddress VARCHAR(500) NOT NULL, 
   destinationAddress VARCHAR(500) NOT NULL,
   destinationLat Decimal(8,6) NOT NULL,
-  destinationLng Decimal(9,6) NOT NULL,
+  destinationLng Decimal(9,6) NOT NULL, 
   kgs tinyint NOT NULL,
   parcelName VARCHAR(120) NOT NULL,
   dateAndTimeAdded DATETIME NOT NULL,
@@ -22,7 +22,8 @@ CREATE TABLE parcels (
   personWhoReceivedParcel VARCHAR(100),
   signature TEXT,
   dateAndTimeReceived DATETIME,
-  locationReceived VARCHAR(25),
+  locationReceivedLat Decimal(8,6),
+  locationReceivedLng Decimal(8,6),
   parcelStatus VARCHAR(14) DEFAULT 'not-dispatched',
   FOREIGN KEY (senderUsername) REFERENCES users(userName),
   FOREIGN KEY (assignedCourier) REFERENCES users(userName)

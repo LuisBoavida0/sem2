@@ -16,6 +16,21 @@ section {   /* Each parcel */
     margin: 10px;   /*Add spacing between parcels*/
 }
 
+section > a {
+    background-color: var(--secondary);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    margin: 20px auto 0px auto;
+    padding: 10px 24px;
+    text-decoration: none;
+    color: var(--font) !important;
+    font-family: 'Noto Sans Display', sans-serif;
+    display: block;
+    font-size: initial;
+}
+
 h1 {    /*Title to center and break line*/
     width: 100%;
     text-align: center;
@@ -62,6 +77,7 @@ form {
 form > input[type='submit'] {
     margin: 20px auto 0px auto;
     padding: 10px 24px;
+    font-size: 16px;
 }
 
 hr {

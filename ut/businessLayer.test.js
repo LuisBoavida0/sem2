@@ -140,7 +140,7 @@ Deno.test('manageParcel - not-dispached parcel status error', async () => {
 })
 
 Deno.test('manageParcel - in-transit', async () => {
-    assertEquals(await manageParcel('UUIDParcelStatusIn-transit', 'username'), 'Parcel in transit', 'manage parcel isnt returning the correct value') 
+    assertEquals(await manageParcel('UUIDParcelStatusIn-transit', 'username'), 'in-transit', 'manage parcel isnt returning the correct value') 
 })
 
 Deno.test('manageParcel - delivered', async () => {

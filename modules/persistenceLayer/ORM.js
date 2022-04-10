@@ -146,6 +146,7 @@ export async function getParcelStatusDb(trackingNumber) {
 		const records = await db.query(`SELECT parcelStatus FROM parcels WHERE trackingNumber = '${trackingNumber}'`)
 		
 		if (!records[0]) throw new Error('No parcel found with that tracking number')
+		
 		return records[0].parcelStatus
 	} catch (err) {
         throw err
@@ -182,7 +183,7 @@ export async function assignParcelDb(trackingNumber, userName) {
  */
 export async function getCourierParcelsDb(courier) {
 	try {
-		return await db.query(`SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
 	} catch (err) {
         throw err
     }
@@ -209,6 +210,28 @@ export async function getAvailableParcelsDb(lat, lng) {
 		
 		//Gets the parcels not-dispatched ordered by distance
 		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Delivers the parcel.
+ * @async
+ * @function deliverParcelDb
+ * @param {Dictionary<string>} obj object containing these values:
+ * @param obj.trackingNumber - The tracking number of the parcel
+ * @param obj.personWhoReceivedParcel  - The full name of the person receiving the parcel
+ * @param obj.locationReceivedLat - The latitude of the received place
+ * @param obj.locationReceivedLng - The longitude of the received place
+ * @param obj.dateAndTimeReceived - The date and time when the parcel was delivered
+ * @param obj.signature - The image containing the signature
+ * @returns {boolean} true if the parcel was successfully delivered.
+ */
+export async function deliverParcelDb(obj) {
+	try {
+		await db.query(`UPDATE parcels SET personWhoReceivedParcel = '${obj.personWhoReceivedParcel}', locationReceivedLat = '${obj.locationReceivedLat}', locationReceivedLng = '${obj.locationReceivedLng}', dateAndTimeReceived = '${obj.dateAndTimeReceived}', signature='${obj.signature}', parcelStatus = 'delivered' WHERE trackingNumber = '${obj.trackingNumber}';`)
+		return true
 	} catch (err) {
         throw err
     }

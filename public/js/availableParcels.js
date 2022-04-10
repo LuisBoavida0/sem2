@@ -28,7 +28,7 @@ async function getAvailableParcels(userLocation) {
 }
 
 function showParcels(parcels) { //Writes the html of each parcel
-  if (!parcels.length) document.getElementsByTagName('main')[0].innerHTML += `<h1>No parcels available</h1>`  //If there is no parcels, show message
+  if (!parcels.length) document.getElementsByTagName('main')[0].innerHTML = `<h1>No parcels available</h1>`  //If there is no parcels, show message
 
   for (parcel of parcels) {
     const hoursSinceStarted = 'Hours since added: ' + Math.floor(Math.abs(new Date() - new Date(parcel.dateAndTimeAdded)) / 36e5) //Get the hours since added
