@@ -31,15 +31,16 @@ function showParcels(parcels) { //Writes the html of each parcel
   if (!parcels.length) document.getElementsByTagName('main')[0].innerHTML = `<h1>No parcels available</h1>`  //If there is no parcels, show message
 
   for (parcel of parcels) {
-    const hoursSinceStarted = 'Hours since added: ' + Math.floor(Math.abs(new Date() - new Date(parcel.dateAndTimeAdded)) / 36e5) //Get the hours since added
+    const hours = Math.floor(Math.abs(new Date() - new Date(parcel.dateAndTimeAdded)) / 36e5)
 
     //Writes the html of each parcel
     document.getElementsByTagName('main')[0].innerHTML += `
       <section>
         <h2>${parcel.parcelName}</h2>
+        <p>tracking number: ${parcel.trackingNumber}</p>
+        <p>Address: ${parcel.senderAddress}</p>
         <p>Destination: ${parcel.destinationAddress}</p>
-        <p>${hoursSinceStarted}</p>
-        <p>Weight: ${parcel.kgs} kgs</p>
+        <p>Posted on: ${new Date(parcel.dateAndTimeAdded).toLocaleString()}</p>
         <form action="/manageParcel" method="post">
           <input type='hidden' name='trackingNumber' value='${parcel.trackingNumber}'>
           <input type='submit' value='Assign'>

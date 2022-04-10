@@ -66,7 +66,7 @@ const getCourierParcels = (queryStr) => {
     }]
 }
 
-const getAvailableParcelsDb = (queryStr) => {    
+const getAvailableParcels = (queryStr) => {    
     if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
     else if (queryStr.includes(' ORDER BY dateAndTimeAdded;')) return [{ parcelName: 'parcelNameNoLocation' }]
     return [{
@@ -98,10 +98,10 @@ export const query = async (queryStr) => {
         return assignParcel(queryStr)
     else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '))
         return getCourierParcels(queryStr)
-    else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng'))
-        return getAvailableParcelsDb(queryStr)
+    else if (queryStr.includes('SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng'))
+        return getAvailableParcels(queryStr)
     else if (queryStr.includes('UPDATE parcels SET personWhoReceivedParcel = '))
-        return getAvailableParcelsDb(queryStr)
+        return deliverParcelDb(queryStr)
 }
 
 export * as db from '../../persistenceLayer/db.js'  //A workaround to be able to call query like db.query

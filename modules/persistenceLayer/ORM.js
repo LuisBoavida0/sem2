@@ -206,10 +206,10 @@ export async function getAvailableParcelsDb(lat, lng) {
 	try {
 		//Gets the parcel without the location
 		if (lat === false)
-			return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
+			return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
 		
 		//Gets the parcels not-dispatched ordered by distance
-		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
+		return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
 	} catch (err) {
         throw err
     }

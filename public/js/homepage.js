@@ -6,7 +6,10 @@ window.addEventListener('load', function(){
 
     for (let i = 0; i < datesEl.length; i++) {   //Go through each parcel
         if (title === 'Your parcels') datesEl[i].innerHTML = 'Added on: ' + new Date(datesEl[i].innerHTML).toLocaleString()  //If in your parcels page format date
-        else datesEl[i].innerHTML = 'Hours since added: ' + Math.floor(Math.abs(new Date() - new Date(datesEl[i].innerHTML)) / 36e5)    //If in courier homepage Convert the date into hours since now
+        else {  //If in courier homepage Convert the date into hours since now
+            const hours = Math.floor(Math.abs(new Date() - new Date(datesEl[i].innerHTML)) / 36e5)
+            datesEl[i].innerHTML = 'Hours since added: ' + (hours > 48 ? `<strong>${hours}</strong>` : hours)
+        }
         if (parcelStatusEl.length) parcelStatusEl[i].classList.add(parcelStatusEl[i].innerHTML)    //Add class for parcel status
     }
 }, false)
