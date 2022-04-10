@@ -183,7 +183,7 @@ export async function assignParcelDb(trackingNumber, userName) {
  */
 export async function getCourierParcelsDb(courier) {
 	try {
-		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered';`)
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '${courier}' AND parcelStatus != 'delivered' ORDER BY dateAndTimeAdded;;`)
 	} catch (err) {
         throw err
     }
