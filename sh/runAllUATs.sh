@@ -29,3 +29,7 @@ npx test-runner ./uat/courierAssignParcel/courierAssignParcelAccess.test.js
 npx test-runner ./uat/courierAssignParcel/courierAssignParcelCorrectly.test.js
 npx test-runner ./uat/courierAssignParcel/courierAssignParcelIncorrectLength.test.js
 npx test-runner ./uat/courierAssignParcel/courierAssignParcelIncorrectTN.test.js 
+echo 'Deliver parcel'
+npx test-runner ./uat/DeliverParcel/DeliverParcelAccess.test.js
+npx test-runner ./uat/DeliverParcel/DeliverParcelCorrectly.test.js
+npx test-runner ./uat/DeliverParcel/DeliverParcelNonExistingParcel.test.js

@@ -59,11 +59,21 @@ sh/runAllUATs.sh
 deno run --allow-all --unstable index.js
 
 ## Connect to online database
+its the one on luis3
 mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
-
+tm4HYSXBTC
 https://www.freemysqlhosting.net/account/
 
 ## heroku settings
 heroku login -i
 heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpack-deno.git
 https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
+
+## Steps to merge to master and automatically push to heroku
+FIRST, CHECK IF I MADE ANY CHANGES TO THE LOCAL DB, IF I DID, UPDATE THE ONLINE ONE
+git checkout master - Goes to master
+git merge FEATURE -m 'MESSAGE' - Merge to master
+git push test master - Pushes to test branch to push to heroku
+git push origin master - Pushes to master
+git branch NEWFEATURE - Creates the new branch
+git checkout NEWFEATURE - Goes to the new branch

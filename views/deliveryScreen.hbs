@@ -1,0 +1,18 @@
+<form action="/deliveryScreen/{{trackingNumber}}" enctype='multipart/form-data' method="post">
+    <h2>Delivery screen</h2>
+
+    <label for="personWhoReceivedParcel">Name</label>
+    <input type='text' name='personWhoReceivedParcel' placeholder='Name of the person' autofocus>
+
+    <label for="signature">Signature</label>
+    <input type='file' name='signature' accept='.jpg , .jpeg , .jfif , .pjpeg , .pjp, .svg, .webp' required></label>
+
+    <input type='text' name='locationReceivedLat' required
+           oninvalid="this.setCustomValidity('Please allow the location permission to get the location')"
+           oninput="this.setCustomValidity('')">
+    <input type='text' name='locationReceivedLng' required
+           oninvalid="this.setCustomValidity('Please allow the location permission to get the location')"
+           oninput="this.setCustomValidity('')">
+
+    <input type='submit' value='Deliver'>
+</form>

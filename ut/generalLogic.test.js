@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { homePageRedirection, getUUID, getDateIsosFormat, formDataProcessing } from '../modules/businessLayer/generalLogic.js'
+import { homePageRedirection, getUUID, getDateIsosFormat, formDataProcessing, deliverProcessWithImage } from '../modules/businessLayer/generalLogic.js'
 
 //-------------- test homePageRedirection function --------------------------------
 Deno.test('homePageRedirection - check for user', () => {
@@ -100,5 +100,64 @@ Deno.test('formDataProcessing - Empty obj', async () => {
         fail('Didnt threw an error')  
     } catch (err) {
         assertEquals(err.message, 'undefined is not iterable', 'Not giving the correct error message')
+    }
+})
+
+//-------------- test deliverProcessWithImage function --------------------------------
+Deno.test('deliverProcessWithImage - check correctly', async () => {
+    const obj = {   //Creates obj to simulate a form data multipart object
+        value: {
+            read: function () {
+                return {
+                    fields: {
+                        name: 'test'
+                    },
+                    files: [
+                        {
+                            filename: './ut/img/imageUploadTest.jpg',
+                            originalName: 'imageUploadTest.jpg'
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    const result = await deliverProcessWithImage(obj, "test")   //Gets the obj processed
+    assertEquals(result.name, 'test', 'deliverProcessWithImage not transforming the object correctly')  //Checks only if the name is esqual because the time has changed so we cant compare the objects
+})
+
+Deno.test('deliverProcessWithImage - check with unkown image', async () => {
+    try {
+        const obj = {   //Creates obj to simulate a form data multipart object
+            value: {
+                read: function () {
+                    return {
+                        fields: {
+                            name: 'test'
+                        },
+                        files: [
+                            {
+                                filename: './ut/img/imageUploadTest2.jpg',
+                                originalName: 'imageUploadTest2.jpg'
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+        const result = await deliverProcessWithImage(obj, "test")   //Gets the obj processed
+        fail('without correct image not throwing any error')
+    } catch (err) {
+        assertEquals(err, "There was a problem adding this image, please try again with a different one", 'Not giving the correct error message')
+    }
+})
+
+Deno.test('deliverProcessWithImage - check with empty obj', async () => {
+    try {
+        const obj = {}
+        const result = await deliverProcessWithImage(obj, "test")   //Gets the obj processed
+        fail('without correct image not throwing any error')
+    } catch (err) {
+        assertEquals(err, "There was a problem adding this image, please try again with a different one", 'Not giving the correct error message')
     }
 })

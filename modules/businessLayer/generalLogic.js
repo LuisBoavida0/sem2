@@ -4,6 +4,8 @@
  */
 
 import { isValidUUIDDb } from '../persistenceLayer/ORM.js'
+import { Base64 } from 'https://deno.land/x/bb64@1.1.0/mod.ts'
+import { resize } from 'https://deno.land/x/deno_image@v0.0.3/mod.ts'
 
 /**
  * Function to tranform the data (form data) into an usable object and check if the data is correct through the use of a schema
@@ -11,11 +13,13 @@ import { isValidUUIDDb } from '../persistenceLayer/ORM.js'
  * @function formDataProcessing
  * @param {Object} obj form object with all the data to be converted to a usable object
  * @param {avj} schema constant that contains the schema
+ * @param {boolean} transformed If the object is already transformed
  * @returns {Object} returns the transformed object.
  * @throws Throws error if Obj does not meet the schema criteria
  */
-export const formDataProcessing = async (obj,  schema) => {
-    obj = Object.fromEntries(await obj.value)
+export const formDataProcessing = async (obj,  schema, transformed = false) => {
+    if (!transformed)   //If not already transformed, transform it
+        obj = Object.fromEntries(await obj.value)
 
     //Check if has the right schema
     const valid = schema(obj)
@@ -75,4 +79,46 @@ export const getUUID = async () => {
     const UUID = crypto.randomUUID() //Gets a random UUID
     if (!await isValidUUIDDb(UUID)) return getUUID()    //If UUID already exists, call again the function to get a new UUID
     return UUID
+}
+
+/**
+ * Converts the form data to a usable object and converts the image into data64
+ * @function deliverProcessWithImage
+ * @param {Dictionary<string>} data object with the form data
+ * @param {string} trackingNumber the tracking number of the parcel
+ * @returns {Dictionary<string>} returns the object with this extra files:
+ * obj.dateAndTimeReceived - the date
+ * obj.trackingNumber - the tracking number
+ * obj.signature - the image
+ */
+export const deliverProcessWithImage = async (data, trackingNumber) => {   //Converts the img to data64 and converts the date
+    try {
+		//Convert form data to an object
+        const fullobj = await data.value.read()
+        const obj = fullobj.fields    //Get the image
+        
+        //Add Date
+        obj.dateAndTimeReceived = getDateIsosFormat()  //Get the current Date   
+        obj.trackingNumber = trackingNumber
+
+        const file = fullobj.files[0]
+        const { filename, originalName } = file
+
+        const size = {  //Decreases the size of the picture to get lighter
+            width: 100,
+            height: 100
+        }
+            
+        const img = await resize(Deno.readFileSync(filename), size)  //Resizes and gets the image
+        const extension = originalName.split('.').pop()  //Gets the extension
+
+        const MimeType = `data:image/${extension};base64,`  //Creates the mimeType
+        
+        const img64 = MimeType + Base64.fromUint8Array(img).toString()  //creates the base64
+
+        obj.signature = img64   //Ads image to the object
+        return obj
+	} catch {
+        throw "There was a problem adding this image, please try again with a different one"
+    }
 }

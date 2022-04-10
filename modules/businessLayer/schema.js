@@ -156,3 +156,44 @@ export const manageParcelSchema = ajv.compile({
   },
   required: [ 'trackingNumber' ]
 })
+
+
+/**
+ * deliver Parcel Schema, a schema that verifies if an object has this fields:
+ * @function deliverParcelSchema
+ * @param {string} trackingNumber the tracking number
+ * @param {string} personWhoReceivedParcel Full name of the person that received the parcel
+ * @param {string} locationReceivedLat Latitude of the delivery
+ * @param {string} locationReceivedLng The longitude of the delivery
+ */
+export const deliverParcelSchema = ajv.compile({
+  title: 'Send Parcel',
+  description: 'Checks if info from Parcel is correctly formatted (Information from the form)',
+  type: 'object',
+  properties: {
+    trackingNumber: {
+      type: 'string',
+      minLength: 36,
+      maxLength: 36
+    },
+    personWhoReceivedParcel: {
+      type: 'string',
+      minLength: 5,
+      maxLength: 100
+    },
+    //https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates
+    locationReceivedLat: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 12,
+      pattern: '^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$'
+    },
+    locationReceivedLng: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 13,
+      pattern: '^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$'
+    }
+  },
+  required: [ 'trackingNumber', 'personWhoReceivedParcel', 'locationReceivedLat', 'locationReceivedLng']
+})

@@ -74,6 +74,11 @@ const getAvailableParcelsDb = (queryStr) => {
     }]
 }
 
+const deliverParcelDb = (queryStr) => {
+    if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
+    return true
+}
+
 export const query = async (queryStr) => {
     if (queryStr.includes('SELECT userType, password FROM users WHERE userName = '))  //Login
         return login(queryStr)
@@ -91,9 +96,11 @@ export const query = async (queryStr) => {
         return getParcelStatus(queryStr)
     else if (queryStr.includes('UPDATE parcels SET assignedCourier = '))
         return assignParcel(queryStr)
-    else if (queryStr.includes('SELECT parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '))
+    else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '))
         return getCourierParcels(queryStr)
     else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng'))
+        return getAvailableParcelsDb(queryStr)
+    else if (queryStr.includes('UPDATE parcels SET personWhoReceivedParcel = '))
         return getAvailableParcelsDb(queryStr)
 }
 

@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb, deliverParcelDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -117,7 +117,7 @@ export const manageParcel = async (trackingNumber, userName) => {
                 await assignParcelDb(trackingNumber, userName)  //Assigns the parcel to the courier
                 return 'Parcel Assigned'
             case 'in-transit':
-                return 'Parcel in transit'
+                return 'in-transit'
             case 'delivered':
                 throw new Error('This Parcel has already been delivered')            
             default:
@@ -139,6 +139,30 @@ export const manageParcel = async (trackingNumber, userName) => {
 export const getAvailableParcels = async (lat, lng) => {
     try {
         return await getAvailableParcelsDb(lat, lng)    //Gets the available parcels ordered by distance (if the location permission was accepted)
+	} catch (err) {
+        throw err
+	}
+}
+
+/**
+ * deliver Parcel layer, calls function to deliver a parcel
+ * @async
+ * @function deliverParcel
+ * @param {Dictionary<string>} obj object containing these values:
+ * @param obj.trackingNumber - The tracking number of the parcel
+ * @param obj.personWhoReceivedParcel  - The full name of the person receiving the parcel
+ * @param obj.locationReceivedLat - The latitude of the received place
+ * @param obj.locationReceivedLng - The longitude of the received place
+ * @param obj.dateAndTimeReceived - The date and time when the parcel was delivered
+ * @param obj.signature - The image containing the signature of the receiver
+ * @returns {boolean} true if parcel was delivered.
+ * @throws If error, throw message
+ */
+export const deliverParcel = async (obj) => {
+    try {
+        //If the tracking number is valid
+        if (await getParcelStatusDb(obj.trackingNumber) !== 'in-transit') throw new Error('The parcel needs to be in transit in order to deliver it')
+        return await deliverParcelDb(obj)   //Delivers the parcel
 	} catch (err) {
         throw err
 	}
