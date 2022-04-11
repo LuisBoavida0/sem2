@@ -68,11 +68,23 @@ export const deliverParcelDb = (obj) => {
     return true
 }
 
-export const getCouriersInTransitDb = (obj) => {
-    return true
+export const getCouriersInTransitDb = () => {
+    return [
+        {
+            assignedCourier: "Name1"
+        },
+        {
+            assignedCourier: "Name2"
+        }
+    ]
 }
 
-export const getDeliveredParcelsDb = (obj) => {
-    return true
+let cont = -1
+export const getDeliveredParcelsDb = () => {
+    cont++
+    if (cont === 0)
+        return true
+    throw new Error('Error thrown')
+    
 }
 
