@@ -38,16 +38,19 @@ router.get('/sendParcel', async context => {
 
 router.get('/availableParcels', async context => {
 	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
-
-	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
-	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true, 'courier': true})	
+	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true})	
 })
 
 router.get('/deliveryScreen/:trackingNumber', async context => {
 	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
-
-	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
 	context.response.body = await handle.renderView('deliveryScreen', {'deliveryScreen': true, 'courier': true, 'trackingNumber': context.params.trackingNumber})	
+})
+
+router.get('/unpickedParcels', async context => {
+	if (context.cookies.get('userType') !== 'manager') context.response.redirect('/login') //Checks if it is a manager
+
+	const parcels = await getAvailableParcels(false, false)	//Calls function to get the available parcels
+	context.response.body = await handle.renderView('unpickedParcels', {parcels, 'homepage': true})	
 })
 
 //-------------------------- Api -------------------------
