@@ -17,7 +17,7 @@ const salt = await genSalt(saltRounds)
  * @param data.userName The username of the user.
  * @param data.password The password of the user.
  * @returns {string} the userType of the user.
- * @throws Throws error if Username not found or invalid password
+ * @throws Throws error if Username not found, or invalid password or db error
  */
 export async function loginDb(data) {
 	try {		
@@ -45,6 +45,7 @@ export async function loginDb(data) {
  * @param data.password The password of the user.
  * @param data.email The email of the user.
  * @returns {boolean} true if the user is successfully created.
+ * @throws Throws db error
  */
 export async function registerDb(data) {
 	try {
@@ -62,6 +63,7 @@ export async function registerDb(data) {
  * @function userDoesntExistDb
  * @param {string} username The username to see if it exists.
  * @returns {boolean} true if the user doesnt exists and false if it does.
+ * @throws Throws db error
  */
 export async function userDoesntExistDb(username) {
 	try {
@@ -79,6 +81,7 @@ export async function userDoesntExistDb(username) {
  * @function isValidUUIDDb
  * @param {string} UUID The UUID.
  * @returns {boolean} true if UUID doesnt exists and false if it does.
+ * @throws Throws db error
  */
 export async function isValidUUIDDb(UUID) {
 	try {
@@ -98,12 +101,15 @@ export async function isValidUUIDDb(UUID) {
  * @param data.trackingNumber The tracking number of the parcel.
  * @param data.senderAddress The sender Address of the parcel.
  * @param data.destinationAddress The destination Address of the parcel.
+ * @param data.destinationLat The latitude of the destination.
+ * @param data.destinationLng The longitude of the destination.
  * @param data.kgs The kilograms of the parcel.
  * @param data.parcelName The name of the parcel.
  * @param data.dateAndTimeAdded The date and time that the parcel was added.
  * @param data.senderUsername The username of the person sending the parcel.
  * @param data.parcelStatus The status of the parcel.
  * @returns {boolean} true if the parcel is successfully created.
+ * @throws Throws db error or if any field doesnt exists on the object
  */
 export async function addParcelDb(data) {
 	try {
@@ -125,6 +131,7 @@ export async function addParcelDb(data) {
  * the destination address (destinationAddress),
  * the datetime that the parcel was created (dateAndTimeAdded),
  * and the parcel status (parcelStatus).
+ * @throws Throws db error
  */
 export async function getUserParcelsDb(user) {
 	try {
@@ -140,11 +147,13 @@ export async function getUserParcelsDb(user) {
  * @function getParcelStatusDb
  * @param {string} trackingNumber The tracking number of the parcel.
  * @returns {string} Returns the parcel status
+ * @throws Throws db error or if there is no parcel with that tracking number
  */
 export async function getParcelStatusDb(trackingNumber) {
 	try {
 		const records = await db.query(`SELECT parcelStatus FROM parcels WHERE trackingNumber = '${trackingNumber}'`)
 		
+		//If no parcels with that tracking number, throw error
 		if (!records[0]) throw new Error('No parcel found with that tracking number')
 		
 		return records[0].parcelStatus
@@ -154,12 +163,13 @@ export async function getParcelStatusDb(trackingNumber) {
 }
 
 /**
- * Assigns the parcel.
+ * Assigns the parcel to a courier.
  * @async
  * @function assignParcelDb
  * @param {string} trackingNumber The tracking number of the parcel.
- * @param {string} userName The userName of the courier.
+ * @param {string} userName The userName of the courier that the parcel will be assigned.
  * @returns {boolean} true if parcel was assigned to the courier
+ * @throws Throws db error
  */
 export async function assignParcelDb(trackingNumber, userName) {
 	try {
@@ -176,10 +186,12 @@ export async function assignParcelDb(trackingNumber, userName) {
  * @function getCourierParcelsDb
  * @param {string} courier The courier userName.
  * @returns {Dictionary<string>} An object containing: 
+ * The tracking number (trackingNumber),
  * Parcel name (parcelName), 
  * the destination address (destinationAddress),
  * the datetime that the parcel was created (dateAndTimeAdded),
  * and the kilograms (kgs).
+ * @throws Throws db error
  */
 export async function getCourierParcelsDb(courier) {
 	try {
@@ -191,6 +203,7 @@ export async function getCourierParcelsDb(courier) {
 
 /**
  * Gets the available parcels for the couriers.
+ * If the location permission was accepted, it will order them by distance, if not, order them by date added
  * @async
  * @function getAvailableParcelsDb
  * @param {string} lat The latitude of the user.
@@ -203,6 +216,7 @@ export async function getCourierParcelsDb(courier) {
  * the datetime that the parcel was created (dateAndTimeAdded),
  * the latitude of the destination (destinationLat),
  * and the longitude of the destination (destinationLng).
+ * @throws Throws db error
  */
 export async function getAvailableParcelsDb(lat, lng) {
 	try {
@@ -210,7 +224,7 @@ export async function getAvailableParcelsDb(lat, lng) {
 		if (lat === false)
 			return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
 		
-		//Gets the parcels not-dispatched ordered by distance
+		//Gets the parcels ordered by distance
 		return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
 	} catch (err) {
         throw err
@@ -218,7 +232,7 @@ export async function getAvailableParcelsDb(lat, lng) {
 }
 
 /**
- * Delivers the parcel.
+ * Delivers a parcel.
  * @async
  * @function deliverParcelDb
  * @param {Dictionary<string>} obj object containing these values:
@@ -229,6 +243,7 @@ export async function getAvailableParcelsDb(lat, lng) {
  * @param obj.dateAndTimeReceived - The date and time when the parcel was delivered
  * @param obj.signature - The image containing the signature
  * @returns {boolean} true if the parcel was successfully delivered.
+ * @throws Throws db error
  */
 export async function deliverParcelDb(obj) {
 	try {
@@ -242,8 +257,9 @@ export async function deliverParcelDb(obj) {
 /**
  * Gets the couriers with parcels to deliver.
  * @async
- * @function getCouriersInTransit
- * @returns {Dictionary<string>} An object containing all the couriers with parcels to deliver
+ * @function getCouriersInTransitDb
+ * @returns {Dictionary<string>} An object containing all the couriers with parcels to deliver (Only has one field named assignedCourier)
+ * @throws Throws db error
  */
 export async function getCouriersInTransitDb() {
 	try {
@@ -261,6 +277,7 @@ export async function getCouriersInTransitDb() {
  * Tracking number (trackingNumber),
  * Parcel name (parcelName), 
  * and the destination address (destinationAddress),
+ * @throws Throws db error
  */
 export async function getDeliveredParcelsDb() {
 	try {

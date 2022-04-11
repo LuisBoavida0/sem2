@@ -12,8 +12,8 @@ import { resize } from 'https://deno.land/x/deno_image@v0.0.3/mod.ts'
  * @async
  * @function formDataProcessing
  * @param {Object} obj form object with all the data to be converted to a usable object
- * @param {avj} schema constant that contains the schema
- * @param {boolean} transformed If the object is already transformed
+ * @param {avj} schema Contains the schema
+ * @param {boolean} transformed flags if the object is already transformed
  * @returns {Object} returns the transformed object.
  * @throws Throws error if Obj does not meet the schema criteria
  */
@@ -91,7 +91,7 @@ export const getUUID = async () => {
  * obj.trackingNumber - the tracking number
  * obj.signature - the image
  */
-export const deliverProcessWithImage = async (data, trackingNumber) => {   //Converts the img to data64 and converts the date
+export const deliverProcessWithImage = async (data, trackingNumber) => {
     try {
 		//Convert form data to an object
         const fullobj = await data.value.read()
@@ -101,10 +101,11 @@ export const deliverProcessWithImage = async (data, trackingNumber) => {   //Con
         obj.dateAndTimeReceived = getDateIsosFormat()  //Get the current Date   
         obj.trackingNumber = trackingNumber
 
+        //Get file info
         const file = fullobj.files[0]
         const { filename, originalName } = file
 
-        const size = {  //Decreases the size of the picture to get lighter
+        const size = {  //variable to then decrease the size of the image to be lighter
             width: 100,
             height: 100
         }

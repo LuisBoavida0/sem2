@@ -141,11 +141,11 @@ export const sendParcelSchema = ajv.compile({
 /**
  * Manage Parcel Schema, a schema that verifies if an object has this fields:
  * @function assignParcelSchema
- * @param {string} trackingNumber the tracking number
+ * @param {string} trackingNumber the tracking number (A string with 36 length)
  */
 export const manageParcelSchema = ajv.compile({
   title: 'Manage Parcel',
-  description: 'Checks if Parcel that courier is going to assign is well formatted',
+  description: 'Checks if Parcel tracking number is well formatted',
   type: 'object',
   properties: {
     trackingNumber: {
@@ -168,7 +168,7 @@ export const manageParcelSchema = ajv.compile({
  */
 export const deliverParcelSchema = ajv.compile({
   title: 'Send Parcel',
-  description: 'Checks if info from Parcel is correctly formatted (Information from the form)',
+  description: 'Checks if info from Parcel is correctly formatted (To deliver it)',
   type: 'object',
   properties: {
     trackingNumber: {
