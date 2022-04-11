@@ -14,7 +14,8 @@ import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, 
  * @param obj.userName The username of the user.
  * @param obj.email The email of the user.
  * @param obj.password The password of the user.
- * @returns {boolean} true if UUID doesnt exists and false if it does.
+ * @returns {boolean} true if User is created
+ * @throws If it was not possible to register
  */
 export const register = async (obj) => { 
     try {
@@ -33,10 +34,11 @@ export const register = async (obj) => {
  * Login layer, calls function to Login
  * @async
  * @function login
- * @param data Information about the user.
- * @param data.userName The username of the user.
- * @param data.password The password of the user.
+ * @param obj Information about the user.
+ * @param obj.userName The username of the user.
+ * @param obj.password The password of the user.
  * @returns {string} the userType of the user.
+ * @throws If it was not possible to Login
  */
 export const login = async (obj) => {
     try {
@@ -50,13 +52,17 @@ export const login = async (obj) => {
  * Send Parcel layer, adds missing values and calls a function to add the parcel
  * @async
  * @function sendParcel
- * @param obj Information about the user.
+ * @param obj Information about the user, Such as:
  * @param obj.senderAddress The sender Address of the parcel.
  * @param obj.destinationAddress The destination Address of the parcel.
+ * @param obj.destinationLat The latitude of the destination.
+ * @param obj.destinationLng The longitude of the destination.
  * @param obj.kgs The kilograms of the parcel.
  * @param obj.parcelName The name of the parcel.
  * @param obj.parcelStatus The status of the parcel.
+ * @param username The userName of the sender
  * @returns {boolean} true if parcel was added.
+ * @throws If it was not possible to send the parcel, throw error
  */
 export const sendParcel = async (obj, username) => {
     try {
@@ -74,25 +80,27 @@ export const sendParcel = async (obj, username) => {
 }
 
 /**
- * Gets the parcels by calling an ORM function according to the user type and username, and returns it
+ * Gets the parcels by calling an ORM function according to the user type and username, and returns it.
+ * If it is a manager than its different
  * @async
  * @function getParcels
  * @param {string} userType Contains the user type
  * @param {string} userName Contains the user name
  * @returns {Dictionary<string>} An object containing the parcels
+ * @throws Any error that encountered
  */
 export const getParcels = async (userType, userName) => {
     try {
         switch(userType) {       
-            case 'user':
+            case 'user':    //If user, Get user parcels
                 return await getUserParcelsDb(userName)
-            case 'courier':
+            case 'courier':    //If courier, Get courier assigned parcels
                 return await getCourierParcelsDb(userName)
-            case 'manager': {
+            case 'manager': {    //If manager, Get all in-transit couriers and their assigned parcels
                 const couriers = await getCouriersInTransitDb() //Gets the couriers in transit
                 for (let i=0; i < couriers.length; i++) {   //Goes through each courier
                     // deno-lint-ignore no-await-in-loop
-                    couriers[i].parcels = await getCourierParcelsDb(couriers[i].assignedCourier)    //Gets his in-transit parcels (Had to use deno lint ignore because the way to not use await here doesnt work in  a list)
+                    couriers[i].parcels = await getCourierParcelsDb(couriers[i].assignedCourier)    //Gets his in-transit parcels (Had to use deno lint ignore because the way to not use await in a loop doesnt work in this type of list)
                     couriers[i].numParcels = couriers[i].parcels.length //Adds the number of parcels in-transit
                 }
                 return couriers //returns the couriers with the parcels
@@ -167,7 +175,7 @@ export const getAvailableParcels = async (lat, lng) => {
  */
 export const deliverParcel = async (obj) => {
     try {
-        //If the tracking number is valid
+        //If the parcel is not in-transit, throw error
         if (await getParcelStatusDb(obj.trackingNumber) !== 'in-transit') throw new Error('The parcel needs to be in transit in order to deliver it')
         return await deliverParcelDb(obj)   //Delivers the parcel
 	} catch (err) {
@@ -180,6 +188,7 @@ export const deliverParcel = async (obj) => {
  * @async
  * @function getDeliveredParcels
  * @returns {Dictionary<string>} An object containing all delivered parcels
+ * @throws If error, throw message
  */
 export const getDeliveredParcels = async () => {
     try {

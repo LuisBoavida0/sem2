@@ -30,9 +30,7 @@ async function getAvailableParcels(userLocation) {
 function showParcels(parcels) { //Writes the html of each parcel
   if (!parcels.length) document.getElementsByTagName('main')[0].innerHTML = `<h1>No parcels available</h1>`  //If there is no parcels, show message
 
-  for (parcel of parcels) {
-    const hours = Math.floor(Math.abs(new Date() - new Date(parcel.dateAndTimeAdded)) / 36e5)
-
+  for (parcel of parcels) { //Goes through each parcel
     //Writes the html of each parcel
     document.getElementsByTagName('main')[0].innerHTML += `
       <section>

@@ -30,7 +30,7 @@ input, textarea, button {   /*Add general style to inputs and button*/
     padding: 5px;
     border-radius: 5px; /*Round borders*/
     color: var(--font) !important;  /*Overwrite default browser css*/
-    font-family: 'Noto Sans Display', sans-serif;
+    font-family: 'Noto Sans Display', sans-serif;   /*Set font*/
     display: block;
 }
 
@@ -54,7 +54,7 @@ p, label {  /*style for text*/
 
 input:not([type="submit"]), textarea {  /*style for inputs (except submit)*/
     margin-bottom: 10px;
-    width: -webkit-fill-available;  /*Width 100% (Using this because 100% isnt working correctly with padding and flex parent)*/
+    width: -webkit-fill-available;  /*Width -webkit-fill-available (Using this because 100% isnt working correctly with padding and flex parent)*/
 }
 
 input[type='submit'], button {  /*Style for buttons*/
@@ -75,8 +75,8 @@ main > p:first-child {
     padding: 20px;  
     margin-bottom: 20px;
     border-radius: 5px; /*Round edges (error message will be in a red box created by this css)*/
-    color: white;
-    background-color: var(--error);
+    color: white;   /*Colors text to white*/
+    background-color: var(--error); /*background-color set to error color*/
 }
 
 /*Success Message
@@ -86,54 +86,54 @@ main > p:first-child.success {
 }
 
 /*Modal cookies*/
-body>aside {
-    position: fixed;
-    bottom: 0;
+body>aside {    /*Sets the cookies to occupy all page*/
+    position: fixed;    /*Sets fixed to put it in front of everything*/
+    top: 0;  /*Starts at the beggining of the page*/
     right: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    overflow: auto;
-    z-index: 1;
+    display: none;  /*Default the cookies modal is not visible*/
+    width: 100%;    /*Set with to occupy full page*/
+    height: 100%;   /*Set height to occupy full page*/
+    background-color: rgba(0,0,0,0.5);  /*Adds background-color to focus on the cookies modal*/
+    overflow: auto; /*Allow scroll if needed*/
+    z-index: 1; /*Set priority*/
 }
 
-body>aside>section {
-    position: relative;
-    background-color: var(--background);
-    border-radius: 5px;
-    border: 1px solid var(--font);
-    padding: 15px;
-    margin: auto;
-    width: 490px;
+body>aside>section {    /*The cookies modal itself (The parent is just to occupy full page)*/
+    position: relative; /*position relative for inside absolute button to respect the parent position*/
+    background-color: var(--background);    /*Adds a background color*/
+    border-radius: 5px; /*Rounds the border*/
+    border: 1px solid var(--font);  /*Adds border*/
+    padding: 15px;  
+    margin: auto;   /*Aligns to center*/
+    width: 490px;   /*Sets width*/
 }
 
-body>aside>section>p {
+body>aside>section>p {  /*Remove Login and register paraghrapg style*/
     border-radius: 0px;
     padding: 0px;
     box-shadow: none;
     background-color: transparent;
 }
 
-body>aside>section>button:first-child {
-    position: absolute;
-    right: 5px;
+body>aside>section>button:first-child { /*close button css*/
+    position: absolute; /*Sets absolute to be able to define position*/
+    right: 5px; /*Sets it at top rigth corner*/
     top: 5px;
-    padding: 6px;
-    font-weight: bold;
+    padding: 6px;   
+    font-weight: bold;  /*makes X Bold*/
 }
 
-body>aside>section p>a {
+body>aside>section p>a {    /*Removes the a default color on paragraphs*/
     color: var(--font);
 }
 
-body>aside>section>a {
-    background-color: var(--secondary);
-    border-radius: 5px;
-    margin: auto;
-    padding: 10px;
-    text-decoration: none;
-    color: var(--font) !important;
-    display: block;
-    width: fit-content;
+body>aside>section>a {  /*Styles Accept cookies link to look like a button*/
+    background-color: var(--secondary); /*Adds background color*/
+    border-radius: 5px; /*Rounds border*/
+    margin: auto;   /*Aligns center*/
+    padding: 10px;  
+    text-decoration: none;  /*Removes text underline*/
+    color: var(--font) !important;  /*Sets color to font*/
+    display: block; /*Makes it block to be able to center it with margin auto*/
+    width: fit-content; /*Make width only the needed one*/
 }

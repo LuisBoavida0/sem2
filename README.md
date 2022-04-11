@@ -1,5 +1,5 @@
 
-# Getting Started
+## Getting Started
 
 This template is designed to be installed inside a Codio box. To to this, open the terminal and run the following command:
 
@@ -11,19 +11,19 @@ This will configure the box ready for you to start development.
 
 > The process can take up to 15 min. Make sure you don't close the browser tab _or let your computer go into sleep mode_.
 
-To run the server:
+## To run the server:
 
 ```shell
 $ deno run --allow-all --unstable index.js
 ```
 
-The website database has been added with a root password of `p455w0rd` and a single **accounts** table which is pre-configured with a single account:
+## To run the Database:
+The website database has been added with a root password of `p455w0rd`.
 
-username: `doej`
+```shell
+$ mysql -u root -p website
+```
 
-password: `p455w0rd`
-
-There is a secure page called **Foo Bar** which can be accessed at the `/foo` route. You will need to delete this and replace with your own secure content.
 
 ## Frequently-Asked Questions
 
@@ -32,48 +32,45 @@ If you get stuck your first step should be to see if this is a problem that othe
 [Frequently-Asked Questions](https://docs.google.com/document/d/1b_lTA_ay0Yi46annuNnZ6fK1nIe_ddszmPua1Wwvfa0/edit?usp=sharing)
 
 ## Run the coverage
-deno test --allow-all --unstable --import-map "./test.json" --coverage=ut/lcov ut/
-deno coverage ut/lcov --lcov > ut/cov_profile.lcov --exclude=ajv.min.js --exclude=/modules/test/ --exclude=/ut/
-genhtml -o ut/coverage ut/cov_profile.lcov
+There is a shell script prepared for that, simply run 
+```shell
+$ sh/coverage.sh
+```
 
 ## lint
-deno lint --unstable --config deno.json
+```shell
+$ deno lint --unstable --config deno.json
+```
 
-## test the project
-deno test --allow-all --unstable --import-map './test.json' ut/
+## Test the project
+Coverage already tests the project, but if you want to do it separately, run:
+```shell
+$ deno test --allow-all --unstable --import-map './test.json' ut/
+```
 
-## beautifier
-deno fmt routes2.js
+## Create Documentation
+There is a shell script prepared for that, simply run 
+```shell
+$ sh/jsDoc.sh
+```
 
-## jsDoc
-source ~/.nvm/nvm.sh
-jsdoc modules/ -r
-
-## Push git
-git push origin feature-2
-
-##Run UATs
-sh/runAllUATs.sh
-
-## Run the project
-deno run --allow-all --unstable index.js
+## Run UATs
+There is a shell script prepared for that, simply run (Note that it is not possible to run it on this environment)
+```shell
+$ sh/runAllUATs.sh
+```
 
 ## Connect to online database
-its the one on luis3
-mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
-tm4HYSXBTC
-https://www.freemysqlhosting.net/account/
+To connect to the online database Use this command and insert `tm4HYSXBTC` as the password
+```shell
+$ mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
+```
 
-## heroku settings
-heroku login -i
-heroku create instantparcel --buildpack=https://github.com/chibat/heroku-buildpack-deno.git
-https://instantparcel.herokuapp.com/ | https://git.heroku.com/instantparcel.git
+## Project online
+The website is on [https://instantparcel.herokuapp.com](`https://instantparcel.herokuapp.com`)
 
-## Steps to merge to master and automatically push to heroku
-FIRST, CHECK IF I MADE ANY CHANGES TO THE LOCAL DB, IF I DID, UPDATE THE ONLINE ONE
-git checkout master - Goes to master
-git merge FEATURE -m 'MESSAGE' - Merge to master
-git push test master - Pushes to test branch to push to heroku
-git push origin master - Pushes to master
-git branch NEWFEATURE - Creates the new branch
-git checkout NEWFEATURE - Goes to the new branch
+## GitHub
+I am using three githubs repositories (you can see them by running `git remote -v`):
+The Main one
+The Heroku repository
+The Repository with the gitActions (To test the project and pushing to heroku automatically)
