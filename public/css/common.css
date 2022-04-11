@@ -84,3 +84,56 @@ Only change the background color to green because the other css is in the error 
 main > p:first-child.success {
     background-color: var(--success);
 }
+
+/*Modal cookies*/
+body>aside {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow: auto;
+    z-index: 1;
+}
+
+body>aside>section {
+    position: relative;
+    background-color: var(--background);
+    border-radius: 5px;
+    border: 1px solid var(--font);
+    padding: 15px;
+    margin: auto;
+    width: 490px;
+}
+
+body>aside>section>p {
+    border-radius: 0px;
+    padding: 0px;
+    box-shadow: none;
+    background-color: transparent;
+}
+
+body>aside>section>button:first-child {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 6px;
+    font-weight: bold;
+}
+
+body>aside>section p>a {
+    color: var(--font);
+}
+
+body>aside>section>a {
+    background-color: var(--secondary);
+    border-radius: 5px;
+    margin: auto;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--font) !important;
+    display: block;
+    width: fit-content;
+}
