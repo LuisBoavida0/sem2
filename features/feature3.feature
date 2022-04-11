@@ -5,6 +5,7 @@ Feature: Assign Parcel
     Scenario: Access assign parcels page from homepage
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "courier1" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -16,6 +17,7 @@ Feature: Assign Parcel
     Scenario: Assign parcel correctly
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -46,6 +48,7 @@ Feature: Assign Parcel
     Scenario: Try to assign parcel with a tracking number with incorrect length
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "courier1" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -58,6 +61,7 @@ Feature: Assign Parcel
     Scenario: Try to assign parcel with incorrect tracking number
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "courier1" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button

@@ -25,6 +25,9 @@ tom.test('access login page from home page     ', async function () {
 	// WHEN I am automatically redirected to login
 			let heading = await page.$eval('h1', node => node.innerText)
 			await assert.equal(heading, 'Login', 'homepage not redirecting to the login')
+	// AND I click accept on the Cookies screen
+			await page.click('a[href="cookiesAccept"]', { waitUntil: 'networkidle0' })
+			await page.waitForNavigation()
 	// THEN I should see the page heading "Log In"
 			heading = await page.$eval('h1', node => node.innerText)
 			await assert.equal(heading, 'Login', 'log in screen not found')

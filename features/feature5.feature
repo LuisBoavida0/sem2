@@ -5,6 +5,7 @@ Feature: Courier See available parcels
     Scenario: See the available parcels
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "courier1" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -22,6 +23,7 @@ Feature: Manager homepage
     Scenario: Access the manager homepage
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
     When I click on the "login" button
@@ -31,6 +33,7 @@ Feature: Manager homepage
     Scenario: See couriers in transit
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -47,6 +50,7 @@ Feature: Manager unpicked
     Scenario: Access the Unpicked parcels page
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -59,6 +63,7 @@ Feature: Manager unpicked
     Scenario: See the Unpicked parcels page
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -76,6 +81,7 @@ Feature: Manager delivered
     Scenario: Access the Delivered parcels page
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -88,6 +94,7 @@ Feature: Manager delivered
     Scenario: See the delivered parcels page
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "manager" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button

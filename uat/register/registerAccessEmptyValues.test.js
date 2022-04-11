@@ -26,6 +26,9 @@ function delay(time) {
 	// AND I am redirected to the login
 			let heading = await page.$eval('h1', node => node.innerText)
 			await assert.equal(heading, 'Login', 'log in screen not found')
+	// AND I click accept on the Cookies screen
+			await page.click('a[href="cookiesAccept"]', { waitUntil: 'networkidle0' })
+			await page.waitForNavigation()
 	// AND I click on the register link
 			await page.click('a[href="/register"]', { waitUntil: 'networkidle0' })
 			await page.waitForNavigation()

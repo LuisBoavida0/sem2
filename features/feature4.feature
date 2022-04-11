@@ -5,6 +5,7 @@ Feature: Deliver Parcel
     Scenario: Access deliver page from homepage
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "courier1" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -16,6 +17,7 @@ Feature: Deliver Parcel
     Scenario: Deliver a parcel correctly
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -55,6 +57,7 @@ Feature: Deliver Parcel
     Scenario: Deliver a parcel with a non existing tracking number
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         AND I enter "courier1" in the username field
         AND I enter "p455w0rd" in the password field
         AND I click on the login button
