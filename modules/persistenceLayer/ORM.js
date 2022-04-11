@@ -198,18 +198,20 @@ export async function getCourierParcelsDb(courier) {
  * @returns {Dictionary<string>} An object containing: 
  * Tracking number (trackingNumber),
  * Parcel name (parcelName), 
+ * the sender address (senderAddress),
  * the destination address (destinationAddress),
  * the datetime that the parcel was created (dateAndTimeAdded),
- * and the kilograms (kgs).
+ * the latitude of the destination (destinationLat),
+ * and the longitude of the destination (destinationLng).
  */
 export async function getAvailableParcelsDb(lat, lng) {
 	try {
 		//Gets the parcel without the location
 		if (lat === false)
-			return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
+			return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY dateAndTimeAdded;`)
 		
 		//Gets the parcels not-dispatched ordered by distance
-		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
+		return await db.query(`SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng, SQRT( POW(69.1 * (destinationLat - ${lat}), 2) + POW(69.1 * (${lng} - destinationLng) * COS(destinationLat / 57.3), 2)) AS distance FROM parcels WHERE parcelStatus = 'not-dispatched' ORDER BY distance;`)
 	} catch (err) {
         throw err
     }
@@ -232,6 +234,37 @@ export async function deliverParcelDb(obj) {
 	try {
 		await db.query(`UPDATE parcels SET personWhoReceivedParcel = '${obj.personWhoReceivedParcel}', locationReceivedLat = '${obj.locationReceivedLat}', locationReceivedLng = '${obj.locationReceivedLng}', dateAndTimeReceived = '${obj.dateAndTimeReceived}', signature='${obj.signature}', parcelStatus = 'delivered' WHERE trackingNumber = '${obj.trackingNumber}';`)
 		return true
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the couriers with parcels to deliver.
+ * @async
+ * @function getCouriersInTransit
+ * @returns {Dictionary<string>} An object containing all the couriers with parcels to deliver
+ */
+export async function getCouriersInTransitDb() {
+	try {
+		return await db.query(`SELECT DISTINCT assignedCourier from parcels WHERE parcelStatus='in-transit';`)
+	} catch (err) {
+        throw err
+    }
+}
+
+/**
+ * Gets the delivered parcels
+ * @async
+ * @function getDeliveredParcelsDb
+ * @returns {Dictionary<string>} An object containing: 
+ * Tracking number (trackingNumber),
+ * Parcel name (parcelName), 
+ * and the destination address (destinationAddress),
+ */
+export async function getDeliveredParcelsDb() {
+	try {
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress FROM parcels WHERE parcelStatus = 'delivered' ORDER BY dateAndTimeAdded DESC;`)
 	} catch (err) {
         throw err
     }

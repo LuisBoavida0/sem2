@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels, deliverParcel } from '../modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels, deliverParcel, getDeliveredParcels } from '../modules/businessLayer/businessLayer.js'
 
 //-------------- test register function --------------------------------
 Deno.test('register Logic - Correct values', async () => {
@@ -105,6 +105,22 @@ Deno.test('getParcels Courier - db call error', async () => {
     } catch (err) {
         assertEquals(err.message, "Error Thrown", 'The message Sent is incorrect')
     }
+})
+
+//  manager
+Deno.test('getParcels manager - Check with correct values', async () => {
+    assertEquals(await getParcels('manager', 'manager'), [
+        {
+            assignedCourier: "Name1",
+            parcels: { parcelName: "parcelName" },
+            numParcels: undefined
+        },
+        {
+            assignedCourier: "Name2",
+            parcels: { parcelName: "parcelName" },
+            numParcels: undefined
+        }
+    ], 'getParcels isnt returning the correct value')
 })
 
 //-------------- test manageParcel function  --------------------------------
@@ -227,3 +243,18 @@ Deno.test('deliverParcel - Check with deliverParcelDb error', async () => {
         assertEquals(err.message, 'Error thrown', 'The message Sent is incorrect')
     }
 })
+
+//-------------- test deliverParcel function  --------------------------------
+Deno.test('getDeliveredParcels - Check correctly', async () => {
+    assertEquals(await getDeliveredParcels(), true, 'The message Sent is incorrect')
+})
+
+Deno.test('getDeliveredParcels - with error', async () => {
+    try {
+        await getDeliveredParcels()
+        fail('the function hasnt thrown an error like it was supposed to')
+    } catch (err) {
+        assertEquals(err.message, 'Error thrown', 'The message Sent is incorrect')
+    }
+})
+ 

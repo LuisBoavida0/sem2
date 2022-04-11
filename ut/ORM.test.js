@@ -1,5 +1,5 @@
 import { assertEquals, fail } from 'https://deno.land/std@0.79.0/testing/asserts.ts'
-import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb, deliverParcelDb } from '../modules/persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, isValidUUIDDb, addParcelDb, getUserParcelsDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb, deliverParcelDb, getCouriersInTransitDb, getDeliveredParcelsDb } from '../modules/persistenceLayer/ORM.js'
 
 //-------------- test loginDb function --------------------------------
 //There was an error of leaking resources because of the bcrypt import in ORM.js (for the compare, genSalt and hash functions)
@@ -479,6 +479,58 @@ Deno.test({
         signature: 'image'
       }
       await deliverParcelDb(obj)
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getCouriersInTransitDb function --------------------------------
+Deno.test({
+  name: 'getCouriersInTransitDb - correct values',
+  async fn () {
+    assertEquals(await getCouriersInTransitDb(), true, 'getCouriersInTransitDb not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getCouriersInTransitDb - db Error (throw error)',
+  async fn () { 
+    try {
+      await getCouriersInTransitDb()
+      fail('the function does not throw an exception as expected')
+    } catch (err) {
+      assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 
+    }
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+//-------------- test getDeliveredParcelsDb function --------------------------------
+Deno.test({
+  name: 'getDeliveredParcelsDb - correct values',
+  async fn () {
+    assertEquals(await getDeliveredParcelsDb(), true, 'getDeliveredParcelsDb not returning true') 
+  },
+  // following two options deactivate open resource checking
+  sanitizeResources: false,
+  sanitizeOps: false
+})
+
+Deno.test({
+  name: 'getDeliveredParcelsDb - db Error (throw error)',
+  async fn () { 
+    try {
+      await getDeliveredParcelsDb()
       fail('the function does not throw an exception as expected')
     } catch (err) {
       assertEquals(err.message, "Error Thrown", 'Message Error incorrect') 

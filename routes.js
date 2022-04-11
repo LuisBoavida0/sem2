@@ -1,7 +1,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.5.1/mod.ts'
 import { Handlebars } from 'https://deno.land/x/handlebars/mod.ts'
 
-import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels, deliverParcel } from './modules/businessLayer/businessLayer.js'
+import { register, login, sendParcel, getParcels, manageParcel, getAvailableParcels, deliverParcel, getDeliveredParcels } from './modules/businessLayer/businessLayer.js'
 import { formDataProcessing, homePageRedirection, deliverProcessWithImage } from './modules/businessLayer/generalLogic.js'
 import { registerSchema, loginSchema, sendParcelSchema, manageParcelSchema, deliverParcelSchema } from './modules/businessLayer/schema.js'
 
@@ -38,16 +38,26 @@ router.get('/sendParcel', async context => {
 
 router.get('/availableParcels', async context => {
 	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
-
-	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
-	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true, 'courier': true})	
+	context.response.body = await handle.renderView('availableParcels', {'availableParcels': true})	
 })
 
 router.get('/deliveryScreen/:trackingNumber', async context => {
 	if (context.cookies.get('userType') !== 'courier') context.response.redirect('/login') //Checks if it is a courier
-
-	//Go to homepage with the parcels, with a key saying to the head that the page is home, and a key saying which type of user is
 	context.response.body = await handle.renderView('deliveryScreen', {'deliveryScreen': true, 'courier': true, 'trackingNumber': context.params.trackingNumber})	
+})
+
+router.get('/unpickedParcels', async context => {
+	if (context.cookies.get('userType') !== 'manager') context.response.redirect('/login') //Checks if it is a manager
+
+	const parcels = await getAvailableParcels(false, false)	//Calls function to get the available parcels
+	context.response.body = await handle.renderView('unpickedParcels', {parcels, 'homepage': true, 'manager': true})	
+})
+
+router.get('/deliveredParcels', async context => {
+	if (context.cookies.get('userType') !== 'manager') context.response.redirect('/login') //Checks if it is a manager
+
+	const parcels = await getDeliveredParcels()	//Calls function to get the available parcels
+	context.response.body = await handle.renderView('deliveredParcels', {parcels, 'homepage': true, 'manager': true})	
 })
 
 //-------------------------- Api -------------------------

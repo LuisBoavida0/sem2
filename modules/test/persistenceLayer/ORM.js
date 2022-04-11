@@ -67,3 +67,24 @@ export const deliverParcelDb = (obj) => {
     if (obj.personWhoReceivedParcel === 'throwError') throw new Error('Error thrown')
     return true
 }
+
+export const getCouriersInTransitDb = () => {
+    return [
+        {
+            assignedCourier: "Name1"
+        },
+        {
+            assignedCourier: "Name2"
+        }
+    ]
+}
+
+let cont = -1
+export const getDeliveredParcelsDb = () => {
+    cont++
+    if (cont === 0)
+        return true
+    throw new Error('Error thrown')
+    
+}
+

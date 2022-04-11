@@ -7,28 +7,13 @@ main {  /* Main css */
     margin: 20px;   /*Adds margin*/
 }
 
-section {   /* Each parcel */
+section, details {   /* Each parcel */
     display: grid;  /*Display grid to put all parcels of that row with the same height*/
     width: calc(25% - 54px); /*Set width to a quarter of the page (At maximum there will be 4 items per row)*/
     min-width: 300px; /*Sets the minimum size*/
     border: 2px solid var(--font);  /*Create border*/
     padding: 15px;  /*Add Spacing from the border*/
     margin: 10px;   /*Add spacing between parcels*/
-}
-
-section > a {
-    background-color: var(--secondary);
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    margin: 20px auto 0px auto;
-    padding: 10px 24px;
-    text-decoration: none;
-    color: var(--font) !important;
-    font-family: 'Noto Sans Display', sans-serif;
-    display: block;
-    font-size: initial;
 }
 
 h1 {    /*Title to center and break line*/
@@ -63,25 +48,84 @@ h2 {    /*Add margin for parcel title*/
 }
 
 /* Courier Homepage Css */
+section > a {   /*Style link to look like a button*/
+    background-color: var(--secondary); /*Adds background color*/
+    border-radius: 5px; /*Makes border rounded*/
+    margin: 20px auto 0px auto; /*Aligns center and adds margin to top*/
+    padding: 10px 24px; /*Adds spacing*/
+    text-decoration: none;  /*Removes underline from text*/
+    color: var(--font) !important; 
+}
+
 main > p:first-child {  /*Set Error/succ message to 500px*/
     width: 500px;
 }
 
-form {
-    width: 500px;
-    border: solid 2px var(--font);
-    padding: 20px;
-    margin-bottom: 20px;
+form {  /*Form css*/
+    width: 500px;   /*Sets width*/
+    border: solid 2px var(--font);  /*Adds border*/
+    padding: 20px;  /*Adds spacing */
+    margin-bottom: 20px;    /*Adds margin to bottom*/
 }
 
-form > input[type='submit'] {
-    margin: 20px auto 0px auto;
-    padding: 10px 24px;
-    font-size: 16px;
+form > input[type='submit'] {   /*Style for form button*/
+    margin: 20px auto 0px auto; /*Centers the button and adds a space to top*/
+    padding: 10px 24px; /*adds spacing*/
+    font-size: 16px;    /*Changes font size*/
 }
 
-hr {
+hr {    /*Sets hr to maximum width for error message to occupy 100% width (since parent is flex)*/
     flex-basis: 100%;
     border: none;
     margin: 0;
+}
+
+/*Manager Homepage*/
+section[onclick] {  /*Set clickable sections with onclick*/
+    cursor: pointer;
+}
+
+aside { /*Style for modal*/
+    position: fixed;    /*Fixed to put above everything*/
+    left: 50%;  /*Center horizontally*/
+    top: 50%;   /*Center vertically*/
+    transform: translate(-50%, -50%);   /*Fix center horizontal and verticall*/
+    width: fit-content; /*Set width to size of content*/
+    max-width: 80%; /*Set max width*/
+    height: auto;   /*set Heigth to auto*/
+    max-height: 80%;    /*Set maximum height*/
+    padding: 30px;  /*Add spacing*/
+    overflow-y: auto;   /*Set scroll vertically (For the aside)*/
+    overflow-x: hidden; /*Dont allow scroll horizontal*/
+    display: flex;  /*Sets it to Flex*/
+    flex-wrap: wrap; /*Flex wrap to breack line after 100%*/
+    justify-content: center;    /*Align items to center*/
+    border: 2px solid black;    /*Adds border*/
+    background-color: #efebf9;  /*Adds background color*/
+    display: none;  /*Default modal is not shown*/
+}
+
+aside>button {  /*Styles close modal button*/
+    position: absolute; /*Absoluto to be able to put on the top right corner*/
+    right: 6px; /*Adds 6px to the right*/
+    top: 6px; /*Adds 6px to top*/
+    padding: 8px;   /*Adds spacing*/
+    font-weight: bold;  /*Set text to bold*/
+}
+
+aside section { /*Adds background color to each section inside modal*/
+    background-color: var(--background);
+}
+
+aside::-webkit-scrollbar {  /*Style modal scroll*/
+  width: 12px;  /*Change width*/
+}
+ 
+aside::-webkit-scrollbar-track {    /*Style modal scroll*/
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); /*Styles scroll path*/
+}
+ 
+aside::-webkit-scrollbar-thumb {    /*Style modal scroll*/
+  background-color: darkgrey;   /*Add  color to the scroll itself*/
+  outline: 1px solid slategrey; /*Add an outline to the scroll*/
 }

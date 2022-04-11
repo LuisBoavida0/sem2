@@ -13,6 +13,9 @@ header nav {    /*header navigation*/
 header ul { /*Remove default css from unordered list*/
     margin: 0;
     padding: 0;
+    display: flex;  /*Adds Flex for multiple head links*/
+    flex-wrap: wrap;    /*Wrap to allow line break*/
+    justify-content: center;    /*Align items center*/
 }
 
 header li { /*Remove default css from list items and added a horizontal margin*/

@@ -66,7 +66,7 @@ const getCourierParcels = (queryStr) => {
     }]
 }
 
-const getAvailableParcelsDb = (queryStr) => {    
+const getAvailableParcels = (queryStr) => {    
     if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
     else if (queryStr.includes(' ORDER BY dateAndTimeAdded;')) return [{ parcelName: 'parcelNameNoLocation' }]
     return [{
@@ -77,6 +77,20 @@ const getAvailableParcelsDb = (queryStr) => {
 const deliverParcelDb = (queryStr) => {
     if (queryStr.includes('throwError')) throw new Error('Error Thrown') //Throw an error
     return true
+}
+
+let cont = -1
+const getCouriersInTransit = (queryStr) => {
+    cont++
+    if (cont === 0) return true
+    throw new Error('Error Thrown') //Throw an error on the second call (to test it)
+}
+
+let contDelivered = -1
+const getDeliveredParcels = (queryStr) => {
+    contDelivered++
+    if (contDelivered === 0) return true
+    throw new Error('Error Thrown') //Throw an error on the second call (to test it)
 }
 
 export const query = async (queryStr) => {
@@ -98,10 +112,14 @@ export const query = async (queryStr) => {
         return assignParcel(queryStr)
     else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs FROM parcels WHERE assignedCourier = '))
         return getCourierParcels(queryStr)
-    else if (queryStr.includes('SELECT trackingNumber, parcelName, destinationAddress, dateAndTimeAdded, kgs, destinationLat, destinationLng'))
-        return getAvailableParcelsDb(queryStr)
+    else if (queryStr.includes('SELECT trackingNumber, parcelName, senderAddress, destinationAddress, dateAndTimeAdded, destinationLat, destinationLng'))
+        return getAvailableParcels(queryStr)
     else if (queryStr.includes('UPDATE parcels SET personWhoReceivedParcel = '))
-        return getAvailableParcelsDb(queryStr)
+        return deliverParcelDb(queryStr)
+    else if (queryStr.includes("SELECT DISTINCT assignedCourier from parcels WHERE parcelStatus='in-transit';"))
+        return getCouriersInTransit(queryStr)
+    else if (queryStr.includes("SELECT trackingNumber, parcelName, destinationAddress FROM parcels WHERE parcelStatus = 'delivered' ORDER BY dateAndTimeAdded DESC;"))
+        return getDeliveredParcels(queryStr)
 }
 
 export * as db from '../../persistenceLayer/db.js'  //A workaround to be able to call query like db.query

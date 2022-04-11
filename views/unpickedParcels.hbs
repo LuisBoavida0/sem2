@@ -1,0 +1,13 @@
+{{#if parcels}}
+    <h1>Unpicked Parcels</h1>
+    {{#each parcels}}
+        <section>
+            <h2>{{this.parcelName}}</h2>
+            <p>Tracking number: {{this.trackingNumber}}</p>
+            <p>{{this.dateAndTimeAdded}}</p>
+            <p>Destination: {{this.destinationAddress}}</p>
+        </section>
+    {{/each}}
+{{else}}
+    <h1>There are no unpicked parcels</h1>
+{{/if}}

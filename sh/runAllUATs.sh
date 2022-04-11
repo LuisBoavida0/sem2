@@ -33,3 +33,11 @@ echo 'Deliver parcel'
 npx test-runner ./uat/DeliverParcel/DeliverParcelAccess.test.js
 npx test-runner ./uat/DeliverParcel/DeliverParcelCorrectly.test.js
 npx test-runner ./uat/DeliverParcel/DeliverParcelNonExistingParcel.test.js
+echo 'feature-5'
+npx test-runner ./uat/feature-5/courierSeeAvailableParcels.test.js
+npx test-runner ./uat/feature-5/managerPageAccess.test.js
+npx test-runner ./uat/feature-5/managerPageSeeCouriersInTransit.test.js
+npx test-runner ./uat/feature-5/managerAccessDeliveredParcels.test.js
+npx test-runner ./uat/feature-5/managerAccessUnpickedParcels.test.js
+npx test-runner ./uat/feature-5/managerSeeDeliveredParcels.test.js
+npx test-runner ./uat/feature-5/managerSeeUnpickedParcels.test.js

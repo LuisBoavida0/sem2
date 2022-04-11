@@ -1,0 +1,12 @@
+{{#if parcels}}
+    <h1>Delivered Parcels</h1>
+    {{#each parcels}}
+        <section>
+            <h2>{{this.parcelName}}</h2>
+            <p>Tracking number: {{this.trackingNumber}}</p>
+            <p>Destination: {{this.destinationAddress}}</p>
+        </section>
+    {{/each}}
+{{else}}
+    <h1>There are no delivered parcels</h1>
+{{/if}}
