@@ -33,4 +33,5 @@ INSERT INTO users(userName, password, email, userType)
 	VALUES('customer1', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'customer1@gmail.com', 'user'),
         ('customer2', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'customer2@gmail.com', 'user'),
         ('courier1', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'courier1@gmail.com', 'courier'),
-        ('courier2', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'courier2@gmail.com', 'courier');
+        ('courier2', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'courier2@gmail.com', 'courier'),
+        ('manager', '$2b$10$gL33obKAFUT5DK3pEbh72OIHztsWBniBBh.PdeKOrF1yr5KFAsdZO', 'manager@gmail.com', 'manager'),;

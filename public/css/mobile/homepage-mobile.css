@@ -3,4 +3,8 @@
     html section {  /*Each parcel*/
         min-width: calc(100% - 34px); /*Set min width to 100% (With padding of 10px on each size)*/
     }
+
+    html aside {    /*When mobile set max with of modal to 100%*/
+        max-width: 100%;
+    }
 }

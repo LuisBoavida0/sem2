@@ -236,3 +236,18 @@ export async function deliverParcelDb(obj) {
         throw err
     }
 }
+
+/**
+ * Gets the couriers with parcels to deliver.
+ * @async
+ * @function getCouriersInTransit
+ * @returns {Dictionary<string>} An object containing all the couriers with parcels to deliver
+ */
+export async function getCouriersInTransitDb() {
+	try {
+		return await db.query(`SELECT DISTINCT assignedCourier from parcels WHERE parcelStatus='in-transit';`)
+	} catch (err) {
+        throw err
+    }
+}
+

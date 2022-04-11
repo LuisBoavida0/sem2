@@ -1,7 +1,7 @@
 // On page load change dates from parcel to a more readable format and add the class for the status of parcel
 window.addEventListener('load', function(){
-    const datesEl = document.querySelectorAll('main>section>p:nth-child(3)')    //Get dates elements
-    const parcelStatusEl = document.querySelectorAll('main>section>p:last-of-type>b') //Get parcel status elements
+    const datesEl = document.querySelectorAll('section>p:nth-child(3)')    //Get dates elements
+    const parcelStatusEl = document.querySelectorAll('section>p:last-of-type>b') //Get parcel status elements
     const title = document.querySelector('h1').innerHTML    //Gets the title of the page to see on which page we are
 
     for (let i = 0; i < datesEl.length; i++) {   //Go through each parcel

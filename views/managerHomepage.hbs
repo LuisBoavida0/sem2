@@ -1,1 +1,23 @@
-<h1>Manager</h1>
+{{#if parcels}}
+    <h1>Couriers in transit</h1>
+    {{#each parcels}}
+        <!--Sets visible aside-->
+        <section onclick='this.lastElementChild.style.display="flex"'>
+            <h2>{{this.assignedCourier}}</h2>
+            <p>Number of parcels to deliver: {{this.numParcels}}</p>
+            <aside>
+                <!--Display none parent, stop propagation to prevent parent onclick-->
+                <button onclick='this.parentElement.style.display="none"; event.stopPropagation();'>X</button>
+                {{#each this.parcels}}
+                        <section>
+                            <p>{{this.parcelName}}</p>
+                            <p>{{this.destinationAddress}}</p>
+                            <p>{{dateAndTimeAdded}}</p>
+                        </section>
+                {{/each}}
+            </aside>
+        </section>
+    {{/each}}
+{{else}}
+    <h1>There are no couriers in transit</h1>
+{{/if}}
