@@ -14,4 +14,22 @@
     <main>
         {{{body}}}
     </main>
+
+    {{#unless cookiesAccepted}}
+    <!--to start with the aside already opened, so i need the inline style-->
+    <aside style="display: flex;">
+        <section>
+            <button type='button' onclick='this.parentElement.parentElement.style.display="none"; event.stopPropagation();'>
+                X
+            </button>
+            <h1>Cookies on Instant Parcel:</h1>
+            <p>We use necessary cookies to make our site work.</p> 
+            <p>Using this tool will set a cookie on your device to remember your 
+                preferences. For more detailed information about the cookies we use, see our <a href="{{host}}/cookiesScreen" target="_blank">cookies 
+                page</a>. </p>
+            <p>Not accepting the cookies wont let you use the website because you need to be logged in in order to be able to use it</p>
+            <a href='cookiesAccept'>Accept</a>
+        </section>
+    </aside>
+    {{/unless}}
 </body>
