@@ -4,7 +4,7 @@
  */
 
 import { getUUID, getDateIsosFormat } from './generalLogic.js'
-import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb, deliverParcelDb, getCouriersInTransitDb } from '../persistenceLayer/ORM.js'
+import { loginDb, registerDb, userDoesntExistDb, addParcelDb, getUserParcelsDb, isValidUUIDDb, getParcelStatusDb, assignParcelDb, getCourierParcelsDb, getAvailableParcelsDb, deliverParcelDb, getCouriersInTransitDb, getDeliveredParcelsDb } from '../persistenceLayer/ORM.js'
 
 /**
  * Register layer, calls function to register if the username doesnt exist
@@ -170,6 +170,20 @@ export const deliverParcel = async (obj) => {
         //If the tracking number is valid
         if (await getParcelStatusDb(obj.trackingNumber) !== 'in-transit') throw new Error('The parcel needs to be in transit in order to deliver it')
         return await deliverParcelDb(obj)   //Delivers the parcel
+	} catch (err) {
+        throw err
+	}
+}
+
+/**
+ * Delivered Parcels layer, calls function to get the parcels delivered
+ * @async
+ * @function getDeliveredParcels
+ * @returns {Dictionary<string>} An object containing all delivered parcels
+ */
+export const getDeliveredParcels = async () => {
+    try {
+        return await getDeliveredParcelsDb()
 	} catch (err) {
         throw err
 	}

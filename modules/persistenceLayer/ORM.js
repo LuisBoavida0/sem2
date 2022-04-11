@@ -198,9 +198,11 @@ export async function getCourierParcelsDb(courier) {
  * @returns {Dictionary<string>} An object containing: 
  * Tracking number (trackingNumber),
  * Parcel name (parcelName), 
+ * the sender address (senderAddress),
  * the destination address (destinationAddress),
  * the datetime that the parcel was created (dateAndTimeAdded),
- * and the kilograms (kgs).
+ * the latitude of the destination (destinationLat),
+ * and the longitude of the destination (destinationLng).
  */
 export async function getAvailableParcelsDb(lat, lng) {
 	try {
@@ -251,3 +253,19 @@ export async function getCouriersInTransitDb() {
     }
 }
 
+/**
+ * Gets the delivered parcels
+ * @async
+ * @function getDeliveredParcelsDb
+ * @returns {Dictionary<string>} An object containing: 
+ * Tracking number (trackingNumber),
+ * Parcel name (parcelName), 
+ * and the destination address (destinationAddress),
+ */
+export async function getDeliveredParcelsDb() {
+	try {
+		return await db.query(`SELECT trackingNumber, parcelName, destinationAddress FROM parcels WHERE parcelStatus = 'delivered' ORDER BY dateAndTimeAdded DESC;`)
+	} catch (err) {
+        throw err
+    }
+}

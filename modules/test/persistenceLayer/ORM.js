@@ -71,3 +71,8 @@ export const deliverParcelDb = (obj) => {
 export const getCouriersInTransitDb = (obj) => {
     return true
 }
+
+export const getDeliveredParcelsDb = (obj) => {
+    return true
+}
+
