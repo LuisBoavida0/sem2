@@ -5,6 +5,7 @@ Feature: Register
     Scenario: register with valid data
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I enter "customerDATE" in the username field
@@ -19,6 +20,7 @@ Feature: Register
     Scenario: register with empty values
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I dont fill anything
@@ -30,6 +32,7 @@ Feature: Register
     Scenario: register with invalid username
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I enter "a" in the username field (invalid username)
@@ -44,6 +47,7 @@ Feature: Register
     Scenario: register with invalid email
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I enter "customerDATE" in the username field
@@ -58,6 +62,7 @@ Feature: Register
     Scenario: register with different passwords
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I enter "customerDATE" in the username field
@@ -72,6 +77,7 @@ Feature: Register
     Scenario: register with invalid passwords
     GIVEN I am on the homepage
         AND I am redirected to the login
+        AND I click accept on the Cookies screen
         AND I click on the register link
         AND I am now on the register page
     WHEN I enter "customerDATE" in the username field

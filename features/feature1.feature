@@ -5,6 +5,7 @@ Feature: Send Parcel
     Scenario: Send a parcel
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -27,6 +28,7 @@ Feature: Send Parcel
     Scenario: Send Parcel from home page incorrect parcelName
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -49,6 +51,7 @@ Feature: Send Parcel
     Scenario: Send Parcel from home page incorrect senderHouseNumber
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -71,6 +74,7 @@ Feature: Send Parcel
     Scenario: Send Parcel from home page incorrect destinationHouseNumber
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button
@@ -93,6 +97,7 @@ Feature: Send Parcel
     Scenario: Send Parcel from home page empty values
     Given I am on the "Home" page
         And I am redirected to the login 
+        And I click accept on the Cookies screen
         And I enter "customer3" in the "username" box
         And I enter "p455w0rd" in the "password" box
         And I click on the "login" button

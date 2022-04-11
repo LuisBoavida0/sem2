@@ -5,6 +5,7 @@ Feature: See Parcels
     Scenario: Access customer homepage from homepage
     GIVEN I am on the homepage
         AND I am automatically redirected to login 
+        AND I click accept on the Cookies screen
         AND I enter "customer3" in the username field
         AND I enter "p455w0rd" in the password field
     WHEN I click on the login button
@@ -14,6 +15,7 @@ Feature: See Parcels
     Scenario: See the customer parcels
     GIVEN I am on the homepage
         AND I am automatically redirected to login 
+        AND I click accept on the Cookies screen
         AND I enter "customer3" in the username field
         AND I enter "p455w0rd" in the password field
         AND I click on the login button
@@ -24,6 +26,7 @@ Feature: See Parcels
     Scenario: See the no parcels message
     GIVEN I am on the homepage
         AND I am automatically redirected to login 
+        AND I click accept on the Cookies screen
         AND I enter "customer3" in the username field
         AND I enter "p455w0rd" in the password field
         AND I click on the login button

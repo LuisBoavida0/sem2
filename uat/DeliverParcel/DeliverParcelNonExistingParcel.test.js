@@ -26,6 +26,9 @@ tom.test('Deliver a parcel with a non existing tracking number     ', async func
         // AND I am automatically redirected to login 
                 let heading = await page.$eval('h1', node => node.innerText)
                 await assert.equal(heading, 'Login', 'homepage not redirecting to the login')
+        // AND I click accept on the Cookies screen
+                await page.click('a[href="cookiesAccept"]', { waitUntil: 'networkidle0' })
+                await page.waitForNavigation()
         // AND I enter "courier1" in the username field
                 await page.type('input[name="userName"]', 'courier1')
         // AND I enter "p455w0rd" in the password field

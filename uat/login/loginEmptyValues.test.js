@@ -26,6 +26,9 @@ function delay(time) {
 	// AND I am redirected to the login
 			let heading = await page.$eval('h1', node => node.innerText)
 			await assert.equal(heading, 'Login', 'homepage not redirecting to the login')
+	// AND I click accept on the Cookies screen
+			await page.click('a[href="cookiesAccept"]', { waitUntil: 'networkidle0' })
+			await page.waitForNavigation()
 	// WHEN I click on the login button
 			await page.click('input[type="submit"]', { waitUntil: 'networkidle0' })
             await delay(500)
