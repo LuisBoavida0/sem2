@@ -23,9 +23,9 @@ const connectionData = {  //Connection data
   },
   '/app': {
 		hostname: 'sql4.freemysqlhosting.net',
-    username: 'sql4480028',
-    password: 'tm4HYSXBTC',
-    db: 'sql4480028'
+    username: 'sql4486255',
+    password: 'cfR6lA2pnn',
+    db: 'sql4486255'
   }
 }
 

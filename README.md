@@ -61,9 +61,9 @@ $ sh/runAllUATs.sh
 ```
 
 ## Connect to online database
-To connect to the online database Use this command and insert `tm4HYSXBTC` as the password
+To connect to the online database Use this command and insert `cfR6lA2pnn` as the password
 ```shell
-$ mysql -u sql4480028 -p -h sql4.freemysqlhosting.net sql4480028
+$ mysql -u sql4486255 -p -h sql4.freemysqlhosting.net sql4486255
 ```
 
 ## Project online
